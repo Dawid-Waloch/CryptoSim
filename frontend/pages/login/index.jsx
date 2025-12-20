@@ -49,10 +49,10 @@ const LoginPage = () => {
             const data = await response.json();
 
             if(!response.ok) {
-                setError(data.errors || [{ id: "api", error: data.message }]);
+                setError([{ id: "api", error: data.message }]);
             }
 
-            login({ username: data.username, token: data.token });
+            login(data.username);
 
             router.push("/");
         } catch (err) {
