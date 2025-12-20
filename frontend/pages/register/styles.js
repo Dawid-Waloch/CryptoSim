@@ -21,6 +21,7 @@ export const FieldContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 5px;
+    margin-bottom: 5px;
 `;
 
 export const Label = styled.label`
@@ -76,4 +77,9 @@ export const FormName = styled.div`
     display: flex;
     justify-content: center;
     margin-bottom: 1em;
+`
+
+export const ErrorContainer = styled.div`
+    color: red;
+    font-weight: bolder;
 `

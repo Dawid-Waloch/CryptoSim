@@ -7,6 +7,7 @@ import {
     Input as BaseInput,
     Button as BaseButton, 
     FormName as BaseFormName,
+    ErrorContainer as BaseErrorContainer,
 } from "../register/styles";
 
 export const LoginContainer = styled(BaseRegistrationContainer)``;
@@ -22,3 +23,5 @@ export const Input = styled(BaseInput)``;
 export const Button = styled(BaseButton)``;
 
 export const FormName = styled(BaseFormName)``;
+
+export const ErrorContainer = styled(BaseErrorContainer)``;

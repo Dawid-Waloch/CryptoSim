@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Navbar from "../../components/Navbar/Navbar";
 import {
     Button,
@@ -7,7 +8,8 @@ import {
     FormName,
     Input,
     Label,
-    RegistrationContainer
+    RegistrationContainer,
+    ErrorContainer
 } from "./styles";
 
 const RegisterPage = () => {
@@ -16,26 +18,51 @@ const RegisterPage = () => {
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [error, setError] = useState([]);
+    const router = useRouter();
 
     const isFormValid = () => {
         const newErrors = [];
-        if(!username) newErrors.push({id: 1, error: "Fill the username field"});
-        if(!email.includes("@")) newErrors.push({id: 2, error: "Your email has to include @"});
-        if(password.length < 8) newErrors.push({id: 3, error: "Your password has to contain more than 7 characters"});
-        if(password !== repeatPassword) newErrors.push({id: 4, error: "You password and repeat password have to be the same"});
+        if(!username) newErrors.push({id: "username", error: "Fill the username field"});
+        if(!email.includes("@")) newErrors.push({id: "email", error: "Your email has to include @"});
+        if(password.length < 8) newErrors.push({id: "password", error: "Your password has to contain more than 7 characters"});
+        if(password !== repeatPassword) newErrors.push({id: "repeatPassword", error: "You password and repeat password have to be the same"});
         setError(newErrors);
 
         return newErrors.length === 0;
     }
 
-    const isFormReady = username && email && password && repeatPassword;
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if(isFormValid()) {
-            console.log("Form submitted");
+
+        if(!isFormValid()) return;
+
+        try {
+            const response = await fetch("/api/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    password,
+                }),
+            });
+
+            const data = await response.json();
+
+            if(!response.ok) {
+                setError(data.errors || [{ id: "api", error: data.message }]);
+            }
+
+            console.log("REGISTRATION SUCCESS", data);
+            router.push("/");
+        } catch (err) {
+            setError([{ id: "network", error: "Server unreachable" }]);
         }
     }
+
+    const getError = (id) => error.find(err => err.id == id)?.error;
 
     return (
         <>
@@ -43,7 +70,7 @@ const RegisterPage = () => {
             <RegistrationContainer>
                 <FormContainer>
                     <FormName>Registration</FormName>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <FieldContainer>
                             <Label htmlFor="username">Username:</Label>
                             <Input
@@ -52,6 +79,7 @@ const RegisterPage = () => {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
+                            <ErrorContainer>{getError("username")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
                             <Label htmlFor="email">E-mail:</Label>
@@ -61,6 +89,7 @@ const RegisterPage = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
+                            <ErrorContainer>{getError("email")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
                             <Label htmlFor="password">Password:</Label>
@@ -70,6 +99,7 @@ const RegisterPage = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+                            <ErrorContainer>{getError("password")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
                             <Label htmlFor="repeat_password">Repeat password:</Label>
@@ -79,12 +109,15 @@ const RegisterPage = () => {
                                 value={repeatPassword}
                                 onChange={(e) => setRepeatPassword(e.target.value)}
                             />
+                            <ErrorContainer>{getError("repeatPassword")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
-                            <Button disabled={!isFormReady} onClick={handleSubmit}>Submit</Button>
+                            <Button type="submit">Submit</Button>
                         </FieldContainer>
                     </form>
                 </FormContainer>
+                <ErrorContainer>{getError("network")}</ErrorContainer>
+                <ErrorContainer>{getError("api")}</ErrorContainer>
             </RegistrationContainer>
         </>
     )
