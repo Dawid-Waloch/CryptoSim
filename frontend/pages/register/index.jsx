@@ -52,7 +52,7 @@ const RegisterPage = () => {
             const data = await response.json();
 
             if(!response.ok) {
-                setError(data.errors || [{ id: "api", error: data.message }]);
+                setError([{ id: "api", error: data.message }]);
             }
 
             console.log("REGISTRATION SUCCESS", data);
