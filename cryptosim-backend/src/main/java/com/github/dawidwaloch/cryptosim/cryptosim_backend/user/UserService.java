@@ -1,13 +1,18 @@
 package com.github.dawidwaloch.cryptosim.cryptosim_backend.user;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.github.dawidwaloch.cryptosim.cryptosim_backend.wallet.Wallet;
+import com.github.dawidwaloch.cryptosim.cryptosim_backend.wallet.WalletRepository;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final WalletRepository walletRepository;
     private final PasswordEncoder passwordEncoder;
 
     public RegisterResponseDTO register(String username, String email, String password){
@@ -24,6 +29,11 @@ public class UserService {
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
+
+        Wallet wallet = new Wallet();
+        wallet.setUserId(user.getId());
+        walletRepository.save(wallet);
+
         return new RegisterResponseDTO(true, "User registered successfully", user.getUsername());
     }
 
@@ -31,11 +41,11 @@ public class UserService {
         return userRepository.findByUsername(username)
                 .map(user -> {
                     if (passwordEncoder.matches(password, user.getPassword())) {
-                        return new LoginResponseDTO(true, "Login successful", user.getUsername());
+                        return new LoginResponseDTO(true, "Login successful", user.getUsername(), user.getId());
                     } else {
-                        return new LoginResponseDTO(false, "Invalid password", null);
+                        return new LoginResponseDTO(false, "Invalid password", null, null);
                     }
                 })
-                .orElse(new LoginResponseDTO(false, "User not found", null));
+                .orElse(new LoginResponseDTO(false, "User not found", null, null));
     }
 }
