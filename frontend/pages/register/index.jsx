@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 import Navbar from "../../components/Navbar/Navbar";
+import { useToast } from "../../context/ToastContext";
 import {
     Button,
     FieldContainer,
@@ -17,8 +19,21 @@ const RegisterPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
-    const [error, setError] = useState([]);
+    const [formError, setFormError] = useState([]);
+    const { flashMessage, setFlashMessage, clearFlashMessage } = useToast();
     const router = useRouter();
+
+    useEffect(() => {
+        if(!flashMessage) return;
+
+        if(flashMessage.type === "success") {
+            toast.success(flashMessage.message, { duration: 4000 });
+        } else {
+            toast.error(flashMessage.message, { duration: 4000 });
+        }
+        
+        clearFlashMessage();
+    }, [flashMessage])
 
     const isFormValid = () => {
         const newErrors = [];
@@ -26,7 +41,7 @@ const RegisterPage = () => {
         if(!email.includes("@")) newErrors.push({id: "email", error: "Your email has to include @"});
         if(password.length < 8) newErrors.push({id: "password", error: "Your password has to contain more than 7 characters"});
         if(password !== repeatPassword) newErrors.push({id: "repeatPassword", error: "You password and repeat password have to be the same"});
-        setError(newErrors);
+        setFormError(newErrors);
 
         return newErrors.length === 0;
     }
@@ -51,18 +66,18 @@ const RegisterPage = () => {
 
             const data = await response.json();
 
-            if(!response.ok) {
-                setError([{ id: "api", error: data.message }]);
+            if(!response.ok || data.success === false) {
+                throw new Error(data.message);
             }
 
-            console.log("REGISTRATION SUCCESS", data);
-            router.push("/");
+            setFlashMessage({ type: "success", message: "Registration success" });
+            router.push("/login");
         } catch (err) {
-            setError([{ id: "network", error: "Server unreachable" }]);
+            setFlashMessage({ type: "error", message: err.message || "Server unreachable" });
         }
     }
 
-    const getError = (id) => error.find(err => err.id == id)?.error;
+    const getError = (id) => formError.find(err => err.id == id)?.error;
 
     return (
         <>
@@ -116,8 +131,6 @@ const RegisterPage = () => {
                         </FieldContainer>
                     </form>
                 </FormContainer>
-                <ErrorContainer>{getError("network")}</ErrorContainer>
-                <ErrorContainer>{getError("api")}</ErrorContainer>
             </RegistrationContainer>
         </>
     )

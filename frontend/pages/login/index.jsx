@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
 import { useAuth } from "../../context/AuthContext";
 import Navbar from "../../components/Navbar/Navbar";
+import { useToast } from "../../context/ToastContext";
 import {
     Button,
     FieldContainer,
@@ -16,15 +18,28 @@ import {
 const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState([]);
-    const router = useRouter();
+    const [formError, setFormError] = useState([]);
+    const { flashMessage, setFlashMessage, clearFlashMessage } = useToast();
     const { login } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if(!flashMessage) return;
+
+        if(flashMessage.type === "success") {
+            toast.success(flashMessage.message, { duration: 4000 });
+        } else {
+            toast.error(flashMessage.message, { duration: 4000 });
+        }
+        
+        clearFlashMessage();
+    }, [flashMessage])
 
     const isFormValid = () => {
         const newErrors = [];
         if(!username) newErrors.push({id: "username", error: "Fill the username field"});
         if(!password) newErrors.push({id: "password", error: "Fill the password field"});
-        setError(newErrors);
+        setFormError(newErrors);
 
         return newErrors.length === 0;
     }
@@ -48,19 +63,21 @@ const LoginPage = () => {
 
             const data = await response.json();
 
-            if(!response.ok) {
-                setError([{ id: "api", error: data.message }]);
+            console.log("login data", data);
+
+            if(!response.ok || data.success === false) {
+                throw new Error(data.message);
             }
 
-            login(data.username);
-
-            router.push("/");
+            setFlashMessage({ type: "success", message: "Login success" });
+            login({username: data.username, userId: data.userId});
+            router.push("/dashboard");
         } catch (err) {
-            setError([{id: "network", error: "Server unreachable"}]);
+            setFlashMessage({type: "error", message: err.message || "Server unreachable" });
         }
     }
 
-    const getError = (id) => error.find(err => err.id === id)?.error;
+    const getError = (id) => formError.find(err => err.id === id)?.error;
 
     return (
         <>
@@ -94,8 +111,6 @@ const LoginPage = () => {
                         </FieldContainer>
                     </form>
                 </FormContainer>
-                <ErrorContainer>{getError("network")}</ErrorContainer>
-                <ErrorContainer>{getError("api")}</ErrorContainer>
             </LoginContainer>
         </>
     )

@@ -1,11 +1,13 @@
-import { AuthProvider } from '../context/AuthContext';
+import { Toaster } from 'react-hot-toast';
+import Providers from '../components/Providers';
 import '../styles/global.css';
 
 const CryptoSim = ({ Component, pageProps }) => {
     return (
-        <AuthProvider>
+        <Providers>
             <Component {...pageProps} />
-        </AuthProvider>
+            <Toaster />
+        </Providers>
     )  
 }
 
