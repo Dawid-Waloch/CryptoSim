@@ -1,12 +1,24 @@
 import Link from "next/link";
-import { Header, LandingContainer, Button, Subtitle, LeftColumn, RightColumn, Paragraph, Card } from "./index.styles";
+import { useAuth } from "../context/AuthContext";
+import {
+    Header,
+    LandingContainer,
+    Button,
+    Subtitle,
+    LeftColumn,
+    RightColumn,
+    Paragraph,
+} from "./index.styles";
 
-const LandingPage = () => (
+const LandingPage = () => {
+    const { user } = useAuth();
+    
+    return (
         <LandingContainer>
             <LeftColumn>
                 <Header>CryptoSim</Header>
                 <Subtitle>Trade. Learn. Repeat.</Subtitle>
-                <Link href={"/login"}>
+                <Link href={user ? "/dashboard" : "/login"}>
                     <Button>Start Trading</Button>
                 </Link>
             </LeftColumn>
@@ -20,6 +32,7 @@ const LandingPage = () => (
                 </Paragraph>
             </RightColumn>
         </LandingContainer>
-)
+    )
+}
 
 export default LandingPage;
