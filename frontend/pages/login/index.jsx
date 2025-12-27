@@ -50,7 +50,9 @@ const LoginPage = () => {
         if(!isFormValid()) return;
 
         try {
-            const response = await fetch("/api/login", {
+            // TODO
+            // Local server
+            const response = await fetch("http://localhost:8080/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

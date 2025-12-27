@@ -52,7 +52,9 @@ const RegisterPage = () => {
         if(!isFormValid()) return;
 
         try {
-            const response = await fetch("/api/register", {
+            // TODO
+            // Local server
+            const response = await fetch("http://localhost:8080/api/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

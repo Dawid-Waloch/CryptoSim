@@ -8,8 +8,6 @@ const ProtectedRoute = ({ children }) => {
 
     useEffect(() => {
         if(!user) router.replace("/login");
-
-
     }, [user, router]);
 
     if (!user) return null;
