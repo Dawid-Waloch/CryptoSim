@@ -17,3 +17,14 @@ CREATE TABLE wallets (
     currency VARCHAR(3) NOT NULL DEFAULT 'USD',
     is_active BOOLEAN NOT NULL DEFAULT true
 )
+
+--changeset maszko:2
+CREATE TABLE assets (
+    id SERIAL PRIMARY KEY,
+    symbol VARCHAR(5) NOT NULL UNIQUE,
+    name VARCHAR(50) NOT NULL,
+    current_price DECIMAL(19,4) NOT NULL DEFAULT 50,
+    type VARCHAR(20) NOT NULL DEFAULT 'CRYPTO',
+    is_active BOOLEAN NOT NULL DEFAULT true,
+    updated_at TIMESTAMP NOT NULL DEFAULT now()
+)
