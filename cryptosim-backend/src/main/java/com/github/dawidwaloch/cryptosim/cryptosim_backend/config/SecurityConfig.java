@@ -22,7 +22,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable) // ważne dla Postmana
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/register", "/api/login", "/wallets/**").permitAll()
+                        .requestMatchers("/api/register", "/api/login", "/wallets/**", "/assets/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
