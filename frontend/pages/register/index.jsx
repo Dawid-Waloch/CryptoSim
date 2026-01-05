@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import toast from "react-hot-toast";
 import Navbar from "../../components/Navbar/Navbar";
 import { useToast } from "../../context/ToastContext";
 import {
@@ -20,20 +19,8 @@ const RegisterPage = () => {
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [formError, setFormError] = useState([]);
-    const { flashMessage, setFlashMessage, clearFlashMessage } = useToast();
+    const { setFlashMessage } = useToast();
     const router = useRouter();
-
-    useEffect(() => {
-        if(!flashMessage) return;
-
-        if(flashMessage.type === "success") {
-            toast.success(flashMessage.message, { duration: 4000 });
-        } else {
-            toast.error(flashMessage.message, { duration: 4000 });
-        }
-        
-        clearFlashMessage();
-    }, [flashMessage])
 
     const isFormValid = () => {
         const newErrors = [];
