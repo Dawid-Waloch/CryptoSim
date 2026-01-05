@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import { toast } from "react-hot-toast";
 import { useAuth } from "../../context/AuthContext";
 import Navbar from "../../components/Navbar/Navbar";
 import { useToast } from "../../context/ToastContext";
@@ -19,21 +18,9 @@ const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [formError, setFormError] = useState([]);
-    const { flashMessage, setFlashMessage, clearFlashMessage } = useToast();
+    const { setFlashMessage } = useToast();
     const { login } = useAuth();
     const router = useRouter();
-
-    useEffect(() => {
-        if(!flashMessage) return;
-
-        if(flashMessage.type === "success") {
-            toast.success(flashMessage.message, { duration: 4000 });
-        } else {
-            toast.error(flashMessage.message, { duration: 4000 });
-        }
-        
-        clearFlashMessage();
-    }, [flashMessage])
 
     const isFormValid = () => {
         const newErrors = [];
@@ -64,8 +51,6 @@ const LoginPage = () => {
             });
 
             const data = await response.json();
-
-            console.log("login data", data);
 
             if(!response.ok || data.success === false) {
                 throw new Error(data.message);
