@@ -48,4 +48,8 @@ public class UserService {
                 })
                 .orElse(new LoginResponseDTO(false, "User not found", null, null));
     }
+
+    public User getUserById(Long userId){
+        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User doesn't exists"));
+    }
 }
