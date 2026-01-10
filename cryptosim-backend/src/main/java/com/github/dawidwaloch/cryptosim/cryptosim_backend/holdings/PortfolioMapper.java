@@ -9,14 +9,25 @@ import java.math.BigDecimal;
 public class PortfolioMapper {
     public PortfolioItemDto toDto(Holding holding){
         Asset asset = holding.getAsset();
-        BigDecimal value = holding.getQuantity().multiply(asset.getCurrentPrice());
+        BigDecimal quantity = holding.getQuantity();
+        BigDecimal currentPrice = asset.getCurrentPrice();
+        BigDecimal value = quantity.multiply(currentPrice);
         return new PortfolioItemDto(
                 asset.getId(),
                 asset.getSymbol(),
                 asset.getName(),
-                holding.getQuantity(),
-                asset.getCurrentPrice(),
+                quantity,
+                currentPrice,
                 value
         );
+    }
+
+    public String formatBigDecimal(BigDecimal number){
+        number = number.stripTrailingZeros();
+
+        if(number.scale() < 0){
+            number = number.setScale(0);
+        }
+        return number.toPlainString();
     }
 }

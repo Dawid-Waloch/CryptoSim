@@ -1,7 +1,5 @@
 package com.github.dawidwaloch.cryptosim.cryptosim_backend.holdings;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.math.BigDecimal;
 
 public record PortfolioItemDto(
