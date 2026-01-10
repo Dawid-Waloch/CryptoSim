@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 @Data
 @Entity
@@ -37,4 +38,26 @@ public class Transaction {
 
     @Column(name = "created_at", nullable = false)
     Timestamp createdAt;
+
+    public static Transaction buy(User user, Asset asset, BigDecimal quantity, BigDecimal price){
+        Transaction t = new Transaction();
+        t.user = user;
+        t.asset = asset;
+        t.type = "BUY";
+        t.quantity = quantity;
+        t.price = price;
+        t.createdAt = Timestamp.from(Instant.now());
+        return t;
+    }
+
+    public static Transaction sell(User user, Asset asset, BigDecimal quantity, BigDecimal price){
+        Transaction t = new Transaction();
+        t.user = user;
+        t.asset = asset;
+        t.type = "SELL";
+        t.quantity = quantity;
+        t.price = price;
+        t.createdAt = Timestamp.from(Instant.now());
+        return t;
+    }
 }
