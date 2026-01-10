@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
 export const DasboardContainer = styled.div`
     width: 80%;
@@ -29,18 +28,9 @@ export const BalanceText = styled.div`
     font-weight: bold;
 `;
 
-export const BalanceValue = styled.div`
-    font-size: 2em;
-    padding: 5px 15px 15px 15px;
-`;
-
 export const BalanceInfo = styled.div`
     display: flex;
     justify-content: space-between;
-`;
-
-export const WalletIcon = styled(AccountBalanceWalletIcon)`
-    padding: 5px 15px 15px 15px;
 `;
 
 export const MarketOverviewCard = styled(BalanceCard)`

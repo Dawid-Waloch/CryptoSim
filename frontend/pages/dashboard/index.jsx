@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { useAuth } from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext";
 import ProtectedRoute from "../../components/ProtectedRoute";
+import WalletDropdown from "../../components/WalletDropdown";
 import {
     BalanceCard,
     BalanceInfo,
     BalanceText,
-    BalanceValue,
     DasboardContainer,
     DashboardInfo,
     MarketOverviewCard,
@@ -15,13 +16,12 @@ import {
     PriceChartText,
     RecentTransactionsCard,
     RecentTransactionsText,
-    WalletIcon
 } from "./styles";
 
 const Dashboard = () => {
-    const [error, setError] = useState("");
     const [wallets, setWallets] = useState([]);
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
+    const { setFlashMessage } = useToast();
 
     const { username, userId } = user || {};
 
@@ -48,9 +48,9 @@ const Dashboard = () => {
                     throw new Error("We couldn't get a balance from api");
                 }
 
-                setWallets(data);
+                setWallets(data.wallets);
             } catch (err) {
-                setError([{id: "network", error: err.message || "Server unreachable" }]);
+                setFlashMessage({type: "error", message: err.message || "Server unreachable" });
             }
         }
 
@@ -62,13 +62,15 @@ const Dashboard = () => {
             <Navbar />
             <DasboardContainer>
                 <h2>Welcome, {username}!</h2>
-                <button onClick={logout}>Logout</button>
                 <DashboardInfo>
                     <BalanceCard>
                         <BalanceText>Account Balance:</BalanceText>
                         <BalanceInfo>
-                            {/* <BalanceValue>${wallets.wallets[0].balance}</BalanceValue> */}
-                            <WalletIcon fontSize="large" />
+                            {wallets.length > 0 ? (
+                                <WalletDropdown wallets={wallets} />
+                            ) : (
+                                <div>You don't have any wallet</div>
+                            )}
                         </BalanceInfo>
                     </BalanceCard>
                     <PriceChartCard>
