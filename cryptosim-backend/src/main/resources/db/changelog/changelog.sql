@@ -28,3 +28,12 @@ CREATE TABLE assets (
     is_active BOOLEAN NOT NULL DEFAULT true,
     updated_at TIMESTAMP NOT NULL DEFAULT now()
 )
+
+--changeset maszko:3
+CREATE TABLE holdings (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    asset_id INT REFERENCES assets(id),
+    quantity DECIMAL(19,8) NOT NULL,
+    UNIQUE (user_id, asset_id)
+)
