@@ -26,7 +26,7 @@ public class TransactionService {
 
         BigDecimal cost = asset.getCurrentPrice().multiply(quantity);
 
-//        walletService.withdraw(userId, cost);
+        walletService.withdraw(userId, cost);
         holdingService.add(user, asset, quantity);
 
         transactionRepository.save(Transaction.buy(user, asset, quantity, cost));
@@ -39,7 +39,7 @@ public class TransactionService {
         holdingService.remove(user, asset, quantity);
 
         BigDecimal income = asset.getCurrentPrice().multiply(quantity);
-//        walletService.deposit(userId, income);
+        walletService.deposit(userId, income);
 
         transactionRepository.save(Transaction.buy(user, asset, quantity, asset.getCurrentPrice()));
     }

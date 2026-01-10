@@ -20,14 +20,11 @@ public class HoldingService {
         });
 
         holding.setQuantity(holding.getQuantity().add(quantity));
-
         holdingRepository.save(holding);
     }
 
     public void remove(User user, Asset asset, BigDecimal quantity){
-        if (quantity.compareTo(BigDecimal.ZERO) <= 0){
-            throw new IllegalArgumentException("Quantity must be positive");
-        }
+        if (quantity.compareTo(BigDecimal.ZERO) <= 0) throw new IllegalArgumentException("Quantity must be positive");
 
         Holding holding = holdingRepository.findByUserAndAsset(user, asset).orElseThrow(() -> new IllegalStateException("No holdings for this asset to remove"));
 
