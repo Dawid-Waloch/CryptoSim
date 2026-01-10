@@ -2,6 +2,7 @@ package com.github.dawidwaloch.cryptosim.cryptosim_backend.transactions;
 
 import com.github.dawidwaloch.cryptosim.cryptosim_backend.assets.Asset;
 import com.github.dawidwaloch.cryptosim.cryptosim_backend.assets.AssetService;
+import com.github.dawidwaloch.cryptosim.cryptosim_backend.holdings.HoldingService;
 import com.github.dawidwaloch.cryptosim.cryptosim_backend.user.User;
 import com.github.dawidwaloch.cryptosim.cryptosim_backend.user.UserService;
 import com.github.dawidwaloch.cryptosim.cryptosim_backend.wallet.WalletService;
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final WalletService walletService;
-//    private final HoldingService holdingService;
+    private final HoldingService holdingService;
     private final AssetService assetService;
     private final UserService userService;
 
@@ -26,7 +27,7 @@ public class TransactionService {
         BigDecimal cost = asset.getCurrentPrice().multiply(quantity);
 
 //        walletService.withdraw(userId, cost);
-//        holdingService.add(user, asset, quantity);
+        holdingService.add(user, asset, quantity);
 
         transactionRepository.save(Transaction.buy(user, asset, quantity, cost));
     }
@@ -35,7 +36,7 @@ public class TransactionService {
         User user = userService.getUserById(userId);
         Asset asset = assetService.getAssetById(assetId);
 
-//        holdingService.remove(user, asset, quantity);
+        holdingService.remove(user, asset, quantity);
 
         BigDecimal income = asset.getCurrentPrice().multiply(quantity);
 //        walletService.deposit(userId, income);
