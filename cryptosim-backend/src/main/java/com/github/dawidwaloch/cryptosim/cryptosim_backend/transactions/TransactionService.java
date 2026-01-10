@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class TransactionService {
     private final HoldingService holdingService;
     private final AssetService assetService;
     private final UserService userService;
+    private final TransactionMapper mapper;
 
     public void buy(Long userId, Long assetId, BigDecimal quantity){
         User user = userService.getUserById(userId);
@@ -42,5 +44,13 @@ public class TransactionService {
         walletService.deposit(userId, income);
 
         transactionRepository.save(Transaction.buy(user, asset, quantity, asset.getCurrentPrice()));
+    }
+
+    public List<TransactionDTO> getTransactions(Long userId){
+        return transactionRepository.findByUserId(userId).stream().map(mapper::toDTO).toList();
+    }
+
+    public List<TransactionDTO> getTransactionsByAssetId(Long userId, Long assetId){
+        return transactionRepository.findByUserIdAndAssetId(userId, assetId).stream().map(mapper::toDTO).toList();
     }
 }

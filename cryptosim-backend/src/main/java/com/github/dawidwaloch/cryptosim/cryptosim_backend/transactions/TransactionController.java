@@ -1,10 +1,9 @@
 package com.github.dawidwaloch.cryptosim.cryptosim_backend.transactions;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/transactions")
@@ -20,5 +19,15 @@ public class TransactionController {
     @PostMapping("/sell")
     public void sell(@RequestBody BuySellRequestDTO request) {
         transactionService.sell(request.userId(), request.assetId(), request.quantity());
+    }
+
+    @GetMapping
+    public List<TransactionDTO> getTransactions(@RequestParam Long userId, @RequestParam(required = false) Long assetId){
+        if (assetId != null){
+            return transactionService.getTransactionsByAssetId(userId, assetId);
+        }
+        else {
+            return transactionService.getTransactions(userId);
+        }
     }
 }
