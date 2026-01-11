@@ -37,3 +37,14 @@ CREATE TABLE holdings (
     quantity DECIMAL(19,8) NOT NULL,
     UNIQUE (user_id, asset_id)
 )
+
+--changeset maszko:4
+CREATE TABLE transactions(
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    asset_id INT REFERENCES assets(id),
+    type VARCHAR(10) NOT NULL,
+    quantity DECIMAL(19,8) NOT NULL,
+    price DECIMAL(19, 4) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT now()
+)

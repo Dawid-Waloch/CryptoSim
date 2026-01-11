@@ -17,4 +17,8 @@ public class AssetService {
     public List<Asset> getAssetsByType(String type){
         return assetRepository.findByType(type);
     }
+
+    public Asset getAssetById(Long assetId){
+        return assetRepository.findById(assetId).orElseThrow(() -> new RuntimeException("Asset doesn't exists"));
+    }
 }

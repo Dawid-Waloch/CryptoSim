@@ -27,4 +27,12 @@ public class Holding {
 
     @Column(precision = 19, scale = 8, nullable = false)
     BigDecimal quantity;
+
+    public static Holding create(User user, Asset asset, BigDecimal quantity){
+        Holding h = new Holding();
+        h.user = user;
+        h.asset = asset;
+        h.quantity = quantity;
+        return h;
+    }
 }
