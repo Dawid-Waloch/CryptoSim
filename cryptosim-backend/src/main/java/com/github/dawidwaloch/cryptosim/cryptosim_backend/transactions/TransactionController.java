@@ -1,6 +1,8 @@
 package com.github.dawidwaloch.cryptosim.cryptosim_backend.transactions;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,13 +14,15 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @PostMapping("/buy")
-    public void buy(@RequestBody BuySellRequestDTO request){
+    public ResponseEntity<String> buy(@RequestBody BuySellRequestDTO request){
         transactionService.buy(request.userId(), request.assetId(), request.quantity());
+        return ResponseEntity.status(HttpStatus.CREATED).body("Asset bought successfully");
     }
 
     @PostMapping("/sell")
-    public void sell(@RequestBody BuySellRequestDTO request) {
+    public ResponseEntity<String> sell(@RequestBody BuySellRequestDTO request) {
         transactionService.sell(request.userId(), request.assetId(), request.quantity());
+        return ResponseEntity.status(HttpStatus.CREATED).body("Asset sold successfully");
     }
 
     @GetMapping

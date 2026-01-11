@@ -31,7 +31,7 @@ public class TransactionService {
         walletService.withdraw(userId, cost);
         holdingService.add(user, asset, quantity);
 
-        transactionRepository.save(Transaction.buy(user, asset, quantity, cost));
+        transactionRepository.save(Transaction.buy(user, asset, quantity, asset.getCurrentPrice()));
     }
 
     public void sell(Long userId, Long assetId, BigDecimal quantity){
@@ -43,7 +43,7 @@ public class TransactionService {
         BigDecimal income = asset.getCurrentPrice().multiply(quantity);
         walletService.deposit(userId, income);
 
-        transactionRepository.save(Transaction.buy(user, asset, quantity, asset.getCurrentPrice()));
+        transactionRepository.save(Transaction.sell(user, asset, quantity, asset.getCurrentPrice()));
     }
 
     public List<TransactionDTO> getTransactions(Long userId){
