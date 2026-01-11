@@ -17,9 +17,11 @@ import {
     RecentTransactionsCard,
     RecentTransactionsText,
 } from "./styles";
+import AssetsTable from "../../components/AssetsTable/AssetsTable";
 
 const Dashboard = () => {
     const [wallets, setWallets] = useState([]);
+    const [assetsWallet, setAssetsWallet] = useState([]);
     const { user } = useAuth();
     const { setFlashMessage } = useToast();
 
@@ -54,7 +56,32 @@ const Dashboard = () => {
             }
         }
 
+        const getWalletAssets = async () => {
+            try {
+                // TODO
+                // Json server
+                const response = await fetch(`http://localhost:4000/walletAssets`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                });
+
+                const data = await response.json();
+                console.log("data", data);
+
+                if(!response.ok) {
+                    throw new Error("We couldn't get your bought assets");
+                }
+
+                setAssetsWallet(data);
+            } catch (err) {
+                setFlashMessage({type: "error", message: err.message || "Server unreachable" });
+            }
+        }
+
         getBalance();
+        getWalletAssets();
     }, [userId]);
 
     return (
@@ -78,7 +105,11 @@ const Dashboard = () => {
                     </PriceChartCard>
                     <MarketOverviewCard>
                         <MarketOverviewText>Market Overview:</MarketOverviewText>
-                        <div>cos</div>
+                        {assetsWallet.length > 0 ? (
+                            <AssetsTable assetsWallet={assetsWallet} />
+                        ) : (
+                            <div>You don't have any bought assets</div>
+                        )}
                     </MarketOverviewCard>
                     <RecentTransactionsCard>
                         <RecentTransactionsText>Recent Transactions:</RecentTransactionsText>
