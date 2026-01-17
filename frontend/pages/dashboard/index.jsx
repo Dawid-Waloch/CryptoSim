@@ -59,8 +59,8 @@ const Dashboard = () => {
         const getWalletAssets = async () => {
             try {
                 // TODO
-                // Json server
-                const response = await fetch(`http://localhost:4000/walletAssets`, {
+                // Local server
+                const response = await fetch(`http://localhost:8080/portfolio?userId=${userId}`, {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",
