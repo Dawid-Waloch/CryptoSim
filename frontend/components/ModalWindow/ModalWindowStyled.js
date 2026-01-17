@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import CancelIcon from '@mui/icons-material/Cancel';
+import { ErrorContainer as BaseErrorContainer } from "../../pages/register/styles";
 
 export const OverlayContainer = styled.div`
     position: absolute;
@@ -27,6 +28,7 @@ export const ModalContainer = styled.div`
     border-radius: 12px;
     color: white;
     min-width: 300px;
+    max-width: 300px;
 `;
 
 export const CancelContainer = styled.div`
@@ -47,7 +49,7 @@ export const Input = styled.input`
     box-sizing: border-box;
     width: 100%;
     padding: 0.8rem 1rem;
-    margin: 0.5rem 0 1rem 0;
+    margin: 0.5rem 0 0.5rem 0;
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     background: rgba(255, 255, 255, 0.1);
@@ -69,6 +71,7 @@ export const AssetInfo = styled.h3`
 export const Button = styled.button`
     width: 100%;
     padding: 0.8rem;
+    margin-top: 15px;
     border: none;
     border-radius: 8px;
     background: linear-gradient(135deg, #3a0000, #8b0000);
@@ -88,4 +91,12 @@ export const Button = styled.button`
         transform: translateY(0);
         box-shadow: none;
     }
-`
+`;
+
+export const CostInfoSpan = styled.span`
+    word-wrap: break-word;
+`;
+
+export const ErrorContainer = styled(BaseErrorContainer)`
+    margin-bottom: 5px;
+`;
