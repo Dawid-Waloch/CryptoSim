@@ -1,7 +1,7 @@
 package com.github.dawidwaloch.cryptosim.cryptosim_backend.transactions;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public record TransactionDTO(
         Long id,
@@ -11,5 +11,5 @@ public record TransactionDTO(
         BigDecimal quantity,
         BigDecimal price,
         BigDecimal value,
-        Timestamp createdAt
+        LocalDateTime createdAt
 ){}

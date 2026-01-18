@@ -6,8 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -35,7 +34,7 @@ public class Transaction {
     BigDecimal price;
 
     @Column(name = "created_at", nullable = false)
-    Timestamp createdAt;
+    LocalDateTime createdAt;
 
     public static Transaction buy(User user, Asset asset, BigDecimal quantity, BigDecimal price){
         Transaction t = new Transaction();
@@ -44,7 +43,7 @@ public class Transaction {
         t.type = "BUY";
         t.quantity = quantity;
         t.price = price;
-        t.createdAt = Timestamp.from(Instant.now());
+        t.createdAt = LocalDateTime.now();
         return t;
     }
 
@@ -55,7 +54,7 @@ public class Transaction {
         t.type = "SELL";
         t.quantity = quantity;
         t.price = price;
-        t.createdAt = Timestamp.from(Instant.now());
+        t.createdAt = LocalDateTime.now();
         return t;
     }
 }

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -30,5 +30,5 @@ public class Asset {
     Boolean isActive;
 
     @Column(name = "updated_at", nullable = false)
-    Timestamp updatedAt;
+    LocalDateTime updatedAt;
 }
