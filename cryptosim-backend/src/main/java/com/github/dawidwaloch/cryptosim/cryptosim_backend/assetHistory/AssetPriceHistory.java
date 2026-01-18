@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -23,5 +23,5 @@ public class AssetPriceHistory {
     private BigDecimal price;
 
     @Column(name = "recorded_at", nullable = false)
-    private Timestamp recordedAt;
+    private LocalDateTime recordedAt;
 }
