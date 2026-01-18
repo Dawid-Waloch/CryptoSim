@@ -48,3 +48,11 @@ CREATE TABLE transactions(
     price DECIMAL(19, 4) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT now()
 )
+
+--changeset maszko:5
+CREATE TABLE asset_price_history(
+    id SERIAL PRIMARY KEY,
+    asset_id INT NOT NULL REFERENCES assets(id),
+    price DECIMAL(19, 4) NOT NULL,
+    recorded_at TIMESTAMP NOT NULL DEFAULT now()
+)
