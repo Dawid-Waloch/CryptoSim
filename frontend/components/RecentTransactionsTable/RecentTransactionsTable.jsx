@@ -9,7 +9,7 @@ const RecentTransactionsTable = ({ recentTransactions }) => {
 
     useEffect(() => {
         if(assetSearch.length > 0) {
-            setFilteredTransactions(recentTransactions.filter((transaction) => 
+            setFilteredTransactions([...recentTransactions].filter((transaction) => 
                 transaction.name.toLowerCase().startsWith(assetSearch.toLowerCase())).reverse()
             )
         } else {
