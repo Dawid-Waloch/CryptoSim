@@ -122,7 +122,7 @@ const AssetsTable = ({ assetsWallet }) => {
                                 </TableCell> */}
                                 <TableCell>
                                     <Button
-                                        buy
+                                        $buy
                                         onClick={() => handleClick({
                                             assetId: asset.assetId,
                                             name: asset.name,

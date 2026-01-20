@@ -3,7 +3,7 @@ import { TableCell as MuiTableCell, TableContainer as MuiTableContainer } from "
 
 export const Button = styled.button`
     background: ${(props) =>
-        props.buy
+        props.$buy
             ? "linear-gradient(135deg, green, darkgreen)"
             : "linear-gradient(135deg, red, darkred)"
     };

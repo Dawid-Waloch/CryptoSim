@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import WalletDropdown from "../../components/WalletDropdown";
+import AssetsTable from "../../components/AssetsTable/AssetsTable";
 import {
     BalanceCard,
     BalanceInfo,
@@ -17,11 +18,12 @@ import {
     RecentTransactionsCard,
     RecentTransactionsText,
 } from "./styles";
-import AssetsTable from "../../components/AssetsTable/AssetsTable";
+import RecentTransactionsTable from "../../components/RecentTransactionsTable/RecentTransactionsTable";
 
 const Dashboard = () => {
     const [wallets, setWallets] = useState([]);
     const [assetsWallet, setAssetsWallet] = useState([]);
+    const [recentTransactions, setRecentTransactions] = useState([]);
     const { user } = useAuth();
     const { setFlashMessage } = useToast();
 
@@ -61,14 +63,13 @@ const Dashboard = () => {
                 // TODO
                 // Local server
                 const response = await fetch(`http://localhost:8080/portfolio?userId=${userId}`, {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                        }
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
                 });
 
                 const data = await response.json();
-                console.log("data", data);
 
                 if(!response.ok) {
                     throw new Error("We couldn't get your bought assets");
@@ -80,8 +81,32 @@ const Dashboard = () => {
             }
         }
 
+        const getRecentTransactions = async () => {
+            try {
+                // TODO
+                // Local server
+                const response = await fetch(`http://localhost:8080/transactions?userId=${userId}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                const data = await response.json();
+
+                if(!response.ok) {
+                    throw new Error("We couldn't get your recent transactions");
+                }
+
+                setRecentTransactions(data);
+            } catch (err) {
+                setFlashMessage({type: "error", message: err.message || "Server unreachable" });
+            }
+        }
+
         getBalance();
         getWalletAssets();
+        getRecentTransactions();
     }, [userId]);
 
     return (
@@ -113,7 +138,11 @@ const Dashboard = () => {
                     </MarketOverviewCard>
                     <RecentTransactionsCard>
                         <RecentTransactionsText>Recent Transactions:</RecentTransactionsText>
-                        <div>cos2</div>
+                        {recentTransactions.length > 0 ? (
+                            <RecentTransactionsTable recentTransactions={recentTransactions} />
+                        ) : (
+                            <div>You don't have any transactions</div>
+                        )}
                     </RecentTransactionsCard>
                 </DashboardInfo>
             </DasboardContainer>
