@@ -5,6 +5,8 @@ import { useToast } from "../../context/ToastContext";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import WalletDropdown from "../../components/WalletDropdown";
 import AssetsTable from "../../components/AssetsTable/AssetsTable";
+import RecentTransactionsTable from "../../components/RecentTransactionsTable/RecentTransactionsTable";
+import EmptyTable from "../../components/EmptyTable/EmptyTable";
 import {
     BalanceCard,
     BalanceInfo,
@@ -18,7 +20,6 @@ import {
     RecentTransactionsCard,
     RecentTransactionsText,
 } from "./styles";
-import RecentTransactionsTable from "../../components/RecentTransactionsTable/RecentTransactionsTable";
 
 const Dashboard = () => {
     const [wallets, setWallets] = useState([]);
@@ -133,7 +134,10 @@ const Dashboard = () => {
                         {assetsWallet.length > 0 ? (
                             <AssetsTable assetsWallet={assetsWallet} />
                         ) : (
-                            <div>You don't have any bought assets</div>
+                            <EmptyTable
+                                cells={["Asset", "Quantity", "Current Price", "Value", "Buy", "Sell"]}
+                                message={"You don't have any bought assets"}
+                            />
                         )}
                     </MarketOverviewCard>
                     <RecentTransactionsCard>
@@ -141,7 +145,10 @@ const Dashboard = () => {
                         {recentTransactions.length > 0 ? (
                             <RecentTransactionsTable recentTransactions={recentTransactions} />
                         ) : (
-                            <div>You don't have any transactions</div>
+                            <EmptyTable
+                                cells={["Date", "Asset Name", "Price", "Quantity", "Value", "Type"]}
+                                message={"You don't have any transactions"}
+                            />
                         )}
                     </RecentTransactionsCard>
                 </DashboardInfo>
