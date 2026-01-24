@@ -1,9 +1,5 @@
 import { useState } from "react";
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
-// TODO
-// Clean unused imports and things in file
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { TokenIcon } from '@web3icons/react/dynamic'
 import ModalWindow from "../ModalWindow/ModalWindow";
 import { useAuth } from "../../context/AuthContext";
@@ -11,7 +7,6 @@ import { useToast } from "../../context/ToastContext";
 import {
     AssetNameSpan,
     Button,
-    ChangeSpan,
     TableCell,
     TableContainer
 } from "./AssetsTableStyled";
@@ -92,60 +87,42 @@ const AssetsTable = ({ assetsWallet }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {assetsWallet.map((asset, id) => {
-                        // TODO
-                        // const change = (((currentPrice - asset.price) / asset.price) * 100).toFixed(2);
-
-                        return (
-                            <TableRow key={id}>
-                                <TableCell>
-                                    <AssetNameSpan>
-                                        <TokenIcon symbol={asset.symbol} variant="branded" size={40} />
-                                        {asset.name}
-                                    </AssetNameSpan>
-                                </TableCell>
-                                <TableCell>{asset.quantity.toFixed(2)}</TableCell>
-                                <TableCell>{asset.currentPrice}$</TableCell>
-                                <TableCell>{asset.value}$</TableCell>
-                                {/* <TableCell>
-                                    {change >= 0 ? (
-                                        <ChangeSpan profit>
-                                            <ArrowDropUpIcon />
-                                            {change}%
-                                        </ChangeSpan>
-                                    ) : (
-                                        <ChangeSpan>
-                                            <ArrowDropDownIcon />
-                                            {change}%
-                                        </ChangeSpan>
-                                    )}
-                                </TableCell> */}
-                                <TableCell>
-                                    <Button
-                                        $buy
-                                        onClick={() => handleClick({
-                                            assetId: asset.assetId,
-                                            name: asset.name,
-                                            currentPrice: asset.currentPrice
-                                        }, "BUY")}
-                                    >
-                                        Buy
-                                    </Button>
-                                </TableCell>
-                                <TableCell>
-                                    <Button
-                                        onClick={() => handleClick({
-                                            assetId: asset.assetId,
-                                            name: asset.name,
-                                            currentPrice: asset.currentPrice
-                                        }, "SELL")}
-                                    >
-                                        Sell
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        )
-                    })}
+                    {assetsWallet.map((asset, id) => (
+                        <TableRow key={id}>
+                            <TableCell>
+                                <AssetNameSpan>
+                                    <TokenIcon symbol={asset.symbol} variant="branded" size={40} />
+                                    {asset.name}
+                                </AssetNameSpan>
+                            </TableCell>
+                            <TableCell>{asset.quantity.toFixed(2)}</TableCell>
+                            <TableCell>{asset.currentPrice}$</TableCell>
+                            <TableCell>{asset.value}$</TableCell>
+                            <TableCell>
+                                <Button
+                                    $buy
+                                    onClick={() => handleClick({
+                                        assetId: asset.assetId,
+                                        name: asset.name,
+                                        currentPrice: asset.currentPrice
+                                    }, "BUY")}
+                                >
+                                    Buy
+                                </Button>
+                            </TableCell>
+                            <TableCell>
+                                <Button
+                                    onClick={() => handleClick({
+                                        assetId: asset.assetId,
+                                        name: asset.name,
+                                        currentPrice: asset.currentPrice
+                                    }, "SELL")}
+                                >
+                                    Sell
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    ))}
                 </TableBody>
             </Table>
         </TableContainer>

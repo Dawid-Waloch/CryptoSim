@@ -37,13 +37,6 @@ export const TableCell = styled(MuiTableCell)`
     white-space: nowrap;
 `;
 
-export const ChangeSpan = styled.span`
-    display: flex;
-    align-items: center;
-    color: ${(props) => (props.profit ? "green" : "red")};
-    font-weight: bold;
-`;
-
 export const AssetNameSpan = styled.span`
     display: flex;
     align-items: center;
