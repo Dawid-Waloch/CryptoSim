@@ -1,29 +1,27 @@
 import { useState } from "react";
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
-// TODO
-// Clean unused imports and things in file
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { TokenIcon } from '@web3icons/react/dynamic'
+import { useRouter } from "next/router";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
+import { useAsset } from "../../context/AssetContext";
 import {
     AssetNameSpan,
     Button,
-    ChangeSpan,
     TableCell,
-    TableContainer
+    TableContainer,
+    TableRowStyled
 } from "./AssetsTableStyled";
-import { useRouter } from "next/router";
 
-const AssetsTable = ({ assetsWallet }) => {
+const AssetsTable = ({ assetsWallet, wallets }) => {
     const [openModal, setOpenModal] = useState(false);
     const [asset, setAsset] = useState({});
     const [operationType, setOperationType] = useState("");
     const router = useRouter();
     const { user } = useAuth();
     const { setFlashMessage } = useToast();
+    const { setSelectedAsset } = useAsset();
 
     const { userId } = user || {};
 
@@ -39,8 +37,17 @@ const AssetsTable = ({ assetsWallet }) => {
     };
 
     const handleConfirm = async (quantityOfAsset, setFormError) => {
+        const prize = asset.currentPrice * quantityOfAsset;
+        const usdWallet = wallets.find(w => w.currency === "USD");
+
         if(quantityOfAsset <= 0) {
             setFormError("Quantity must be greater than 0");
+            return;
+        } else if(operationType === "BUY" && prize > usdWallet.balance) {
+            setFormError("Not enough funds");
+            return;
+        } else if(operationType === "SELL" && quantityOfAsset > asset.quantity) {
+            setFormError("Not enough assets");
             return;
         }
 
@@ -92,60 +99,44 @@ const AssetsTable = ({ assetsWallet }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {assetsWallet.map((asset, id) => {
-                        // TODO
-                        // const change = (((currentPrice - asset.price) / asset.price) * 100).toFixed(2);
-
-                        return (
-                            <TableRow key={id}>
-                                <TableCell>
-                                    <AssetNameSpan>
-                                        <TokenIcon symbol={asset.symbol} variant="branded" size={40} />
-                                        {asset.name}
-                                    </AssetNameSpan>
-                                </TableCell>
-                                <TableCell>{asset.quantity.toFixed(2)}</TableCell>
-                                <TableCell>{asset.currentPrice}$</TableCell>
-                                <TableCell>{asset.value}$</TableCell>
-                                {/* <TableCell>
-                                    {change >= 0 ? (
-                                        <ChangeSpan profit>
-                                            <ArrowDropUpIcon />
-                                            {change}%
-                                        </ChangeSpan>
-                                    ) : (
-                                        <ChangeSpan>
-                                            <ArrowDropDownIcon />
-                                            {change}%
-                                        </ChangeSpan>
-                                    )}
-                                </TableCell> */}
-                                <TableCell>
-                                    <Button
-                                        $buy
-                                        onClick={() => handleClick({
-                                            assetId: asset.assetId,
-                                            name: asset.name,
-                                            currentPrice: asset.currentPrice
-                                        }, "BUY")}
-                                    >
-                                        Buy
-                                    </Button>
-                                </TableCell>
-                                <TableCell>
-                                    <Button
-                                        onClick={() => handleClick({
-                                            assetId: asset.assetId,
-                                            name: asset.name,
-                                            currentPrice: asset.currentPrice
-                                        }, "SELL")}
-                                    >
-                                        Sell
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        )
-                    })}
+                    {assetsWallet.map((asset, id) => (
+                        <TableRowStyled key={id} onClick={() => setSelectedAsset(asset.assetId)}>
+                            <TableCell>
+                                <AssetNameSpan>
+                                    <TokenIcon symbol={asset.symbol} variant="branded" size={40} />
+                                    {asset.name}
+                                </AssetNameSpan>
+                            </TableCell>
+                            <TableCell>{asset.quantity.toFixed(2)}</TableCell>
+                            <TableCell>{asset.currentPrice}$</TableCell>
+                            <TableCell>{asset.value}$</TableCell>
+                            <TableCell>
+                                <Button
+                                    $buy
+                                    onClick={() => handleClick({
+                                        assetId: asset.assetId,
+                                        name: asset.name,
+                                        currentPrice: asset.currentPrice,
+                                        quantity: asset.quantity
+                                    }, "BUY")}
+                                >
+                                    Buy
+                                </Button>
+                            </TableCell>
+                            <TableCell>
+                                <Button
+                                    onClick={() => handleClick({
+                                        assetId: asset.assetId,
+                                        name: asset.name,
+                                        currentPrice: asset.currentPrice,
+                                        quantity: asset.quantity
+                                    }, "SELL")}
+                                >
+                                    Sell
+                                </Button>
+                            </TableCell>
+                        </TableRowStyled>
+                    ))}
                 </TableBody>
             </Table>
         </TableContainer>

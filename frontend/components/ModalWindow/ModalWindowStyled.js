@@ -3,7 +3,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { ErrorContainer as BaseErrorContainer } from "../../pages/register/styles";
 
 export const OverlayContainer = styled.div`
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;

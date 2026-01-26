@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { TableCell as MuiTableCell, TableContainer as MuiTableContainer } from "@mui/material";
+import { TableCell as MuiTableCell, TableContainer as MuiTableContainer, TableRow as MuiTableRow } from "@mui/material";
 
 export const Button = styled.button`
     background: ${(props) =>
@@ -37,16 +37,16 @@ export const TableCell = styled(MuiTableCell)`
     white-space: nowrap;
 `;
 
-export const ChangeSpan = styled.span`
-    display: flex;
-    align-items: center;
-    color: ${(props) => (props.profit ? "green" : "red")};
-    font-weight: bold;
-`;
-
 export const AssetNameSpan = styled.span`
     display: flex;
     align-items: center;
     gap: 8px;
     font-weight: bold;
+`;
+
+export const TableRowStyled = styled(MuiTableRow)`
+    &:hover {
+        background-color: #4b0000;
+        cursor: pointer;
+    }
 `;
