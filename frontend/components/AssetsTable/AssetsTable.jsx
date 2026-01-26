@@ -1,24 +1,27 @@
 import { useState } from "react";
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
 import { TokenIcon } from '@web3icons/react/dynamic'
+import { useRouter } from "next/router";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
+import { useAsset } from "../../context/AssetContext";
 import {
     AssetNameSpan,
     Button,
     TableCell,
-    TableContainer
+    TableContainer,
+    TableRowStyled
 } from "./AssetsTableStyled";
-import { useRouter } from "next/router";
 
-const AssetsTable = ({ assetsWallet }) => {
+const AssetsTable = ({ assetsWallet, wallets }) => {
     const [openModal, setOpenModal] = useState(false);
     const [asset, setAsset] = useState({});
     const [operationType, setOperationType] = useState("");
     const router = useRouter();
     const { user } = useAuth();
     const { setFlashMessage } = useToast();
+    const { setSelectedAsset } = useAsset();
 
     const { userId } = user || {};
 
@@ -34,8 +37,17 @@ const AssetsTable = ({ assetsWallet }) => {
     };
 
     const handleConfirm = async (quantityOfAsset, setFormError) => {
+        const prize = asset.currentPrice * quantityOfAsset;
+        const usdWallet = wallets.find(w => w.currency === "USD");
+
         if(quantityOfAsset <= 0) {
             setFormError("Quantity must be greater than 0");
+            return;
+        } else if(operationType === "BUY" && prize > usdWallet.balance) {
+            setFormError("Not enough funds");
+            return;
+        } else if(operationType === "SELL" && quantityOfAsset > asset.quantity) {
+            setFormError("Not enough assets");
             return;
         }
 
@@ -88,7 +100,7 @@ const AssetsTable = ({ assetsWallet }) => {
                 </TableHead>
                 <TableBody>
                     {assetsWallet.map((asset, id) => (
-                        <TableRow key={id}>
+                        <TableRowStyled key={id} onClick={() => setSelectedAsset(asset.assetId)}>
                             <TableCell>
                                 <AssetNameSpan>
                                     <TokenIcon symbol={asset.symbol} variant="branded" size={40} />
@@ -104,7 +116,8 @@ const AssetsTable = ({ assetsWallet }) => {
                                     onClick={() => handleClick({
                                         assetId: asset.assetId,
                                         name: asset.name,
-                                        currentPrice: asset.currentPrice
+                                        currentPrice: asset.currentPrice,
+                                        quantity: asset.quantity
                                     }, "BUY")}
                                 >
                                     Buy
@@ -115,13 +128,14 @@ const AssetsTable = ({ assetsWallet }) => {
                                     onClick={() => handleClick({
                                         assetId: asset.assetId,
                                         name: asset.name,
-                                        currentPrice: asset.currentPrice
+                                        currentPrice: asset.currentPrice,
+                                        quantity: asset.quantity
                                     }, "SELL")}
                                 >
                                     Sell
                                 </Button>
                             </TableCell>
-                        </TableRow>
+                        </TableRowStyled>
                     ))}
                 </TableBody>
             </Table>
