@@ -20,13 +20,17 @@ import {
     RecentTransactionsCard,
     RecentTransactionsText,
 } from "./styles";
+import PriceChart from "../../components/PriceChart/PriceChart";
+import { useAsset } from "../../context/AssetContext";
 
 const Dashboard = () => {
     const [wallets, setWallets] = useState([]);
     const [assetsWallet, setAssetsWallet] = useState([]);
     const [recentTransactions, setRecentTransactions] = useState([]);
+    const [assetPriceHistory, setAssetPriceHistory] = useState([]);
     const { user } = useAuth();
     const { setFlashMessage } = useToast();
+    const { selectedAsset } = useAsset();
 
     const { username, userId } = user || {};
 
@@ -110,6 +114,38 @@ const Dashboard = () => {
         getRecentTransactions();
     }, [userId]);
 
+    useEffect(() => {
+        const getAssetHistory = async () => {
+            try {
+                // TODO
+                // Json server
+                const response = await fetch(`http://localhost:4000/assetHistory?assetId=${selectedAsset || 1}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                const data = await response.json();
+
+                console.log("data", data)
+                
+                if(!response.ok) {
+                    throw new Error("We couldn't get your asset's price history");
+                }
+
+                setAssetPriceHistory(data);
+            } catch (err) {
+                setFlashMessage({type: "error", message: err.message || "Server unreachable" });
+            }
+        }
+
+        getAssetHistory();
+    }, [selectedAsset])
+
+    const priceHistoryAssetId = selectedAsset || assetPriceHistory[0]?.assetId;
+    const assetInfo = assetsWallet.find(a => a.assetId === priceHistoryAssetId);
+
     return (
         <ProtectedRoute>
             <Navbar />
@@ -128,11 +164,15 @@ const Dashboard = () => {
                     </BalanceCard>
                     <PriceChartCard>
                         <PriceChartText>Price chart:</PriceChartText>
+                        <PriceChart
+                            assetInfo={assetInfo}
+                            assetPriceHistory={assetPriceHistory}
+                        />
                     </PriceChartCard>
                     <MarketOverviewCard>
                         <MarketOverviewText>Market Overview:</MarketOverviewText>
                         {assetsWallet.length > 0 ? (
-                            <AssetsTable assetsWallet={assetsWallet} />
+                            <AssetsTable assetsWallet={assetsWallet} wallets={wallets} />
                         ) : (
                             <EmptyTable
                                 cells={["Asset", "Quantity", "Current Price", "Value", "Buy", "Sell"]}
