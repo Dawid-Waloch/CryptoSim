@@ -22,11 +22,20 @@ export const TableContainer = styled(MuiTableContainer)`
 `;
 
 export const TypeSpan = styled.span`
-    font-weight: bold;
-    color: ${(props) =>
-        props.type === "BUY" ? "green" :
-        props.type === "SELL" ? "red" :
-        "black"};
+    display: inline-block;
+    text-align: center;
+    width: 40px;
+    background: ${(props) =>
+        props.type === "BUY"
+            ? "linear-gradient(135deg, green, darkgreen)"
+            : "linear-gradient(135deg, red, darkred)"
+    };
+    color: white;
+    border-radius: 12px;
+    padding: 10px 22px;
+    border: none; 
+    font-weight: 600;
+    font-size: 0.9rem;
 `;
 
 export const Input = styled.input`
