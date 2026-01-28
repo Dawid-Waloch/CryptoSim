@@ -36,6 +36,9 @@ CryptoSim enables users to:
 | Styling  | CSS, Styled Components          |
 | Database | PostgreSQL (local instance)     |
 
+### Application Overview
+> Screenshots will be added when the project will be finished
+
 ### Getting Started (Local Development)
 **Prerequisites**
 
@@ -88,31 +91,7 @@ spring.application.name=cryptosim-backend
 spring.datasource.url=jdbc:postgresql://localhost:5432/cryptosim
 spring.datasource.username=postgres
 spring.datasource.password=your_password
-spring.liquibase.enabled=true
-spring.liquibase.change-log=classpath:/db/changelog/changelog.sql
-logging.level.liquibase = INFO
-spring.jpa.hibernate.ddl-auto=none
 ```
-
-### Application Features
-
-**Backend:**
-- User authentication
-- REST API for:
-  - Trading operations
-  - Portfolio management
-  - Transaction history
-- Business logic for profit/loss calculation
-- Integration with market price data sources
-
-**Frontend:**
-- Landing page
-- User login & registration
-- Investment dashboard
-- Market price charts
-- Bought Assets
-- Transaction history
-- Market panel
 
 ### Market Data
 CryptoSim uses real market prices but operates exclusively on virtual funds, making it safe for experimentation and learning.
