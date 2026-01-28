@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import ProtectedRoute from "../../components/ProtectedRoute";
+import { useToast } from "../../context/ToastContext";
+import MarketAssets from "../../components/MarketAssets/MarketAssets";
 import {
     MarketContainer,
     MarketInfo,
@@ -8,19 +11,47 @@ import {
     AssetsChartCard,
     AssetsChartText,
     FormCard,
-    FormText
+    FormText,
 } from "./styles";
 
 const Market = () => {
+    const [marketAssets, setMarketAssets] = useState([]);
+    const { setFlashMessage } = useToast();
+
+    useEffect(() => {
+        const getMarketAssets = async () => {
+            try {
+                //TODO
+                // Json server
+                const response = await fetch("http://localhost:5000/assetsList", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+
+                if(!response.ok) {
+                    throw new Error("We couldn't get market assets data");
+                }
+
+                const data = await response.json();
+                setMarketAssets(data);
+            } catch (err) {
+                setFlashMessage({ type: "error", message: err.message || "Server unreachable" });
+            }
+        }
+
+        getMarketAssets();
+    }, [])
+
     return (
         <ProtectedRoute>
             <Navbar />
             <MarketContainer>
-                <h2>Market</h2>
                 <MarketInfo>
                     <AssetsCard>
                         <AssetsText>Stocks & Assets:</AssetsText>
-                        <div>coś</div>
+                        <MarketAssets marketAssets={marketAssets} />
                     </AssetsCard>
                     <AssetsChartCard>
                         <AssetsChartText>Price chart:</AssetsChartText>
