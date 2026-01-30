@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { TokenIcon } from '@web3icons/react/dynamic'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -13,7 +14,6 @@ import {
     ChartContainer,
     PercentageChangeSpan
 } from './PriceChartStyled';
-import { useEffect, useRef } from 'react';
 
 const PriceChart = ({ assetInfo, assetPriceHistory }) => {
     const chartContainerRef = useRef(null);

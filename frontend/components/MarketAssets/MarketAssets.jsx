@@ -30,12 +30,12 @@ const MarketAssets = ({ marketAssets }) => {
                         {marketAsset.price_change_percentage_24h >= 0 ? (
                             <ChangeSpan profit={true}>
                                 <ArrowDropUpIcon />
-                                <MarketPricePercentage>+{Number(marketAsset.price_change_percentage_24h).toFixed(2)}</MarketPricePercentage>
+                                <span>+{Number(marketAsset.price_change_percentage_24h).toFixed(2)}</span>
                             </ChangeSpan>
                         ) : (
                             <ChangeSpan>
                                 <ArrowDropDownIcon />
-                                <MarketPricePercentage>{Number(marketAsset.price_change_percentage_24h).toFixed(2)}</MarketPricePercentage>
+                                <span>{Number(marketAsset.price_change_percentage_24h).toFixed(2)}</span>
                             </ChangeSpan>
                         )}
                     </MarketPriceInfo>

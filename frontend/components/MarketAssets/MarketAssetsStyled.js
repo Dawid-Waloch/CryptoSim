@@ -8,18 +8,18 @@ export const AssetsListContainer = styled.div`
 `;
 
 export const MarketAssetContainer = styled.div`
-    padding: 10px;
+    padding: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid white;
+    border-top: 1px solid white;
 `;
 
 export const MarketAssetInfo = styled.div`
     display: flex;
     align-items: center;
     gap: 7px;
-`
+`;
 
 export const MarketAssetName = styled.span`
     font-size: 1rem;
@@ -30,10 +30,6 @@ export const MarketPrice = styled.span`
     font-weight: bold;
     text-align: right;
 `;
-
-export const MarketPricePercentage = styled.span`
-    text-align: right;
-`
 
 export const MarketAssetNameContainer = styled.div`
     display: flex;
@@ -48,6 +44,7 @@ export const MarketPriceInfo = styled.div`
 export const ChangeSpan = styled.span`
     display: flex;
     align-items: center;
+    justify-content: right;
     color: ${(props) => (props.profit ? "green" : "red")};
     font-weight: bold;
 `;
