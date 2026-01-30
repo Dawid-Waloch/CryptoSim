@@ -13,10 +13,7 @@ const Navbar = () => {
                 {user ? (
                     <>
                         <NavLink href={"/dashboard"}>Dashboard</NavLink>
-                        <NavLink href={"/portfolio"}>Portfolio</NavLink>
-                        <NavLink href={"/trade"}>Trade</NavLink>
                         <NavLink href={"/market"}>Market</NavLink>
-                        <NavLink href={"/profile"}>Profile</NavLink>
                     </>
                 ): (
                     <>
