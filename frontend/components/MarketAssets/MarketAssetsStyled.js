@@ -13,6 +13,11 @@ export const MarketAssetContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     border-top: 1px solid white;
+
+    &:hover {
+        background-color: #4b0000;
+        cursor: pointer;
+    }
 `;
 
 export const MarketAssetInfo = styled.div`

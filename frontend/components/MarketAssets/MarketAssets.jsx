@@ -10,14 +10,13 @@ import {
     MarketAssetNameContainer,
     MarketPrice,
     MarketPriceInfo,
-    MarketPricePercentage
 } from "./MarketAssetsStyled";
 
-const MarketAssets = ({ marketAssets }) => {
+const MarketAssets = ({ marketAssets, setSelectedAsset }) => {
     return (
         <AssetsListContainer>
             {marketAssets.map((marketAsset, id) => (
-                <MarketAssetContainer key={id}>
+                <MarketAssetContainer key={id} onClick={() => setSelectedAsset({symbol: marketAsset.symbol, name: marketAsset.name})}>
                     <MarketAssetInfo>
                         <Image src={marketAsset.image} />
                         <MarketAssetNameContainer>
