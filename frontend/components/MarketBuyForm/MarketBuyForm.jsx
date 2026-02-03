@@ -13,7 +13,7 @@ import {
     TotalCashField
 } from "./MarketBuyFormStyled";
 
-const MarketBuyForm = () => {
+const MarketBuyForm = ({ walletBalance }) => {
     const [quantity, setQuantity] = useState(0);
 
     const handleSubmit = (e) => {
@@ -53,7 +53,7 @@ const MarketBuyForm = () => {
                         <span>$coś 2</span>
                     </EstimatedCostField>
                     <TotalCashField>
-                        <span>Total Cash: $coś3 </span>
+                        <span>Total Cash: {Number(walletBalance).toFixed(2)}$</span>
                     </TotalCashField>
                     <BuyButton type="submit">Buy</BuyButton>
                 </form>

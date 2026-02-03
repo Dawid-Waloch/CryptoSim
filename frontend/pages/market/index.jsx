@@ -125,7 +125,7 @@ const Market = () => {
                     </AssetsChartCard>
                     <FormCard>
                         <FormText>Buy form:</FormText>
-                        <MarketBuyForm />
+                        <MarketBuyForm walletBalance={usdWallet.balance} />
                     </FormCard>
                 </MarketInfo>
             </MarketContainer>
