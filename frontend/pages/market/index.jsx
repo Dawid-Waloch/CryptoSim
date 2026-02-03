@@ -28,6 +28,8 @@ const Market = () => {
     const { userId } = user || {};
 
     useEffect(() => {
+        if(!userId) return;
+
         const getMarketAssets = async () => {
             try {
                 // TODO
@@ -68,8 +70,7 @@ const Market = () => {
 
                 const data = await response.json();
 
-                console.log(data);
-                setWallets(data);
+                setWallets(data.wallets);
             } catch (err) {
                 setFlashMessage({ type: "error", message: err.message || "Server unreachable" });
             }
@@ -77,7 +78,7 @@ const Market = () => {
 
         getMarketAssets();
         getBalance();
-    }, [])
+    }, [userId])
 
     useEffect(() => {
         // TODO
@@ -108,7 +109,7 @@ const Market = () => {
 
     const assetInfo = {symbol: selectedAsset.symbol || "btc", name: selectedAsset.name || "Bitcoin"};
 
-    const usdWallet = wallets.wallets.find(wallet => wallet.currency === "USD");
+    const usdWallet = wallets.find(wallet => wallet.currency === "USD") || {};
 
     return (
         <ProtectedRoute>
