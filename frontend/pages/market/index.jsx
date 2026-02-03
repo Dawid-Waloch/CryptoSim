@@ -5,6 +5,7 @@ import { useToast } from "../../context/ToastContext";
 import MarketAssets from "../../components/MarketAssets/MarketAssets";
 import PriceChart from "../../components/PriceChart/PriceChart";
 import MarketBuyForm from "../../components/MarketBuyForm/MarketBuyForm";
+import { useAuth } from "../../context/AuthContext";
 import {
     MarketContainer,
     MarketInfo,
@@ -20,7 +21,11 @@ const Market = () => {
     const [marketAssets, setMarketAssets] = useState([]);
     const [selectedAsset, setSelectedAsset] = useState("");
     const [assetPriceHistory, setAssetPriceHistory] = useState([]);
+    const [wallets, setWallets] = useState([]);
     const { setFlashMessage } = useToast();
+    const { user } = useAuth();
+
+    const { userId } = user || {};
 
     useEffect(() => {
         const getMarketAssets = async () => {
@@ -45,7 +50,33 @@ const Market = () => {
             }
         }
 
+        const getBalance = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/wallets/${userId}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        userId
+                    })
+                })
+
+                if(!response.ok) {
+                    throw new Error("We couldn't get your wallet balance");
+                }
+
+                const data = await response.json();
+
+                console.log(data);
+                setWallets(data);
+            } catch (err) {
+                setFlashMessage({ type: "error", message: err.message || "Server unreachable" });
+            }
+        }
+
         getMarketAssets();
+        getBalance();
     }, [])
 
     useEffect(() => {
