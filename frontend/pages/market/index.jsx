@@ -4,6 +4,7 @@ import ProtectedRoute from "../../components/ProtectedRoute";
 import { useToast } from "../../context/ToastContext";
 import MarketAssets from "../../components/MarketAssets/MarketAssets";
 import PriceChart from "../../components/PriceChart/PriceChart";
+import MarketBuyForm from "../../components/MarketBuyForm/MarketBuyForm";
 import {
     MarketContainer,
     MarketInfo,
@@ -91,7 +92,7 @@ const Market = () => {
                     </AssetsChartCard>
                     <FormCard>
                         <FormText>Buy form:</FormText>
-                        <div>coś 3</div>
+                        <MarketBuyForm />
                     </FormCard>
                 </MarketInfo>
             </MarketContainer>
