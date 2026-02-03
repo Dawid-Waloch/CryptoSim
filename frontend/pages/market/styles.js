@@ -18,7 +18,7 @@ export const AssetsCard = styled.div`
     border: 1px solid white;
     border-radius: 12px;
     grid-column: 1;
-    grid-row: 1 / span 3;
+    grid-row: 1 / span 2;
 `;
 
 export const AssetsText = styled.div`
@@ -30,12 +30,12 @@ export const AssetsText = styled.div`
 
 export const AssetsChartCard = styled(AssetsCard)`
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1;
 `;
 
 export const FormCard = styled(AssetsCard)`
     grid-column: 2;
-    grid-row: 3;
+    grid-row: 2;
 `;
 
 export const AssetsChartText = styled(AssetsText)``;
