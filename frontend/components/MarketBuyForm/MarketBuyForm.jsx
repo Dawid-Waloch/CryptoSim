@@ -13,7 +13,7 @@ import {
     TotalCashField
 } from "./MarketBuyFormStyled";
 
-const MarketBuyForm = ({ walletBalance }) => {
+const MarketBuyForm = ({ walletBalance, assetInfo }) => {
     const [quantity, setQuantity] = useState(0);
 
     const handleSubmit = (e) => {
@@ -22,11 +22,16 @@ const MarketBuyForm = ({ walletBalance }) => {
         console.log("Buy assets in market");
     }
 
+    const {
+        symbol,
+        name
+    } = assetInfo || {};
+
     return (
         <MarketBuyFormContainer>
             <MarketBuyFormHeader>
-                <span>Buy Bitcoin Asset</span>
-                <span>BTC</span>
+                <span>Buy {name} Asset</span>
+                <span>{String(symbol).toUpperCase()}</span>
             </MarketBuyFormHeader>
             <MarketBuyFormBody>
                 <form onSubmit={handleSubmit}>
