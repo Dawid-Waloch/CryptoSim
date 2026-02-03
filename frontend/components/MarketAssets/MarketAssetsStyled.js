@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const AssetsListContainer = styled.div`
     display: flex;
     flex-direction: column;
-    max-height: 700px;
+    max-height: 750px;
     overflow-y: auto;
 `;
 
