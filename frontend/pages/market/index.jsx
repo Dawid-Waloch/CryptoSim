@@ -108,6 +108,8 @@ const Market = () => {
 
     const assetInfo = {symbol: selectedAsset.symbol || "btc", name: selectedAsset.name || "Bitcoin"};
 
+    const usdWallet = wallets.wallets.find(wallet => wallet.currency === "USD");
+
     return (
         <ProtectedRoute>
             <Navbar />
