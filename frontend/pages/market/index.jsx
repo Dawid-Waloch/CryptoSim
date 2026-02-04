@@ -19,7 +19,7 @@ import {
 
 const Market = () => {
     const [marketAssets, setMarketAssets] = useState([]);
-    const [selectedAsset, setSelectedAsset] = useState("");
+    const [selectedAsset, setSelectedAsset] = useState({});
     const [assetPriceHistory, setAssetPriceHistory] = useState([]);
     const [wallets, setWallets] = useState([]);
     const { setFlashMessage } = useToast();
@@ -33,8 +33,8 @@ const Market = () => {
         const getMarketAssets = async () => {
             try {
                 // TODO
-                // Json server
-                const response = await fetch("http://localhost:5000/assetsList", {
+                // Local server
+                const response = await fetch("http://localhost:8080/assets", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
@@ -54,6 +54,8 @@ const Market = () => {
 
         const getBalance = async () => {
             try {
+                // TODO
+                // Local server
                 const response = await fetch(`http://localhost:8080/wallets/${userId}`, {
                     method: "POST",
                     headers: {
