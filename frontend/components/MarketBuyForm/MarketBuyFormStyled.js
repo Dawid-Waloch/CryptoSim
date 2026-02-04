@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Input as BaseInput } from "../RecentTransactionsTable/RecentTransactionsStyled";
 import { Button as BaseButton } from "../ModalWindow/ModalWindowStyled";
+import { ErrorContainer as BaseErrorContainer } from "../../pages/register/styles";
 
 export const MarketBuyFormContainer = styled.div`
     margin: 10px;
@@ -70,3 +71,9 @@ export const Button = styled(BaseButton)`
 `;
 
 export const BuyButton = styled(BaseButton)``;
+
+export const ErrorContainer = styled(BaseErrorContainer)`
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+`;

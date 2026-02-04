@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import {
     Button,
     BuyButton,
+    ErrorContainer,
     EstimatedCostField,
     Input,
     MarketBuyFormBody,
@@ -18,6 +19,7 @@ import {
 
 const MarketBuyForm = ({ walletBalance, assetInfo }) => {
     const [quantity, setQuantity] = useState(undefined);
+    const [formError, setFormError] = useState("");
     const { setFlashMessage } = useToast();
     const { user } = useAuth();
     const router = useRouter();
@@ -35,6 +37,11 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(quantity * currentPrice > walletBalance) {
+            setFormError("You don't have enough money to buy that asset");
+            return;
+        }
 
         try {
             const response = await fetch(`http://localhost:8080/transactions/buy`, {
@@ -98,7 +105,7 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
                     </QuantityField>
                     <PricePerAssetField>
                         <span>Price per Asset</span>
-                        <span>{currentPrice}$</span>
+                        <span>{Number(currentPrice).toFixed(2)}$</span>
                     </PricePerAssetField>
                     <EstimatedCostField>
                         <span>Estimated cost</span>
@@ -108,6 +115,7 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
                         <span>Total Cash: {Number(walletBalance).toFixed(2)}$</span>
                     </TotalCashField>
                     <BuyButton type="submit">Buy</BuyButton>
+                    <ErrorContainer>{formError}</ErrorContainer>
                 </form>
             </MarketBuyFormBody>
         </MarketBuyFormContainer>
