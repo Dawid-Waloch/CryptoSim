@@ -109,7 +109,12 @@ const Market = () => {
         };
     }, [selectedAsset])
 
-    const assetInfo = {symbol: selectedAsset.symbol || "btc", name: selectedAsset.name || "Bitcoin"};
+    const assetInfo = {
+        assetId: selectedAsset.assetId || marketAssets[0]?.id,
+        symbol: selectedAsset.symbol || marketAssets[0]?.symbol,
+        name: selectedAsset.name || marketAssets[0]?.name,
+        currentPrice: selectedAsset.currentPrice || marketAssets[0]?.currentPrice
+    };
 
     const usdWallet = wallets.find(wallet => wallet.currency === "USD") || {};
 
