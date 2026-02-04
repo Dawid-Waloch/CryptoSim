@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useToast } from "../../context/ToastContext";
+import { useAuth } from "../../context/AuthContext";
 import {
     Button,
     BuyButton,
@@ -14,18 +17,49 @@ import {
 } from "./MarketBuyFormStyled";
 
 const MarketBuyForm = ({ walletBalance, assetInfo }) => {
-    const [quantity, setQuantity] = useState(0);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        console.log("Buy assets in market");
-    }
+    const [quantity, setQuantity] = useState(undefined);
+    const { setFlashMessage } = useToast();
+    const { user } = useAuth();
+    const router = useRouter();
 
     const {
+        assetId,
         symbol,
-        name
+        name,
+        currentPrice
     } = assetInfo || {};
+
+    const {
+        userId
+    } = user || {};
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch(`http://localhost:8080/transactions/buy`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId,
+                    assetId,
+                    quantity
+                })
+            })
+
+            if(!response.ok) {
+                throw new Error("We couldn't buy this asset");
+            }
+
+            const data = await response.text();
+            setFlashMessage({ type: "success", message: data });
+            router.reload();
+        } catch (err) {
+            setFlashMessage({ type: "error", message: err.message || "Server unreachable" });
+        }
+    }
 
     return (
         <MarketBuyFormContainer>
@@ -51,11 +85,11 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
                     </QuantityField>
                     <PricePerAssetField>
                         <span>Price per Asset</span>
-                        <span>$coś</span>
+                        <span>{currentPrice}$</span>
                     </PricePerAssetField>
                     <EstimatedCostField>
                         <span>Estimated cost</span>
-                        <span>$coś 2</span>
+                        <span>{((quantity || 0) * currentPrice).toFixed(2)}$</span>
                     </EstimatedCostField>
                     <TotalCashField>
                         <span>Total Cash: {Number(walletBalance).toFixed(2)}$</span>
