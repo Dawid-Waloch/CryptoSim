@@ -72,15 +72,28 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
                     <QuantityField>
                         <span>Quantity</span>
                         <QuantityControl>
-                            <Button onClick={() => setQuantity((q) => Math.max(0, q - 1))}>-</Button>
+                            <Button
+                                type="button"
+                                onClick={() => setQuantity((q) => Math.max(0, q - 1))}
+                            >
+                                -
+                            </Button>
                             <Input
                                 type="number"
                                 min={0}
                                 placeholder="Quantity"
                                 value={quantity}
-                                onChange={(e) => setQuantity(Number(e.target.value))}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setQuantity(value === "" ? "" : Number(value))
+                                }}
                             />
-                            <Button onClick={() => setQuantity((q) => q + 1)}>+</Button>
+                            <Button
+                                type="button"
+                                onClick={() => setQuantity((q) => q + 1)}
+                            >
+                                +
+                            </Button>
                         </QuantityControl>
                     </QuantityField>
                     <PricePerAssetField>
