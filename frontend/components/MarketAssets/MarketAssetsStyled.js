@@ -12,7 +12,8 @@ export const MarketAssetContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-top: ${(props) => (props.$id === 0 ? "1px solid white" : "")};
 
     &:hover {
         background-color: #4b0000;
@@ -52,9 +53,4 @@ export const ChangeSpan = styled.span`
     justify-content: right;
     color: ${(props) => (props.profit ? "green" : "red")};
     font-weight: bold;
-`;
-
-export const Image = styled.img`
-    width: 45px;
-    height: 45px;
 `;
