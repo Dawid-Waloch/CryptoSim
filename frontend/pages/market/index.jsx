@@ -3,6 +3,9 @@ import Navbar from "../../components/Navbar/Navbar";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { useToast } from "../../context/ToastContext";
 import MarketAssets from "../../components/MarketAssets/MarketAssets";
+import PriceChart from "../../components/PriceChart/PriceChart";
+import MarketBuyForm from "../../components/MarketBuyForm/MarketBuyForm";
+import { useAuth } from "../../context/AuthContext";
 import {
     MarketContainer,
     MarketInfo,
@@ -16,14 +19,22 @@ import {
 
 const Market = () => {
     const [marketAssets, setMarketAssets] = useState([]);
+    const [selectedAsset, setSelectedAsset] = useState({});
+    const [assetPriceHistory, setAssetPriceHistory] = useState([]);
+    const [wallets, setWallets] = useState([]);
     const { setFlashMessage } = useToast();
+    const { user } = useAuth();
+
+    const { userId } = user || {};
 
     useEffect(() => {
+        if(!userId) return;
+
         const getMarketAssets = async () => {
             try {
                 // TODO
-                // Json server
-                const response = await fetch("http://localhost:5000/assetsList", {
+                // Local server
+                const response = await fetch("http://localhost:8080/assets", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
@@ -41,8 +52,71 @@ const Market = () => {
             }
         }
 
+        const getBalance = async () => {
+            try {
+                // TODO
+                // Local server
+                const response = await fetch(`http://localhost:8080/wallets/${userId}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        userId
+                    })
+                })
+
+                if(!response.ok) {
+                    throw new Error("We couldn't get your wallet balance");
+                }
+
+                const data = await response.json();
+
+                setWallets(data.wallets);
+            } catch (err) {
+                setFlashMessage({ type: "error", message: err.message || "Server unreachable" });
+            }
+        }
+
         getMarketAssets();
-    }, [])
+        getBalance();
+    }, [userId])
+
+    useEffect(() => {
+        // TODO
+        // Unused, beacuse there is no ready endpoints
+        const getHistoricalDataByAssetId = async () => {
+            try {
+                // TODO
+                // Json server
+                const response = await fetch(`http://localhost:8080`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if(!response.ok) {
+                    throw new Error("We couldn't get data about the asset");
+                }
+
+                const data = await response.json();
+                setAssetPriceHistory(data);
+            } catch (err) {
+                setFlashMessage({ type: "error", message: err.message || "Server unreachable" });
+            }
+            
+        };
+    }, [selectedAsset])
+
+    const assetInfo = {
+        assetId: selectedAsset.assetId || marketAssets[0]?.id,
+        symbol: selectedAsset.symbol || marketAssets[0]?.symbol,
+        name: selectedAsset.name || marketAssets[0]?.name,
+        currentPrice: selectedAsset.currentPrice || marketAssets[0]?.currentPrice
+    };
+
+    const usdWallet = wallets.find(wallet => wallet.currency === "USD") || {};
 
     return (
         <ProtectedRoute>
@@ -51,15 +125,15 @@ const Market = () => {
                 <MarketInfo>
                     <AssetsCard>
                         <AssetsText>Stocks & Assets:</AssetsText>
-                        <MarketAssets marketAssets={marketAssets} />
+                        <MarketAssets marketAssets={marketAssets} setSelectedAsset={setSelectedAsset} />
                     </AssetsCard>
                     <AssetsChartCard>
                         <AssetsChartText>Price chart:</AssetsChartText>
-                        <div>coś 2</div>
+                        <PriceChart assetInfo={assetInfo} assetPriceHistory={assetPriceHistory} />
                     </AssetsChartCard>
                     <FormCard>
                         <FormText>Buy form:</FormText>
-                        <div>coś 3</div>
+                        <MarketBuyForm walletBalance={usdWallet.balance} assetInfo={assetInfo} />
                     </FormCard>
                 </MarketInfo>
             </MarketContainer>
