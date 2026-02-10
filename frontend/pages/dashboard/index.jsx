@@ -122,8 +122,8 @@ const Dashboard = () => {
         const getAssetHistory = async () => {
             try {
                 // TODO
-                // Json server
-                const response = await fetch(`http://localhost:4000/assetHistory?assetId=${selectedAsset || 1}`, {
+                // Local server
+                const response = await fetch(`http://localhost:8080/assets/${selectedAsset || 1}/candles`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
