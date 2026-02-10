@@ -31,6 +31,8 @@ const PriceChart = ({ assetInfo, assetPriceHistory }) => {
                 horzLines: { color: 'rgba(255,255,255,0.05)' },
             },
             timeScale: {
+                timeVisible: true,
+                secondsVisible: false,
                 borderColor: 'rgba(255,255,255,0.15)',
             },
             rightPriceScale: {
@@ -50,7 +52,9 @@ const PriceChart = ({ assetInfo, assetPriceHistory }) => {
 
         candlestickSeries.setData(
             assetPriceHistory.map(price => ({
-                time: price.time,
+                time: new Date(price.startTime).getHours() === 0 && new Date(price.startTime).getMinutes() === 0
+                    ? price.startTime.split("T")[0]
+                    : Math.floor(new Date(price.startTime).getTime() / 1000),
                 open: price.open,
                 high: price.high,
                 low: price.low,
@@ -84,7 +88,7 @@ const PriceChart = ({ assetInfo, assetPriceHistory }) => {
                 <AssetInfoChart>
                     <AssetName>{name}</AssetName>
                     <AssetPriceContainer>
-                        <AssetPrice>{currentPrice}</AssetPrice>
+                        <AssetPrice>{Number(currentPrice).toFixed(2)}</AssetPrice>
                         {percentageChange >= 0 ? (
                             <ChangeSpan profit={true}>
                                 <ArrowDropUpIcon />
