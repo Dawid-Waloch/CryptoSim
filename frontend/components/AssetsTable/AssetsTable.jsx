@@ -76,9 +76,11 @@ const AssetsTable = ({ assetsWallet, wallets }) => {
             if(!response.ok) {
                 throw new Error(`You can't ${OPERATION_LABEL[operationType]} these asset`);
             }
-
+            
             setFlashMessage({type: "success", message: data });
-            router.reload();
+            setTimeout(() => {
+                router.reload();
+            }, 800);
         } catch (err) {
             setFlashMessage({type: "error", message: err.message || "Server unreachable" });
         }
