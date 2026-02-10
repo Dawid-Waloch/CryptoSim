@@ -145,8 +145,8 @@ const Dashboard = () => {
         getAssetHistory();
     }, [selectedAsset])
 
-    const priceHistoryAssetId = selectedAsset || assetPriceHistory[0]?.assetId;
-    const assetInfo = assetsWallet.find(a => a.assetId === priceHistoryAssetId);
+    const priceHistoryAssetId = selectedAsset || 1;
+    const assetInfo = assetsWallet.find(a => a.assetId === priceHistoryAssetId) || {name: "Bitcoin", symbol: "BTC"};
 
     return (
         <ProtectedRoute>
