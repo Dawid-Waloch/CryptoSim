@@ -62,7 +62,9 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
 
             const data = await response.text();
             setFlashMessage({ type: "success", message: data });
-            router.reload();
+            setTimeout(() => {
+                router.reload();
+            }, 500);
         } catch (err) {
             setFlashMessage({ type: "error", message: err.message || "Server unreachable" });
         }

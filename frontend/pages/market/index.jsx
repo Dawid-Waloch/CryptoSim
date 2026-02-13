@@ -83,13 +83,11 @@ const Market = () => {
     }, [userId])
 
     useEffect(() => {
-        // TODO
-        // Unused, beacuse there is no ready endpoints
         const getHistoricalDataByAssetId = async () => {
             try {
                 // TODO
-                // Json server
-                const response = await fetch(`http://localhost:8080`, {
+                // Local server
+                const response = await fetch(`http://localhost:8080/assets/${selectedAsset.assetId || 1}/candles`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
@@ -101,12 +99,15 @@ const Market = () => {
                 }
 
                 const data = await response.json();
+                
                 setAssetPriceHistory(data);
             } catch (err) {
                 setFlashMessage({ type: "error", message: err.message || "Server unreachable" });
             }
             
         };
+
+        getHistoricalDataByAssetId();
     }, [selectedAsset])
 
     const assetInfo = {

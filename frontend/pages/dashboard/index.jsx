@@ -50,13 +50,17 @@ const Dashboard = () => {
                         userId
                     }),
                 })
-
-                const data = await response.json();
-
-                if(!response.ok || data.success === false) {
+           
+                if(!response.ok) {
                     throw new Error("We couldn't get a balance from api");
                 }
 
+                const data = await response.json();
+
+                if(data.success === false) {
+                    throw new Error("We couldn't get a balance from api");
+                }
+                
                 setWallets(data.wallets);
             } catch (err) {
                 setFlashMessage({type: "error", message: err.message || "Server unreachable" });
@@ -74,11 +78,11 @@ const Dashboard = () => {
                     }
                 });
 
-                const data = await response.json();
-
                 if(!response.ok) {
                     throw new Error("We couldn't get your bought assets");
                 }
+
+                const data = await response.json();
 
                 setAssetsWallet(data);
             } catch (err) {
@@ -97,11 +101,11 @@ const Dashboard = () => {
                     }
                 });
 
-                const data = await response.json();
-
                 if(!response.ok) {
                     throw new Error("We couldn't get your recent transactions");
                 }
+
+                const data = await response.json();
 
                 setRecentTransactions(data);
             } catch (err) {
@@ -118,21 +122,19 @@ const Dashboard = () => {
         const getAssetHistory = async () => {
             try {
                 // TODO
-                // Json server
-                const response = await fetch(`http://localhost:4000/assetHistory?assetId=${selectedAsset || 1}`, {
+                // Local server
+                const response = await fetch(`http://localhost:8080/assets/${selectedAsset || 1}/candles`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
                     }
                 });
 
-                const data = await response.json();
-
-                console.log("data", data)
-                
                 if(!response.ok) {
                     throw new Error("We couldn't get your asset's price history");
                 }
+                
+                const data = await response.json();
 
                 setAssetPriceHistory(data);
             } catch (err) {
@@ -143,8 +145,8 @@ const Dashboard = () => {
         getAssetHistory();
     }, [selectedAsset])
 
-    const priceHistoryAssetId = selectedAsset || assetPriceHistory[0]?.assetId;
-    const assetInfo = assetsWallet.find(a => a.assetId === priceHistoryAssetId);
+    const priceHistoryAssetId = selectedAsset || 1;
+    const assetInfo = assetsWallet.find(a => a.assetId === priceHistoryAssetId) || {name: "Bitcoin", symbol: "BTC"};
 
     return (
         <ProtectedRoute>
