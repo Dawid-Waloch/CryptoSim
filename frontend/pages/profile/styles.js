@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Button as BaseButton } from "../../components/ModalWindow/ModalWindowStyled";
 
 export const ProfileContainer = styled.div`
     display: grid;
@@ -45,3 +46,5 @@ export const InfoSpan = styled.span`
 `
 
 export const SimulationText = styled(UserInfoText)``;
+
+export const Button = styled(BaseButton)``;

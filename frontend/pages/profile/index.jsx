@@ -69,6 +69,8 @@ const Profile = () => {
                     <SimulationText>Simulation:</SimulationText>
                     <SimulationBody>
                         <InfoSpan>Balance: {Number(usdWallet.balance).toFixed(2)}$</InfoSpan>
+                        <InfoSpan>Start Balance: {Number(100).toFixed(2)}$</InfoSpan>
+                        <Button>Reset Simulation</Button>
                     </SimulationBody>
                 </SimulationCard>
             </ProfileContainer>
