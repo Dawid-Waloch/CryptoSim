@@ -57,6 +57,6 @@ CREATE TABLE asset_price_history(
     recorded_at TIMESTAMP NOT NULL DEFAULT now()
 )
 
---changset Dawid-Waloch:6
+--changeset Dawid-Waloch:6
 ALTER TABLE transactions
 ADD COLUMN disabled BOOLEAN NOT NULL DEFAULT FALSE;
