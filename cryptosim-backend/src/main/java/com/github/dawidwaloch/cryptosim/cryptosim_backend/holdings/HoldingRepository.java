@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface HoldingRepository extends JpaRepository<Holding, Long> {
     List<Holding> findByUserId(Long userId);
     Optional<Holding> findByUserAndAsset(User user, Asset asset);
+    void deleteByUserId(Long userId);
 }
