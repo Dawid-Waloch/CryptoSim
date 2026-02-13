@@ -1,7 +1,10 @@
+import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import ProtectedRoute from "../../components/ProtectedRoute"
 import { useAuth } from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext";
 import {
+    Button,
     InfoSpan,
     ProfileContainer,
     SimulationBody,
@@ -13,9 +16,43 @@ import {
 } from "./styles";
 
 const Profile = () => {
+    const [wallets, setWallets] = useState([]);
+    const { setFlashMessage } = useToast();
     const { user } = useAuth();
 
-    const { username } = user || {};
+    const { username, userId } = user || {};
+
+    useEffect(() => {
+        const getBalance = async () => {
+            try {
+                // TODO
+                // Local server
+                const response = await fetch(`http://localhost:8080/wallets/${userId}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        userId
+                    })
+                })
+
+                if(!response.ok) {
+                    throw new Error("We couldn't get your wallet balance");
+                }
+
+                const data = await response.json();
+
+                setWallets(data.wallets);
+            } catch (err) {
+                setFlashMessage({ type: "error", message: err.message || "Server unreachable" });
+            }
+        }
+
+        getBalance();
+    }, [userId]);
+
+    const usdWallet = wallets.find(wallet => wallet.currency === "USD") || {};
 
     return (
         <ProtectedRoute>
@@ -31,7 +68,7 @@ const Profile = () => {
                 <SimulationCard>
                     <SimulationText>Simulation:</SimulationText>
                     <SimulationBody>
-                        <InfoSpan>Balance: {}</InfoSpan>
+                        <InfoSpan>Balance: {Number(usdWallet.balance).toFixed(2)}$</InfoSpan>
                     </SimulationBody>
                 </SimulationCard>
             </ProfileContainer>
