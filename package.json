@@ -1,6 +1,7 @@
 {
   "name": "cryptosim",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,13 +15,22 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.6",
+    "@mui/material": "^7.3.6",
+    "@web3icons/react": "^4.1.12",
+    "lightweight-charts": "^5.1.0",
     "next": "^16.0.5",
     "prettier": "^3.7.2",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-hot-toast": "^2.6.0",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.22",
+    "babel-plugin-styled-components": "^2.1.4",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.17"
   }

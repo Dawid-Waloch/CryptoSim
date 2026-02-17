@@ -1,0 +1,56 @@
+import styled from "styled-components";
+
+export const AssetsListContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    max-height: 750px;
+    overflow-y: auto;
+`;
+
+export const MarketAssetContainer = styled.div`
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid white;
+    border-top: ${(props) => (props.$id === 0 ? "1px solid white" : "")};
+
+    &:hover {
+        background-color: #4b0000;
+        cursor: pointer;
+    }
+`;
+
+export const MarketAssetInfo = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 7px;
+`;
+
+export const MarketAssetName = styled.span`
+    font-size: 1rem;
+    font-weight: bold;
+`;
+
+export const MarketPrice = styled.span`
+    font-weight: bold;
+    text-align: right;
+`;
+
+export const MarketAssetNameContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+export const MarketPriceInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+export const ChangeSpan = styled.span`
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    color: ${(props) => (props.profit ? "green" : "red")};
+    font-weight: bold;
+`;
