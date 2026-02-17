@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import ProtectedRoute from "../../components/ProtectedRoute"
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
+import { useRouter } from "next/router";
 import {
     Button,
     InfoSpan,
@@ -19,6 +20,7 @@ const Profile = () => {
     const [wallets, setWallets] = useState([]);
     const { setFlashMessage } = useToast();
     const { user } = useAuth();
+    const router = useRouter();
 
     const { username, userId } = user || {};
 
@@ -52,6 +54,29 @@ const Profile = () => {
         getBalance();
     }, [userId]);
 
+    const resetSimulation = async () => {
+        try {
+            // TODO
+            // Local server
+            const response = await fetch(`http://localhost:8080/reset?userId=${userId}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+            if(!response.ok) {
+                throw new Error("We couldn't reset simulation");
+            }
+
+            const data = await response.text();
+            setFlashMessage({ type: "success", message: data });
+            router.push("/dashboard");
+        } catch (err) {
+            setFlashMessage({ type: "error", message: err.message || "Server unreachable" });
+        }
+    }
+
     const usdWallet = wallets.find(wallet => wallet.currency === "USD") || {};
 
     return (
@@ -70,7 +95,7 @@ const Profile = () => {
                     <SimulationBody>
                         <InfoSpan>Balance: {Number(usdWallet.balance).toFixed(2)}$</InfoSpan>
                         <InfoSpan>Start Balance: {Number(100).toFixed(2)}$</InfoSpan>
-                        <Button>Reset Simulation</Button>
+                        <Button onClick={resetSimulation}>Reset Simulation</Button>
                     </SimulationBody>
                 </SimulationCard>
             </ProfileContainer>
