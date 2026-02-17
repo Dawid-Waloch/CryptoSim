@@ -6,6 +6,7 @@ import com.github.dawidwaloch.cryptosim.cryptosim_backend.holdings.HoldingReposi
 import com.github.dawidwaloch.cryptosim.cryptosim_backend.transactions.TransactionRepository;
 import com.github.dawidwaloch.cryptosim.cryptosim_backend.wallet.WalletRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -15,6 +16,7 @@ public class SimulationService {
     private final HoldingRepository holdingRepository;
     private final WalletRepository walletRepository;
 
+    @Transactional
     public void resetUserSimulation(Long userId) {
         holdingRepository.deleteByUserId(userId);
         walletRepository.resetWalletBalances(userId);
