@@ -18,7 +18,7 @@ import {
 } from "./MarketBuyFormStyled";
 
 const MarketBuyForm = ({ walletBalance, assetInfo }) => {
-    const [quantity, setQuantity] = useState(undefined);
+    const [quantity, setQuantity] = useState(0);
     const [formError, setFormError] = useState("");
     const { setFlashMessage } = useToast();
     const { user } = useAuth();
@@ -94,12 +94,12 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
                                 value={quantity}
                                 onChange={(e) => {
                                     const value = e.target.value;
-                                    setQuantity(value === "" ? "" : Number(value))
+                                    setQuantity(Number(value))
                                 }}
                             />
                             <Button
                                 type="button"
-                                onClick={() => setQuantity((q) => q + 1)}
+                                onClick={() => setQuantity((q) => (Number(q) || 0) + 1)}
                             >
                                 +
                             </Button>
