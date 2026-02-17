@@ -22,7 +22,7 @@ const Profile = () => {
     const { user } = useAuth();
     const router = useRouter();
 
-    const { username, userId } = user || {};
+    const { username, userId, email } = user || {};
 
     useEffect(() => {
         const getBalance = async () => {
@@ -87,7 +87,7 @@ const Profile = () => {
                     <UserInfoText>User Info:</UserInfoText>
                     <UserInfoBody>
                         <InfoSpan>Username: {username}</InfoSpan>
-                        <InfoSpan>E-mail: {}</InfoSpan>
+                        <InfoSpan>E-mail: {email}</InfoSpan>
                     </UserInfoBody>
                 </UserInfoCard>
                 <SimulationCard>
