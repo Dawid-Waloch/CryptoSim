@@ -57,7 +57,7 @@ const LoginPage = () => {
             }
 
             setFlashMessage({ type: "success", message: "Login success" });
-            login({username: data.username, userId: data.userId});
+            login({username: data.username, userId: data.userId, email: data.email});
             router.push("/dashboard");
         } catch (err) {
             setFlashMessage({type: "error", message: err.message || "Server unreachable" });
