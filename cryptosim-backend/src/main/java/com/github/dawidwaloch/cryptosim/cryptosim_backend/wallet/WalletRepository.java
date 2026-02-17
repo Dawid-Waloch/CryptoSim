@@ -2,6 +2,7 @@ package com.github.dawidwaloch.cryptosim.cryptosim_backend.wallet;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -19,6 +20,7 @@ public interface WalletRepository extends JpaRepository<Wallet, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT w FROM Wallet w WHERE w.id = :id")
     Optional<Wallet> findByIdForUpdate(@Param("id") Long id);
-    @Query("UPDATE Wallet w SET w.balance = 100 WHERE w.user_id = :user_id")
-    void resetWalletBalances(@Param("user_id") Long userId);
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE Wallet w SET w.balance = 100 WHERE w.userId = :userId")
+    void resetWalletBalances(@Param("userId") Long userId);
 }
