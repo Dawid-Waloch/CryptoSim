@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
 import { TokenIcon } from "@web3icons/react/dynamic";
-import { TableContainer, AssetNameSpan, TableCell, TypeSpan, Input } from "./RecentTransactionsStyled";
+import {
+    TableContainer,
+    AssetNameSpan,
+    TableCell,
+    TypeSpan,
+    Input
+} from "./RecentTransactionsStyled";
 
 const RecentTransactionsTable = ({ recentTransactions }) => {
     const [filteredTransactions, setFilteredTransactions] = useState([...recentTransactions].reverse());
@@ -40,20 +46,21 @@ const RecentTransactionsTable = ({ recentTransactions }) => {
                         {filteredTransactions.map((transaction, id) => {
                             const date = new Date(transaction.createdAt);
                             const formattedDate = date.toLocaleString();
+                            const isLast = id === filteredTransactions.length - 1;
 
                             return (
                                 <TableRow key={id}>
-                                    <TableCell>{formattedDate}</TableCell>
-                                    <TableCell>
+                                    <TableCell $isLast={isLast}>{formattedDate}</TableCell>
+                                    <TableCell $isLast={isLast}>
                                         <AssetNameSpan>
                                             <TokenIcon symbol={transaction.symbol} variant="branded" size={40} />
                                             {transaction.name}
                                         </AssetNameSpan>
                                     </TableCell>
-                                    <TableCell>{transaction.price}$</TableCell>
-                                    <TableCell>{transaction.quantity.toFixed(2)}</TableCell>
-                                    <TableCell>{transaction.value}$</TableCell>
-                                    <TableCell>
+                                    <TableCell $isLast={isLast}>{transaction.price}$</TableCell>
+                                    <TableCell $isLast={isLast}>{transaction.quantity.toFixed(2)}</TableCell>
+                                    <TableCell $isLast={isLast}>{transaction.value}$</TableCell>
+                                    <TableCell $isLast={isLast}>
                                         <TypeSpan type={transaction.type}>
                                             {transaction.type}
                                         </TypeSpan>
