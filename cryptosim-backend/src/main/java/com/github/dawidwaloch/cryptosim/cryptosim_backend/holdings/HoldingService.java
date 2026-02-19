@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,11 +16,16 @@ public class HoldingService {
     public void add(User user, Asset asset, BigDecimal quantity){
         if (quantity.compareTo(BigDecimal.ZERO) <= 0) throw new IllegalArgumentException("Quantity must be positive");
 
-        Holding holding = holdingRepository.findByUserAndAsset(user, asset).orElseGet(() -> {
-            return Holding.create(user, asset, quantity);
-        });
+        Optional<Holding> optionalHolding = holdingRepository.findByUserAndAsset(user, asset);
+        Holding holding;
 
-        holding.setQuantity(holding.getQuantity().add(quantity));
+        if(optionalHolding.isPresent()) {
+            holding = optionalHolding.get();
+            holding.setQuantity(holding.getQuantity().add(quantity));
+        } else {
+            holding = Holding.create(user, asset, quantity);
+        }
+
         holdingRepository.save(holding);
     }
 
