@@ -14,6 +14,7 @@ export const TableCell = styled(BaseTableCell)`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    border-bottom: ${(props) => props.$isLast ? "none !important" : "1px solid white"};
 `;
 
 export const TableContainer = styled(MuiTableContainer)`
