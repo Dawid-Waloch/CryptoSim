@@ -25,6 +25,8 @@ const Profile = () => {
     const { username, userId, email } = user || {};
 
     useEffect(() => {
+        if(!userId) return;
+
         const getBalance = async () => {
             try {
                 // TODO
