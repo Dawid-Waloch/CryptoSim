@@ -19,7 +19,7 @@ import {
 const Profile = () => {
     const [wallets, setWallets] = useState([]);
     const { setFlashMessage } = useToast();
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const router = useRouter();
 
     const { username, userId, email } = user || {};
@@ -77,6 +77,11 @@ const Profile = () => {
         }
     }
 
+    const handleLogout = () => {
+        logout();
+        setFlashMessage({type: "success", message: "Logout success"});
+    }
+
     const usdWallet = wallets.find(wallet => wallet.currency === "USD") || {};
 
     return (
@@ -88,6 +93,7 @@ const Profile = () => {
                     <UserInfoBody>
                         <InfoSpan>Username: {username}</InfoSpan>
                         <InfoSpan>E-mail: {email}</InfoSpan>
+                        <Button onClick={handleLogout}>Logout</Button>
                     </UserInfoBody>
                 </UserInfoCard>
                 <SimulationCard>
