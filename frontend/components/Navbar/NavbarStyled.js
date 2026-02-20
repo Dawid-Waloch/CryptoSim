@@ -30,6 +30,9 @@ export const NavLink = styled(Link)`
     color: white;
     text-decoration: none;
     font-size: 1.25em;
+    display: flex;
+    align-items: center;
+    gap: 2px;
 
     &::after {
         content: "";
