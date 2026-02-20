@@ -10,8 +10,10 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    List<Transaction> findByUserId(Long userId);
-    List<Transaction> findByUserIdAndAssetId(Long userId, Long assetId);
+    @Query("SELECT t FROM Transaction t WHERE t.disabled = FALSE AND t.user.id = :userId")
+    List<Transaction> findByUserId(@Param("userId") Long userId);
+    @Query("SELECT t FROM Transaction t WHERE t.disabled = FALSE AND t.user.id = :userId AND t.asset.id = :assetId")
+    List<Transaction> findByUserIdAndAssetId(@Param("userId") Long userId, @Param("assetId") Long assetId);
     List<Transaction> findByAssetIdOrderByCreatedAtAsc(Long assetId);
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Transaction t SET t.disabled = TRUE WHERE t.user.id = :userId")
