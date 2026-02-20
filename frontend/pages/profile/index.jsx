@@ -19,7 +19,7 @@ import {
 const Profile = () => {
     const [wallets, setWallets] = useState([]);
     const { setFlashMessage } = useToast();
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const router = useRouter();
 
     const { username, userId, email } = user || {};
@@ -88,6 +88,7 @@ const Profile = () => {
                     <UserInfoBody>
                         <InfoSpan>Username: {username}</InfoSpan>
                         <InfoSpan>E-mail: {email}</InfoSpan>
+                        <Button onClick={logout}>Logout</Button>
                     </UserInfoBody>
                 </UserInfoCard>
                 <SimulationCard>
