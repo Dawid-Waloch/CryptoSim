@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { TokenIcon } from '@web3icons/react/dynamic'
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { createChart, CandlestickSeries } from 'lightweight-charts';
+import { ArrowDropDownIcon, ArrowDropUpIcon } from '../../icons';
 import {
     AssetChartContainer,
     AssetInfoChart,
