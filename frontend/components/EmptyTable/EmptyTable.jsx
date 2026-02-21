@@ -1,5 +1,11 @@
-import { Table, TableBody, TableContainer, TableHead, TableRow } from "@mui/material"
-import InfoIcon from '@mui/icons-material/Info';
+import {
+    Table,
+    TableBody,
+    TableContainer,
+    TableHead,
+    TableRow
+} from "@mui/material"
+import { InfoIcon } from "../../icons"
 import { CellContent, NoBorderTableCell, TableCell } from "./EmptyTableStyled"
 
 const EmptyTable = ({ cells, message }) => (
