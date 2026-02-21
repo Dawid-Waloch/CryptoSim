@@ -4,3 +4,4 @@ export { default as AppRegistrationIcon } from '@mui/icons-material/AppRegistrat
 export { default as StoreIcon } from '@mui/icons-material/Store';
 export { default as HomeIcon } from '@mui/icons-material/Home';
 export { default as AccountCircleIcon } from '@mui/icons-material/AccountCircle';
+export { default as AccountBalanceWalletIcon } from '@mui/icons-material/AccountBalanceWallet';
