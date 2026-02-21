@@ -6,3 +6,5 @@ export { default as HomeIcon } from '@mui/icons-material/Home';
 export { default as AccountCircleIcon } from '@mui/icons-material/AccountCircle';
 export { default as AccountBalanceWalletIcon } from '@mui/icons-material/AccountBalanceWallet';
 export { default as InfoIcon } from '@mui/icons-material/Info';
+export { default as ArrowDropUpIcon } from '@mui/icons-material/ArrowDropUp';
+export { default as ArrowDropDownIcon } from '@mui/icons-material/ArrowDropDown';
