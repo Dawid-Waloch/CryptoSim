@@ -11,7 +11,7 @@ export const NavbarContainer = styled.nav`
     align-items: center;
     width: 80%;
     margin: 20px auto;
-    padding: 10px;
+    padding: 0 20px;
 `;
 
 export const NavLinks = styled.div`

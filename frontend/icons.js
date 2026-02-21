@@ -1,0 +1,12 @@
+export { default as LoginIcon } from '@mui/icons-material/Login';
+export { default as PersonIcon } from '@mui/icons-material/Person';
+export { default as AppRegistrationIcon } from '@mui/icons-material/AppRegistration';
+export { default as StoreIcon } from '@mui/icons-material/Store';
+export { default as HomeIcon } from '@mui/icons-material/Home';
+export { default as AccountCircleIcon } from '@mui/icons-material/AccountCircle';
+export { default as AccountBalanceWalletIcon } from '@mui/icons-material/AccountBalanceWallet';
+export { default as InfoIcon } from '@mui/icons-material/Info';
+export { default as ArrowDropUpIcon } from '@mui/icons-material/ArrowDropUp';
+export { default as ArrowDropDownIcon } from '@mui/icons-material/ArrowDropDown';
+export { default as EmailIcon } from '@mui/icons-material/Email';
+export { default as LockIcon } from '@mui/icons-material/Lock';

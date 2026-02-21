@@ -43,6 +43,14 @@ export const SimulationBody = styled.div`
 
 export const InfoSpan = styled.span`
     margin: 5px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+`
+
+export const BoldSpan = styled.span`
+    font-weight: bold;
+    margin-right: 2px;
 `
 
 export const SimulationText = styled(UserInfoText)``;

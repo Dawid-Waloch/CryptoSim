@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Navbar from "../../components/Navbar/Navbar";
 import ProtectedRoute from "../../components/ProtectedRoute"
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
-import { useRouter } from "next/router";
+import { PersonIcon, EmailIcon, AccountBalanceWalletIcon } from "../../icons";
 import {
+    BoldSpan,
     Button,
     InfoSpan,
     ProfileContainer,
@@ -93,16 +95,32 @@ const Profile = () => {
                 <UserInfoCard>
                     <UserInfoText>User Info:</UserInfoText>
                     <UserInfoBody>
-                        <InfoSpan>Username: {username}</InfoSpan>
-                        <InfoSpan>E-mail: {email}</InfoSpan>
+                        <InfoSpan>
+                            <PersonIcon />
+                            <BoldSpan>Username:</BoldSpan>
+                            <span>{username}</span>
+                        </InfoSpan>
+                        <InfoSpan>
+                            <EmailIcon />
+                            <BoldSpan>E-mail:</BoldSpan>
+                            <span>{email}</span>
+                        </InfoSpan>
                         <Button onClick={handleLogout}>Logout</Button>
                     </UserInfoBody>
                 </UserInfoCard>
                 <SimulationCard>
                     <SimulationText>Simulation:</SimulationText>
                     <SimulationBody>
-                        <InfoSpan>Balance: {Number(usdWallet.balance).toFixed(2)}$</InfoSpan>
-                        <InfoSpan>Start Balance: {Number(100).toFixed(2)}$</InfoSpan>
+                        <InfoSpan>
+                            <AccountBalanceWalletIcon />
+                            <BoldSpan>Balance:</BoldSpan>
+                            <span>{Number(usdWallet.balance).toFixed(2)}$</span>
+                        </InfoSpan>
+                        <InfoSpan>
+                            <AccountBalanceWalletIcon />
+                            <BoldSpan>Start Balance:</BoldSpan>
+                            <span>{Number(100).toFixed(2)}$</span>
+                        </InfoSpan>
                         <Button onClick={resetSimulation}>Reset Simulation</Button>
                     </SimulationBody>
                 </SimulationCard>

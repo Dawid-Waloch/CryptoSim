@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "../../context/AuthContext";
 import Navbar from "../../components/Navbar/Navbar";
 import { useToast } from "../../context/ToastContext";
+import { LoginIcon, PersonIcon, LockIcon } from "../../icons";
 import {
     Button,
     FieldContainer,
@@ -71,10 +72,16 @@ const LoginPage = () => {
             <Navbar />
             <LoginContainer>
                 <FormContainer>
-                    <FormName>Login</FormName>
+                    <FormName>
+                        <LoginIcon />
+                        <span>Login</span>
+                    </FormName>
                     <form onSubmit={handleSubmit}>
                         <FieldContainer>
-                            <Label htmlFor="username">Username:</Label>
+                            <Label htmlFor="username">
+                                <PersonIcon />
+                                <span>Username:</span>
+                            </Label>
                             <Input
                                 type="text"
                                 placeholder="Username"
@@ -84,7 +91,10 @@ const LoginPage = () => {
                             <ErrorContainer>{getError("username")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
-                            <Label htmlFor="password">Password:</Label>
+                            <Label htmlFor="password">
+                                <LockIcon />
+                                <span>Password:</span>
+                            </Label>
                             <Input
                                 type="password"
                                 placeholder="Password"

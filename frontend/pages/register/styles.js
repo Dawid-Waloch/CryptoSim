@@ -27,8 +27,10 @@ export const FieldContainer = styled.div`
 export const Label = styled.label`
     font-weight: 600;
     margin-top: 0.5rem;
-    display: block;
+    display: flex;
+    align-items: center;
     color: #fff;
+    gap: 3px;
 `;
 
 export const Input = styled.input`
@@ -77,6 +79,7 @@ export const FormName = styled.div`
     display: flex;
     justify-content: center;
     margin-bottom: 1em;
+    gap: 3px;
 `
 
 export const ErrorContainer = styled.div`
