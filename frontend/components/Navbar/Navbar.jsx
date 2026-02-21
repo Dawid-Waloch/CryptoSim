@@ -1,10 +1,17 @@
-import StoreIcon from '@mui/icons-material/Store';
-import HomeIcon from '@mui/icons-material/Home';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import LoginIcon from '@mui/icons-material/Login';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import { useAuth } from "../../context/AuthContext";
-import { NavbarContainer, NavLink, NavLinks, NavLogo } from "./NavbarStyled";
+import {
+    AppRegistrationIcon,
+    HomeIcon,
+    StoreIcon,
+    AccountCircleIcon,
+    LoginIcon
+} from "../../icons";
+import {
+    NavbarContainer,
+    NavLink,
+    NavLinks,
+    NavLogo
+} from "./NavbarStyled";
 
 const Navbar = () => {
     const { user } = useAuth();
