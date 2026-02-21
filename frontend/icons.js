@@ -8,3 +8,5 @@ export { default as AccountBalanceWalletIcon } from '@mui/icons-material/Account
 export { default as InfoIcon } from '@mui/icons-material/Info';
 export { default as ArrowDropUpIcon } from '@mui/icons-material/ArrowDropUp';
 export { default as ArrowDropDownIcon } from '@mui/icons-material/ArrowDropDown';
+export { default as EmailIcon } from '@mui/icons-material/Email';
+export { default as LockIcon } from '@mui/icons-material/Lock';
