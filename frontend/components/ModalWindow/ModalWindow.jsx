@@ -26,7 +26,7 @@ const ModalWindow = ({ handleClose, assetInfo, operationType, handleConfirm }) =
         <OverlayContainer>
             <ModalContainer>
                 <CancelContainer>
-                    <Icon onClick={handleClose} />
+                    <Icon data-testid="close-icon" onClick={handleClose} />
                 </CancelContainer>
                 <AssetInfo>{OPERATION_LABEL[operationType]} {assetInfo.name} ({assetInfo.currentPrice}$)</AssetInfo>
                 <Input
