@@ -6,3 +6,7 @@ vi.stubGlobal('fetch', vi.fn(() =>
         json: () => Promise.resolve({}),
     })
 ));
+
+vi.mock('next/router', () => ({
+  useRouter: () => ({ push: vi.fn(), query: {} }),
+}));
