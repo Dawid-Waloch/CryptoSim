@@ -1,4 +1,4 @@
-import { describe, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { customRender, screen } from "../../tests/test-utils";
 import AssetsTable from "./AssetsTable";
