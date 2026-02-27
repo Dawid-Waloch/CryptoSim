@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from 'vitest'
 import userEvent from '@testing-library/user-event';
-import { customRender, getByText, screen } from "../../tests/test-utils";
+import { customRender, screen } from "../../tests/test-utils";
 import MarketBuyForm from './MarketBuyForm';
+import { ToastContext } from '../../context/ToastContext';
 
 describe('MarketBuyForm Component', () => {
     const mockWalletBalance = 100;
@@ -11,7 +12,7 @@ describe('MarketBuyForm Component', () => {
         name: "Shiba Inu",
         symbol: "SHIB"
     };
-    // const mockSetFlashMessage = vi.fn();
+    const mockSetFlashMessage = vi.fn();
 
     it('renders correct buy form', () => {
         customRender(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
@@ -59,24 +60,28 @@ describe('MarketBuyForm Component', () => {
         expect(screen.getByText(/you don't have enough money to buy that asset/i)).toBeInTheDocument();
     });
 
-    // it('submits purchase successfully', async () => {
-    //     customRender(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
+    it('submits purchase successfully', async () => {
+        customRender(
+            <ToastContext.Provider value={{ setFlashMessage: mockSetFlashMessage }}>
+                <MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />
+            </ToastContext.Provider>
+        );
 
-    //     fetch.mockResolvedValueOnce({
-    //         ok: true,
-    //         text: async () => /asset bought successfully/i
-    //     });
+        fetch.mockResolvedValueOnce({
+            ok: true,
+            text: async () => /asset bought successfully/i
+        });
 
-    //     const buyButton = screen.getByRole('button', { name: /buy/i });
-    //     const input = screen.getByRole('spinbutton');
+        const buyButton = screen.getByRole('button', { name: /buy/i });
+        const input = screen.getByRole('spinbutton');
 
-    //     await userEvent.clear(input);
-    //     await userEvent.type(input, '1');
-    //     await userEvent.click(buyButton);
+        await userEvent.clear(input);
+        await userEvent.type(input, '1');
+        await userEvent.click(buyButton);
 
-    //     expect(mockSetFlashMessage).toHaveBeenCalledWith({
-    //         type: 'success',
-    //         message: /asset bought successfully/i
-    //     });
-    // });
+        expect(mockSetFlashMessage).toHaveBeenCalledWith({
+            type: 'success',
+            message: /asset bought successfully/i
+        });
+    });
 });
