@@ -10,16 +10,17 @@ import {
 } from "./RecentTransactionsStyled";
 
 const RecentTransactionsTable = ({ recentTransactions }) => {
-    const [filteredTransactions, setFilteredTransactions] = useState([...recentTransactions].reverse());
+    const sortedRecentTransactions = [...recentTransactions].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const [filteredTransactions, setFilteredTransactions] = useState([...sortedRecentTransactions]);
     const [assetSearch, setAssetSearch] = useState("");
 
     useEffect(() => {
         if(assetSearch.length > 0) {
-            setFilteredTransactions([...recentTransactions].filter((transaction) => 
-                transaction.name.toLowerCase().startsWith(assetSearch.toLowerCase())).reverse()
+            setFilteredTransactions([...sortedRecentTransactions].filter((transaction) => 
+                transaction.name.toLowerCase().startsWith(assetSearch.toLowerCase()))
             )
         } else {
-            setFilteredTransactions([...recentTransactions].reverse());
+            setFilteredTransactions([...sortedRecentTransactions]);
         }
     }, [assetSearch])
     
