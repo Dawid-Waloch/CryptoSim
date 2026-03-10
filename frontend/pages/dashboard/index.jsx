@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
-import ProtectedRoute from "../../components/ProtectedRoute";
+import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
 import WalletDropdown from "../../components/WalletDropdown";
 import AssetsTable from "../../components/AssetsTable/AssetsTable";
 import RecentTransactionsTable from "../../components/RecentTransactionsTable/RecentTransactionsTable";
