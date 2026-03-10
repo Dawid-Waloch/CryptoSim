@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import toast from "react-hot-toast";
 import { customRender, screen, waitFor } from "../../tests/test-utils";
 import { useToast } from "../../context/ToastContext";
@@ -11,7 +11,7 @@ vi.mock('react-hot-toast', () => ({
     },
 }));
 
-vi.mock("../../context/ToastContext", async (importOriginal) => {
+vi.mock('../../context/ToastContext', async (importOriginal) => {
     const actual = await importOriginal();
 
     return {
@@ -27,16 +27,31 @@ describe('FlashMessageListener Component', () => {
         vi.clearAllMocks();
     });
 
-    it("shows success toast and clears flash message", async () => {
+    it('shows success toast and clears flash message', async () => {
         vi.mocked(useToast).mockReturnValue({
-            flashMessage: { type: "success", message: "Saved!" },
+            flashMessage: { type: 'success', message: 'Saved!' },
             clearFlashMessage: mockClearFlashMessage,
         });
 
         customRender(<FlashMessageListener />);
 
         await waitFor(() => {
-            expect(toast.success).toHaveBeenCalledWith("Saved!", { duration: 4000 });
+            expect(toast.success).toHaveBeenCalledWith('Saved!', { duration: 4000 });
+        });
+
+        expect(mockClearFlashMessage).toHaveBeenCalled();
+    });
+
+    it('shows error toast and clears flash message', async () => {
+        vi.mocked(useToast).mockReturnValue({
+            flashMessage: { type: 'error', message: 'Error!' },
+            clearFlashMessage: mockClearFlashMessage,
+        });
+
+        customRender(<FlashMessageListener />);
+
+        await waitFor(() => {
+            expect(toast.error).toHaveBeenCalledWith('Error!', { duration: 4000 });
         });
 
         expect(mockClearFlashMessage).toHaveBeenCalled();
