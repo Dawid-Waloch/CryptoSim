@@ -56,4 +56,17 @@ describe('FlashMessageListener Component', () => {
 
         expect(mockClearFlashMessage).toHaveBeenCalled();
     });
+
+    it('does nothing when flash message is null', async () => {
+        vi.mocked(useToast).mockReturnValue({
+            flashMessage: null,
+            clearFlashMessage: mockClearFlashMessage,
+        });
+
+        customRender(<FlashMessageListener />);
+
+        expect(toast.error).not.toHaveBeenCalled();
+        expect(toast.success).not.toHaveBeenCalled();
+        expect(mockClearFlashMessage).not.toHaveBeenCalled();
+    });
 });
