@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
 import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
-import WalletDropdown from "../../components/WalletDropdown";
+import WalletDropdown from "../../components/WalletDropdown/WalletDropdown";
 import AssetsTable from "../../components/AssetsTable/AssetsTable";
 import RecentTransactionsTable from "../../components/RecentTransactionsTable/RecentTransactionsTable";
 import EmptyTable from "../../components/EmptyTable/EmptyTable";
