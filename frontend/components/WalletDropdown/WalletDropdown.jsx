@@ -13,6 +13,7 @@ const WalletDropdown = ({ wallets }) => {
         <Select
             value={selectedValue}
             onChange={handleChange}
+            role="button"
             fullWidth
             sx={{
                 color: "white",
