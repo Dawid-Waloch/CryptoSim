@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MenuItem, Select } from "@mui/material";
-import { AccountBalanceWalletIcon } from "../icons";
+import { AccountBalanceWalletIcon } from "../../icons";
 
 const WalletDropdown = ({ wallets }) => {
     const [selectedValue, setSelectedValue] = useState(wallets[0].id);
