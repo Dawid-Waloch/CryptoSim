@@ -26,4 +26,18 @@ describe('WalletDropdown Component', () => {
         expect(options[1]).toHaveTextContent(/50/i);
         expect(options[1]).toHaveTextContent(/pln/i);
     });
+
+    it('displays other wallet when it will be clicked', async () => {
+        render(<WalletDropdown wallets={mockWallets} />);
+
+        const selectButton = screen.getByRole('combobox');
+        await userEvent.click(selectButton);
+
+        const listbox = await screen.findByRole('listbox');
+        const options = within(listbox).getAllByRole('option');
+        await userEvent.click(options[1]);
+
+        expect(await screen.findByText(/50/i)).toBeInTheDocument();
+        expect(await screen.findByText(/pln/i)).toBeInTheDocument();
+    });
 });
