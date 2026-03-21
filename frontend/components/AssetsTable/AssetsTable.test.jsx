@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import userEvent from "@testing-library/user-event";
-import { customRender, screen } from "../../tests/test-utils";
+import { render, screen } from "../../tests/test-utils";
 import AssetsTable from "./AssetsTable";
 
 describe('AssetsTable Component', () => {
@@ -14,13 +14,13 @@ describe('AssetsTable Component', () => {
     ];
 
     it('renders correct number of asset ', () => {
-        customRender(<AssetsTable assetsWallet={mockAssetsWallet} wallets={mockWallets} />);
+        render(<AssetsTable assetsWallet={mockAssetsWallet} wallets={mockWallets} />);
 
         expect(screen.getAllByText(/bitcoin|xrp/i)).toHaveLength(2);
     });
 
     it('renders correct number of action buttons per asset', () => {
-        customRender(<AssetsTable assetsWallet={mockAssetsWallet} wallets={mockWallets} />);
+        render(<AssetsTable assetsWallet={mockAssetsWallet} wallets={mockWallets} />);
 
         expect(screen.getAllByRole('button', { name: /buy/i })).toHaveLength(2);
         expect(screen.getAllByRole('button', { name: /sell/i })).toHaveLength(2);
@@ -30,7 +30,7 @@ describe('AssetsTable Component', () => {
         { action: "Buy" },
         { action: "Sell" }
     ])('opens modal with correct asset when $action is clicked', async ({ action }) => {
-        customRender(<AssetsTable assetsWallet={mockAssetsWallet} wallets={mockWallets} />);
+        render(<AssetsTable assetsWallet={mockAssetsWallet} wallets={mockWallets} />);
 
         const buyButtons = screen.getAllByRole('button', { name: new RegExp(action, 'i') });
         await userEvent.click(buyButtons[0]);
@@ -39,7 +39,7 @@ describe('AssetsTable Component', () => {
     });
 
     it('closes modal when close icon is clicked', async () => {
-        customRender(<AssetsTable assetsWallet={mockAssetsWallet} wallets={mockWallets} />);
+        render(<AssetsTable assetsWallet={mockAssetsWallet} wallets={mockWallets} />);
         
         const buyButtons = screen.getAllByRole('button', { name: /buy/i });
         await userEvent.click(buyButtons[0]);
