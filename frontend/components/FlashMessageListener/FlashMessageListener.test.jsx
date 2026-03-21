@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import toast from "react-hot-toast";
-import { render, waitFor } from "../../tests/test-utils";
+import { render, waitFor } from "@testing-library/react";
 import { useToast } from "../../context/ToastContext";
 import FlashMessageListener from "./FlashMessageListener";
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "../../tests/test-utils";
+import { render, screen } from "@testing-library/react";
 import PriceChart from "./PriceChart";
 
 vi.mock("lightweight-charts", () => ({

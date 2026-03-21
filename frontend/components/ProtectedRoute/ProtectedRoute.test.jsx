@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { render, waitFor } from "../../tests/test-utils";
+import { render, waitFor } from "@testing-library/react";
+import { useRouter } from "next/router";
 import ProtectedRoute from "./ProtectedRoute";
 import { useAuth } from "../../context/AuthContext";
-import { useRouter } from "next/router";
 
 describe('ProtectedRoute Component', () => {
     afterEach(() => {

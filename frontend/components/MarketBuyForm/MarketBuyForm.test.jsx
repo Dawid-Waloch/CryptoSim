@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import userEvent from '@testing-library/user-event';
-import { render, screen } from "../../tests/test-utils";
+import { render, screen } from "@testing-library/react";
 import MarketBuyForm from './MarketBuyForm';
 import { useToast } from '../../context/ToastContext';
 

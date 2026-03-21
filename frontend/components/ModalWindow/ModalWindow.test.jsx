@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
-import { render, screen } from "../../tests/test-utils";
+import { render, screen } from "@testing-library/react";
 import ModalWindow from "./ModalWindow";
 
 describe('ModalWindow Component', () => {
