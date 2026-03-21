@@ -2,22 +2,17 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { render, waitFor } from "../../tests/test-utils";
 import ProtectedRoute from "./ProtectedRoute";
 import { useAuth } from "../../context/AuthContext";
-
-vi.mock('../../context/AuthContext');
-
-const mockReplace = vi.fn();
-
-vi.mock("next/router", () => ({
-    useRouter: () => ({ replace: mockReplace }),
-}));
+import { useRouter } from "next/router";
 
 describe('ProtectedRoute Component', () => {
     afterEach(() => {
         vi.clearAllMocks();
     });
 
+    const mockReplace = vi.fn();
+
     it('renders nothing when auth state is loading', () => {
-        vi.mocked(useAuth).mockReturnValue({
+        vi.mocked(useAuth).mockReturnValueOnce({
             user: undefined
         });
 
@@ -29,8 +24,12 @@ describe('ProtectedRoute Component', () => {
     });
 
     it('renders nothing and redirects unauthenticated users to login page', async () => {
-        vi.mocked(useAuth).mockReturnValue({
+        vi.mocked(useAuth).mockReturnValueOnce({
             user: null
+        });
+
+        vi.mocked(useRouter).mockReturnValue({
+            replace: mockReplace
         });
 
         const { container } = render(
@@ -45,10 +44,6 @@ describe('ProtectedRoute Component', () => {
     });
 
     it("renders children when user is authenticated", () => {
-        vi.mocked(useAuth).mockReturnValue({
-            user: 'John'
-        });
-
         const { container } = render(
             <ProtectedRoute>Child</ProtectedRoute>
         );
