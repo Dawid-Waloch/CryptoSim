@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { useToast } from "../context/ToastContext";
+import { useToast } from "../../context/ToastContext";
 
 const FlashMessageListener = () => {
     const { flashMessage, clearFlashMessage } = useToast();

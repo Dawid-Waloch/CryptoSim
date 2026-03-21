@@ -27,6 +27,8 @@ const RecentTransactionsTable = ({ recentTransactions }) => {
     return (
         <>
             <Input
+                type="text"
+                aria-label="Search Assets"
                 placeholder="Search Assets"
                 value={assetSearch}
                 onChange={(e) => setAssetSearch(e.target.value)}

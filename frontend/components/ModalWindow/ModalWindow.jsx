@@ -12,7 +12,7 @@ import {
 } from "./ModalWindowStyled"
 
 const ModalWindow = ({ handleClose, assetInfo, operationType, handleConfirm }) => {
-    const [quantityOfAsset, setQuantityOfAsset] = useState(null);
+    const [quantityOfAsset, setQuantityOfAsset] = useState(0);
     const [formError, setFormError] = useState("");
 
     const OPERATION_LABEL = {
@@ -26,17 +26,20 @@ const ModalWindow = ({ handleClose, assetInfo, operationType, handleConfirm }) =
         <OverlayContainer>
             <ModalContainer>
                 <CancelContainer>
-                    <Icon onClick={handleClose} />
+                    <Icon data-testid="close-icon" onClick={handleClose} />
                 </CancelContainer>
                 <AssetInfo>{OPERATION_LABEL[operationType]} {assetInfo.name} ({assetInfo.currentPrice}$)</AssetInfo>
                 <Input
                     type="number"
+                    min={0}
                     placeholder="Quantity"
                     name="Quantity"
                     value={quantityOfAsset}
-                    onChange={(e) => setQuantityOfAsset(e.target.value)}
+                    onChange={(e) => setQuantityOfAsset(Number(e.target.value))}
                 />
-                <ErrorContainer>{formError}</ErrorContainer>
+                {formError &&
+                    <ErrorContainer role='alert'>{formError}</ErrorContainer>
+                }
                 <CostInfoSpan>
                     {label}: {assetInfo.currentPrice * quantityOfAsset}$
                 </CostInfoSpan>

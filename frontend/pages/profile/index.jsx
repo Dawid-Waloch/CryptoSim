@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Navbar from "../../components/Navbar/Navbar";
-import ProtectedRoute from "../../components/ProtectedRoute"
+import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute"
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
 import { PersonIcon, EmailIcon, AccountBalanceWalletIcon } from "../../icons";

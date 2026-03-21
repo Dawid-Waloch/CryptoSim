@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import ProtectedRoute from "../../components/ProtectedRoute";
+import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
 import { useToast } from "../../context/ToastContext";
 import MarketAssets from "../../components/MarketAssets/MarketAssets";
 import PriceChart from "../../components/PriceChart/PriceChart";
