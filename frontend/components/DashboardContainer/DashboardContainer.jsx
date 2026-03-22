@@ -1,8 +1,8 @@
-import WalletDropdown from "../../components/WalletDropdown/WalletDropdown";
-import AssetsTable from "../../components/AssetsTable/AssetsTable";
-import RecentTransactionsTable from "../../components/RecentTransactionsTable/RecentTransactionsTable";
-import EmptyTable from "../../components/EmptyTable/EmptyTable";
-import PriceChart from "../../components/PriceChart/PriceChart";
+import WalletDropdown from "../WalletDropdown/WalletDropdown";
+import AssetsTable from "../AssetsTable/AssetsTable";
+import RecentTransactionsTable from "../RecentTransactionsTable/RecentTransactionsTable";
+import EmptyTable from "../EmptyTable/EmptyTable";
+import PriceChart from "../PriceChart/PriceChart";
 import { useAuth } from "../../context/AuthContext";
 import {
     BalanceCard,
@@ -21,7 +21,7 @@ import {
 const DashboardContainer = (props) => {
     const { user } = useAuth();
     const { username } = user || {};
-    
+
     const {
         wallets,
         assetsWallet,
