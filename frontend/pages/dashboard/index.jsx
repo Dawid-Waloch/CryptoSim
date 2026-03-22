@@ -15,7 +15,7 @@ const Dashboard = () => {
     const { setFlashMessage } = useToast();
     const { selectedAsset } = useAsset();
 
-    const { username, userId } = user || {};
+    const { userId } = user || {};
 
     useEffect(() => {
         if(!userId) return;
@@ -140,7 +140,6 @@ const Dashboard = () => {
                 assetInfo={assetInfo}
                 assetPriceHistory={assetPriceHistory}
                 recentTransactions={recentTransactions}
-                username={username}
             />
         </ProtectedRoute>
     );

@@ -3,6 +3,7 @@ import AssetsTable from "../../components/AssetsTable/AssetsTable";
 import RecentTransactionsTable from "../../components/RecentTransactionsTable/RecentTransactionsTable";
 import EmptyTable from "../../components/EmptyTable/EmptyTable";
 import PriceChart from "../../components/PriceChart/PriceChart";
+import { useAuth } from "../../context/AuthContext";
 import {
     BalanceCard,
     BalanceInfo,
@@ -18,13 +19,15 @@ import {
 } from "./DashboardContainerStyled";
 
 const DashboardContainer = (props) => {
+    const { user } = useAuth();
+    const { username } = user || {};
+    
     const {
         wallets,
         assetsWallet,
         assetInfo,
         assetPriceHistory,
         recentTransactions,
-        username
     } = props
 
     return (
