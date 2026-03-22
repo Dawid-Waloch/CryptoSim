@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
-import { customRender, screen } from "../../tests/test-utils";
+import { render, screen } from "@testing-library/react";
 import MarketAssets from "./MarketAssets";
 
 describe('MarketAssets Component', () => {
@@ -15,13 +15,13 @@ describe('MarketAssets Component', () => {
     });
 
     it('renders correct number of market assets', () => {
-        customRender(<MarketAssets marketAssets={mockMarketAssets} setSelectedAsset={mockSetSelectedAsset} />);
+        render(<MarketAssets marketAssets={mockMarketAssets} setSelectedAsset={mockSetSelectedAsset} />);
 
         expect(screen.getAllByRole('button')).toHaveLength(2);
     });
 
     it('calls setSelectedAsset with correct payload on click', async () => {
-        customRender(<MarketAssets marketAssets={mockMarketAssets} setSelectedAsset={mockSetSelectedAsset} />);
+        render(<MarketAssets marketAssets={mockMarketAssets} setSelectedAsset={mockSetSelectedAsset} />);
 
         const buttons = screen.getAllByRole('button')
         await userEvent.click(buttons[0]);

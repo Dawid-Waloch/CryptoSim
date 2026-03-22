@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest'
 import userEvent from '@testing-library/user-event';
-import { customRender, screen } from "../../tests/test-utils";
+import { render, screen } from "@testing-library/react";
 import MarketBuyForm from './MarketBuyForm';
-import { ToastContext } from '../../context/ToastContext';
+import { useToast } from '../../context/ToastContext';
 
 describe('MarketBuyForm Component', () => {
     const mockWalletBalance = 100;
@@ -15,13 +15,13 @@ describe('MarketBuyForm Component', () => {
     const mockSetFlashMessage = vi.fn();
 
     it('renders correct buy form', () => {
-        customRender(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
+        render(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
 
         expect(screen.getByText(/shiba inu/i)).toBeInTheDocument();
     });
 
     it('button decrements quantity but never below 0', async () => {
-        customRender(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
+        render(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
 
         const DecrementButton = screen.getByRole('button', { name: '-' });
         const input = screen.getByRole('spinbutton');
@@ -32,7 +32,7 @@ describe('MarketBuyForm Component', () => {
     });
 
     it('button increments quantity', async () => {
-        customRender(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
+        render(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
 
         const IncrementButton = screen.getByRole('button', { name: '+' });
         const input = screen.getByRole('spinbutton');
@@ -43,13 +43,13 @@ describe('MarketBuyForm Component', () => {
     });
 
     it('renders correct wallet balance', () => {
-        customRender(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
+        render(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
 
         expect(screen.getByText(new RegExp(`Total Cash: ${mockWalletBalance.toFixed(2)}\\$`, 'i'))).toBeInTheDocument();
     });
 
     it('shows error when the walletBalance is too low', async () => {
-        customRender(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
+        render(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
 
         const buyButton = screen.getByRole('button', { name: /buy/i });
         const input = screen.getByRole('spinbutton');
@@ -61,11 +61,11 @@ describe('MarketBuyForm Component', () => {
     });
 
     it('submits purchase successfully', async () => {
-        customRender(
-            <ToastContext.Provider value={{ setFlashMessage: mockSetFlashMessage }}>
-                <MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />
-            </ToastContext.Provider>
-        );
+        vi.mocked(useToast).mockReturnValue({
+            setFlashMessage: mockSetFlashMessage
+        });
+
+        render(<MarketBuyForm walletBalance={mockWalletBalance} assetInfo={mockAssetInfo} />);
 
         fetch.mockResolvedValueOnce({
             ok: true,

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { customRender, screen } from "../../tests/test-utils";
+import { render, screen } from "@testing-library/react";
 import EmptyTable from "./EmptyTable";
 
 describe('EmptyTable Component', () => {
@@ -7,7 +7,7 @@ describe('EmptyTable Component', () => {
     const mockMessage = "You don't have any data";
 
     it('renders correct cells', () => {
-        customRender(<EmptyTable cells={mockCells} message={mockMessage} />);
+        render(<EmptyTable cells={mockCells} message={mockMessage} />);
 
         expect(screen.getByText("date")).toBeInTheDocument();
         expect(screen.getByText("value")).toBeInTheDocument();
@@ -15,7 +15,7 @@ describe('EmptyTable Component', () => {
     });
 
     it('renders correct message', () => {
-        customRender(<EmptyTable cells={mockCells} message={mockMessage} />);
+        render(<EmptyTable cells={mockCells} message={mockMessage} />);
 
         expect(screen.getByText("You don't have any data")).toBeInTheDocument();
     });

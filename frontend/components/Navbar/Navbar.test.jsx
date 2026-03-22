@@ -1,32 +1,22 @@
-import { describe, it, expect } from "vitest";
-import { customRender, screen } from "../../tests/test-utils";
+import { describe, it, expect, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
 import Navbar from "./Navbar";
-import { AuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 describe('Navbar Component', () => {
-    const mockUser = {
-        username: 'dawid',
-        userId: 1,
-        email: 'dawidw@wp.pl'
-    };
-
     it('renders navbar for non logged user', () => {
-        customRender(
-            <AuthContext.Provider value={{ user: null }}>
-                <Navbar />
-            </AuthContext.Provider>
-        );
+        vi.mocked(useAuth).mockReturnValueOnce({
+            user: null
+        });
+
+        render(<Navbar />);
 
         expect(screen.getByText('Login')).toBeInTheDocument();
         expect(screen.getByText('Register')).toBeInTheDocument();
     });
 
     it('renders navbar for logged user', () => {
-        customRender(
-            <AuthContext.Provider value={{ user: mockUser }}>
-                <Navbar />
-            </AuthContext.Provider>
-        );
+        render(<Navbar />);
 
         expect(screen.getByText('Dashboard')).toBeInTheDocument();
         expect(screen.getByText('Market')).toBeInTheDocument();

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { customRender, screen } from "../../tests/test-utils";
+import { render, screen } from "@testing-library/react";
 import PriceChart from "./PriceChart";
 
 vi.mock("lightweight-charts", () => ({
@@ -43,7 +43,7 @@ describe('PriceChart Component', () => {
     const percentageChange = (((currentPrice - previousPrice) / previousPrice) * 100).toFixed(2);
 
     it('renders asset info with current price, change and percentage change', () => {
-        customRender(<PriceChart assetInfo={mockAssetInfo} assetPriceHistory={mockAssetPriceHistory} />);
+        render(<PriceChart assetInfo={mockAssetInfo} assetPriceHistory={mockAssetPriceHistory} />);
 
         const priceInfo = screen.getByTestId('price-info');
         expect(screen.getByText(mockAssetInfo.name)).toBeInTheDocument();
@@ -54,14 +54,14 @@ describe('PriceChart Component', () => {
     });
 
     it('renders negative price change', () => {
-        customRender(<PriceChart assetInfo={mockAssetInfo} assetPriceHistory={mockNegativeChange} />);
+        render(<PriceChart assetInfo={mockAssetInfo} assetPriceHistory={mockNegativeChange} />);
 
         const priceInfo = screen.getByTestId('price-info');
         expect(priceInfo.textContent).toMatch(/-\d+/);
     });
 
     it('renders positive price change', () => {
-        customRender(<PriceChart assetInfo={mockAssetInfo} assetPriceHistory={mockPositiveChange} />);
+        render(<PriceChart assetInfo={mockAssetInfo} assetPriceHistory={mockPositiveChange} />);
 
         const priceInfo = screen.getByTestId('price-info');
         expect(priceInfo.textContent).toMatch(/\+\d+/);

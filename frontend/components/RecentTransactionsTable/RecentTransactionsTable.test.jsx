@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { customRender, screen, within } from "../../tests/test-utils";
+import { render, screen, within } from "@testing-library/react";
 import RecentTransactionsTable from "./RecentTransactionsTable";
 import userEvent from "@testing-library/user-event";
 
@@ -30,7 +30,7 @@ describe('RecentTransactionsTable Component', () => {
     ];
 
     it('renders properly quantity of rows in recent transactions', () => {
-        customRender(<RecentTransactionsTable recentTransactions={mockRecentTransactions} />);
+        render(<RecentTransactionsTable recentTransactions={mockRecentTransactions} />);
 
         const table = screen.getByRole('table');
         const rows = within(table).getAllByRole('row');
@@ -39,7 +39,7 @@ describe('RecentTransactionsTable Component', () => {
     });
 
     it('renders correct information in correct cell', () => {
-        customRender(<RecentTransactionsTable recentTransactions={mockRecentTransactions} />);
+        render(<RecentTransactionsTable recentTransactions={mockRecentTransactions} />);
 
         const table = screen.getByRole('table');
         const rows = within(table).getAllByRole('row');
@@ -61,7 +61,7 @@ describe('RecentTransactionsTable Component', () => {
     });
 
     it('renders recent transaction correctly when a specific asset name is typed', async () => {
-        customRender(<RecentTransactionsTable recentTransactions={mockRecentTransactions} />);
+        render(<RecentTransactionsTable recentTransactions={mockRecentTransactions} />);
 
         const input = screen.getByRole('textbox', { name: /search assets/i });
         await userEvent.clear(input);
@@ -77,7 +77,7 @@ describe('RecentTransactionsTable Component', () => {
     });
 
     it('renders no data when wrong asset name is typed', async () => {
-        customRender(<RecentTransactionsTable recentTransactions={mockRecentTransactions} />);
+        render(<RecentTransactionsTable recentTransactions={mockRecentTransactions} />);
 
         const input = screen.getByRole('textbox', { name: /search assets/i });
         await userEvent.clear(input);
@@ -91,7 +91,7 @@ describe('RecentTransactionsTable Component', () => {
     });
 
     it('renders recent trnasaction correctly when asset name in input is typed and then cleared', async () => {
-        customRender(<RecentTransactionsTable recentTransactions={mockRecentTransactions} />);
+        render(<RecentTransactionsTable recentTransactions={mockRecentTransactions} />);
 
         const input = screen.getByRole('textbox', { name: /search assets/i });
         await userEvent.clear(input);

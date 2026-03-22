@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
-import { customRender, screen } from "../../tests/test-utils";
+import { render, screen } from "@testing-library/react";
 import ModalWindow from "./ModalWindow";
 
 describe('ModalWindow Component', () => {
@@ -42,7 +42,14 @@ describe('ModalWindow Component', () => {
         { opType: 'BUY' },
         { opType: 'SELL' }
     ])('renders correct asset $opType modal', ({ opType }) => {
-        customRender(<ModalWindow assetInfo={mockAssetInfo} operationType={opType} handleClose={handleClose} handleConfirm={handleConfirm} />);
+        render(
+            <ModalWindow
+                assetInfo={mockAssetInfo}
+                operationType={opType}
+                handleClose={handleClose}
+                handleConfirm={handleConfirm}
+            />
+        );
 
         const OPERATION_LABEL = {
             BUY: "Buy",
@@ -53,7 +60,7 @@ describe('ModalWindow Component', () => {
     });
 
     it('closes ModalWindow properly', async () => {
-        customRender(<ModalWindow assetInfo={mockAssetInfo} operationType={mockOpBuyType} handleClose={handleClose} handleConfirm={handleConfirm} />);
+        render(<ModalWindow assetInfo={mockAssetInfo} operationType={mockOpBuyType} handleClose={handleClose} handleConfirm={handleConfirm} />);
 
         await userEvent.click(screen.getByTestId('close-icon'));
         expect(handleClose).toHaveBeenCalledTimes(1);
@@ -63,7 +70,14 @@ describe('ModalWindow Component', () => {
         { opType: 'BUY' },
         { opType: 'SELL' }
     ])('confims ModalWindow $opType asset properly', async ({ opType }) => {
-        customRender(<ModalWindow assetInfo={mockAssetInfo} operationType={opType} handleClose={handleClose} handleConfirm={handleConfirm} />);
+        render(
+            <ModalWindow
+                assetInfo={mockAssetInfo}
+                operationType={opType}
+                handleClose={handleClose}
+                handleConfirm={handleConfirm}
+            />
+        );
 
         const input = screen.getByRole('spinbutton');
         const confirmButton = screen.getByRole('button', { name: /confirm/i });
@@ -80,7 +94,7 @@ describe('ModalWindow Component', () => {
         { opType: 'BUY' },
         { opType: 'SELL' }
     ])('displays $opType quantity errors properly', async ({ opType }) => {
-        customRender(
+        render(
             <ModalWindow
                 assetInfo={mockAssetInfo}
                 operationType={opType}
@@ -103,7 +117,7 @@ describe('ModalWindow Component', () => {
     });
 
     it('redners funds errors properly', async () => {
-        customRender(
+        render(
             <ModalWindow
                 assetInfo={mockAssetInfo}
                 operationType={mockOpBuyType}
@@ -126,7 +140,7 @@ describe('ModalWindow Component', () => {
     });
 
     it('redners assets errors properly', async () => {
-        customRender(
+        render(
             <ModalWindow
                 assetInfo={mockAssetInfo}
                 operationType={mockOpSellType}
