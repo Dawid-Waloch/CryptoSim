@@ -70,4 +70,29 @@ describe('Dashboard Page Integration', () => {
         const tables = screen.getAllByRole('table');
         expect(tables).toHaveLength(3);
     });
+
+    it('renders info for specific components when user has nothing', () => {
+        const mockAssetsWallet = [];
+        const mockWallets = [];
+        const mockRecentTransactions = [];
+
+        render(
+            <DashboardContainer
+                wallets={mockWallets}
+                assetsWallet={mockAssetsWallet}
+                assetInfo={mockAssetInfo}
+                assetPriceHistory={mockAssetPriceHistory}
+                recentTransactions={mockRecentTransactions}
+            />
+        );
+
+        // Account Balance
+        expect(screen.getByText(/you don't have any wallet/i)).toBeInTheDocument();
+
+        // Market Overview
+        expect(screen.getByText(/you don't have any bought assets/i)).toBeInTheDocument();
+
+        // Recent Transactions
+        expect(screen.getByText(/you don't have any transactions/i)).toBeInTheDocument();
+    });
 });
