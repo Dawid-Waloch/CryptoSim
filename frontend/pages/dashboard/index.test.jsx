@@ -51,4 +51,23 @@ describe('Dashboard Page Integration', () => {
         expect(screen.getByText(/recent transactions/i)).toBeInTheDocument();
         expect(screen.getByText(/price chart/i)).toBeInTheDocument();
     });
+
+    it('renders when user have sth on profile', () => {
+        render(
+            <DashboardContainer
+                wallets={mockWallets}
+                assetsWallet={mockAssetsWallet}
+                assetInfo={mockAssetInfo}
+                assetPriceHistory={mockAssetPriceHistory}
+                recentTransactions={mockRecentTransactions}
+            />
+        );
+
+        // Account Balance
+        expect(screen.getByRole('combobox')).toBeInTheDocument();
+        
+        // Market Overview & Recent Transactions
+        const tables = screen.getAllByRole('table');
+        expect(tables).toHaveLength(3);
+    });
 });
