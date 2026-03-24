@@ -1,6 +1,19 @@
-import { describe, expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+import { render, screen, within } from "@testing-library/react";
 import DashboardContainer from "../../components/DashboardContainer/DashboardContainer";
+import userEvent from "@testing-library/user-event";
+import { useAsset } from "../../context/AssetContext";
+
+vi.mock('lightweight-charts', () => ({
+    createChart: vi.fn(() => ({
+        addSeries: vi.fn(() => ({
+            setData: vi.fn(),
+        })),
+        timeScale: () => ({ fitContent: vi.fn() }),
+        remove: vi.fn(),
+    })),
+    CandlestickSeries: {},
+}));
 
 describe('Dashboard Page Integration', () => {
     let mockAssetsWallet = [
@@ -68,7 +81,7 @@ describe('Dashboard Page Integration', () => {
         
         // Market Overview & Recent Transactions
         const tables = screen.getAllByRole('table');
-        expect(tables).toHaveLength(3);
+        expect(tables).toHaveLength(2);
     });
 
     it('renders info for specific components when user has nothing', () => {
@@ -94,5 +107,31 @@ describe('Dashboard Page Integration', () => {
 
         // Recent Transactions
         expect(screen.getByText(/you don't have any transactions/i)).toBeInTheDocument();
+    });
+
+    it('changes displayed chart by clicking on specific asset in market overview', async () => {
+        const mockSetSelectedAsset = vi.fn();
+
+        vi.mocked(useAsset).mockReturnValue({
+            setSelectedAsset: mockSetSelectedAsset
+        });
+
+        render(
+            <DashboardContainer
+                wallets={mockWallets}
+                assetsWallet={mockAssetsWallet}
+                assetInfo={mockAssetInfo}
+                assetPriceHistory={mockAssetPriceHistory}
+                recentTransactions={mockRecentTransactions}
+            />
+        );
+
+        const tables = screen.getAllByRole('table');
+        const rows = within(tables[0]).getAllByRole('row');
+        const bodyRows = rows.slice(1);
+        
+        await userEvent.click(bodyRows[1]);
+
+        expect(mockSetSelectedAsset).toHaveBeenCalledWith(2);
     });
 });

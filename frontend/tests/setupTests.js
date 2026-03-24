@@ -41,6 +41,7 @@ vi.mock('../context/ToastContext', () => ({
 
 vi.mock('../context/AssetContext', () => ({
     useAsset: vi.fn(() => ({
+        selectedAsset: 1,
         setSelectedAsset: vi.fn(),
     }))
 }));
