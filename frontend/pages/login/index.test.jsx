@@ -31,7 +31,6 @@ describe('Login Page Integration', () => {
     });
 
     it('renders toast when user not found', async () => {
-
         const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValueOnce({
             ok: false,
             status: 404,
@@ -55,6 +54,34 @@ describe('Login Page Integration', () => {
         await userEvent.click(submitButton);
 
         expect(await screen.findByText(/user not found/i)).toBeInTheDocument();
+
+        mockFetch.mockRestore();
+    });
+
+    it('renders toast when password is invalid', async () => {
+        const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+            ok: false,
+            status: 404,
+            json: async () => ({ message: 'Invalid password' }),
+        });
+        
+        render(
+            <ToastProvider>
+                <Toaster />
+                <FlashMessageListener />
+                <LoginPage />
+            </ToastProvider>
+        );
+
+        const usernameInput = screen.getByPlaceholderText('Username');
+        const passwordInput = screen.getByPlaceholderText('Password');
+        const submitButton = screen.getByRole('button', { name: /submit/i });
+
+        await userEvent.type(usernameInput, 'dawid');
+        await userEvent.type(passwordInput, '123');
+        await userEvent.click(submitButton);
+
+        expect(await screen.findByText(/invalid password/i)).toBeInTheDocument();
 
         mockFetch.mockRestore();
     });
