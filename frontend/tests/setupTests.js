@@ -15,13 +15,6 @@ vi.mock('next/router', () => ({
     }))
 }));
 
-vi.mock('react-hot-toast', () => ({
-    default: {
-        success: vi.fn(),
-        error: vi.fn(),
-    },
-}));
-
 vi.mock('../context/AuthContext', () => ({
     useAuth: vi.fn(() => ({
         user: {

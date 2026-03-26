@@ -4,6 +4,13 @@ import { render, screen } from "@testing-library/react";
 import MarketBuyForm from './MarketBuyForm';
 import { useToast } from '../../context/ToastContext';
 
+vi.mock('react-hot-toast', () => ({
+    default: {
+        success: vi.fn(),
+        error: vi.fn(),
+    },
+}));
+
 describe('MarketBuyForm Component', () => {
     const mockWalletBalance = 100;
     const mockAssetInfo = {
