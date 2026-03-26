@@ -21,7 +21,8 @@ vi.mock('../context/AuthContext', () => ({
             userId: 1,
             username: 'dawid',
             email: 'dawid@wp.pl'
-        }
+        },
+        login: vi.fn()
     }))
 }));
 
