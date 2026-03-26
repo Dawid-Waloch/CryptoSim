@@ -11,7 +11,6 @@ vi.mock('react-hot-toast', () => ({
     },
 }));
 
-
 describe('FlashMessageListener Component', () => {
     const mockClearFlashMessage = vi.fn();
 
