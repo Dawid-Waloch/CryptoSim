@@ -1,21 +1,9 @@
 import { useEffect, useState } from "react";
+import { useToast } from "../../context/ToastContext";
+import { useAuth } from "../../context/AuthContext";
 import Navbar from "../../components/Navbar/Navbar";
 import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
-import { useToast } from "../../context/ToastContext";
-import MarketAssets from "../../components/MarketAssets/MarketAssets";
-import PriceChart from "../../components/PriceChart/PriceChart";
-import MarketBuyForm from "../../components/MarketBuyForm/MarketBuyForm";
-import { useAuth } from "../../context/AuthContext";
-import {
-    MarketContainer,
-    MarketInfo,
-    AssetsCard,
-    AssetsText,
-    AssetsChartCard,
-    AssetsChartText,
-    FormCard,
-    FormText,
-} from "./styles";
+import MarketContainer from "../../components/MarketContainer/MarketContainer";
 
 const Market = () => {
     const [marketAssets, setMarketAssets] = useState([]);
@@ -122,22 +110,13 @@ const Market = () => {
     return (
         <ProtectedRoute>
             <Navbar />
-            <MarketContainer>
-                <MarketInfo>
-                    <AssetsCard>
-                        <AssetsText>Stocks & Assets:</AssetsText>
-                        <MarketAssets marketAssets={marketAssets} setSelectedAsset={setSelectedAsset} />
-                    </AssetsCard>
-                    <AssetsChartCard>
-                        <AssetsChartText>Price chart:</AssetsChartText>
-                        <PriceChart assetInfo={assetInfo} assetPriceHistory={assetPriceHistory} />
-                    </AssetsChartCard>
-                    <FormCard>
-                        <FormText>Buy form:</FormText>
-                        <MarketBuyForm walletBalance={usdWallet.balance} assetInfo={assetInfo} />
-                    </FormCard>
-                </MarketInfo>
-            </MarketContainer>
+            <MarketContainer
+                marketAssets={marketAssets}
+                setSelectedAsset={setSelectedAsset}
+                assetInfo={assetInfo}
+                assetPriceHistory={assetPriceHistory}
+                usdWallet={usdWallet}
+            />
         </ProtectedRoute>
     )
 }
