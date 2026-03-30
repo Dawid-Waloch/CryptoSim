@@ -72,8 +72,7 @@ describe('Market Page Integration', () => {
             />
         );
 
-        const buttons = screen.getAllByRole('button');
-        const xrpButton = buttons[0];
+        const xrpButton = screen.getByRole('button', { name: /xrp/i });
         
         await userEvent.click(xrpButton);
 
