@@ -21,4 +21,17 @@ describe('Profile Page Integration', () => {
         expect(screen.getByText(/user info:/i)).toBeInTheDocument();
         expect(screen.getByText(/simulation:/i)).toBeInTheDocument();
     });
+
+    it('renders correct user info', () => {
+        render(
+            <ProfileContainer
+                handleLogout={mockHandleLogout}
+                usdWallet={mockUSDWallet}
+                resetSimulation={mockResetSimulation}
+            />
+        );
+
+        expect(screen.getByText('dawid')).toBeInTheDocument();
+        expect(screen.getByText('dawid@wp.pl')).toBeInTheDocument();
+    });
 });
