@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import MarketContainer from "../../components/MarketContainer/MarketContainer";
 import userEvent from "@testing-library/user-event";
+import { useAsset } from "../../context/AssetContext";
+import MarketContainer from "../../components/MarketContainer/MarketContainer";
 
 vi.mock('lightweight-charts', () => ({
     createChart: vi.fn(() => ({
@@ -54,5 +55,33 @@ describe('Market Page Integration', () => {
         expect(screen.getByText(/stocks & assets/i)).toBeInTheDocument();
         expect(screen.getByText(/price chart/i)).toBeInTheDocument();
         expect(screen.getByText(/buy form/i)).toBeInTheDocument();
+    });
+
+    it('calls correct asset info after clicking specific asset from list', async () => {
+        vi.mocked(useAsset).mockReturnValue({
+            setSelectedAsset: mockSetSelectedAsset
+        });
+
+        render(
+            <MarketContainer
+                marketAssets={mockMarketAssets}
+                setSelectedAsset={mockSetSelectedAsset}
+                assetInfo={mockAssetInfo}
+                assetPriceHistory={mockAssetPriceHistory}
+                usdWallet={mockUSDWallet}
+            />
+        );
+
+        const buttons = screen.getAllByRole('button');
+        const xrpButton = buttons[0];
+        
+        await userEvent.click(xrpButton);
+
+        expect(mockSetSelectedAsset).toHaveBeenCalledWith({
+            assetId: mockMarketAssets[0].id,
+            name: mockMarketAssets[0].name,
+            symbol: mockMarketAssets[0].symbol,
+            currentPrice: mockMarketAssets[0].currentPrice
+        });
     });
 });
