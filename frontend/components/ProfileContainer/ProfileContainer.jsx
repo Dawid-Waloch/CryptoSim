@@ -42,12 +42,12 @@ const ProfileContainer = ({ handleLogout, usdWallet, resetSimulation }) => {
                         <InfoSpan>
                             <AccountBalanceWalletIcon />
                             <BoldSpan>Balance:</BoldSpan>
-                            <span>{Number(usdWallet.balance).toFixed(2)}$</span>
+                            <span data-testid="wallet-balance">{Number(usdWallet.balance).toFixed(2)}$</span>
                         </InfoSpan>
                         <InfoSpan>
                             <AccountBalanceWalletIcon />
                             <BoldSpan>Start Balance:</BoldSpan>
-                            <span>{Number(100).toFixed(2)}$</span>
+                            <span  data-testid="start-balance">{Number(100).toFixed(2)}$</span>
                         </InfoSpan>
                         <Button onClick={resetSimulation}>Reset Simulation</Button>
                     </SimulationBody>
