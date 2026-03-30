@@ -1,22 +1,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useToast } from "../../context/ToastContext";
+import { useAuth } from "../../context/AuthContext";
 import Navbar from "../../components/Navbar/Navbar";
 import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute"
-import { useAuth } from "../../context/AuthContext";
-import { useToast } from "../../context/ToastContext";
-import { PersonIcon, EmailIcon, AccountBalanceWalletIcon } from "../../icons";
-import {
-    BoldSpan,
-    Button,
-    InfoSpan,
-    ProfileContainer,
-    SimulationBody,
-    SimulationCard,
-    SimulationText,
-    UserInfoBody,
-    UserInfoCard,
-    UserInfoText
-} from "./styles";
+import ProfileContainer from "../../components/ProfileContainer/ProfileContainer";
 
 const Profile = () => {
     const [wallets, setWallets] = useState([]);
@@ -24,7 +12,7 @@ const Profile = () => {
     const { user, logout } = useAuth();
     const router = useRouter();
 
-    const { username, userId, email } = user || {};
+    const { userId } = user || {};
 
     useEffect(() => {
         if(!userId) return;
@@ -91,40 +79,11 @@ const Profile = () => {
     return (
         <ProtectedRoute>
             <Navbar />
-            <ProfileContainer>
-                <UserInfoCard>
-                    <UserInfoText>User Info:</UserInfoText>
-                    <UserInfoBody>
-                        <InfoSpan>
-                            <PersonIcon />
-                            <BoldSpan>Username:</BoldSpan>
-                            <span>{username}</span>
-                        </InfoSpan>
-                        <InfoSpan>
-                            <EmailIcon />
-                            <BoldSpan>E-mail:</BoldSpan>
-                            <span>{email}</span>
-                        </InfoSpan>
-                        <Button onClick={handleLogout}>Logout</Button>
-                    </UserInfoBody>
-                </UserInfoCard>
-                <SimulationCard>
-                    <SimulationText>Simulation:</SimulationText>
-                    <SimulationBody>
-                        <InfoSpan>
-                            <AccountBalanceWalletIcon />
-                            <BoldSpan>Balance:</BoldSpan>
-                            <span>{Number(usdWallet.balance).toFixed(2)}$</span>
-                        </InfoSpan>
-                        <InfoSpan>
-                            <AccountBalanceWalletIcon />
-                            <BoldSpan>Start Balance:</BoldSpan>
-                            <span>{Number(100).toFixed(2)}$</span>
-                        </InfoSpan>
-                        <Button onClick={resetSimulation}>Reset Simulation</Button>
-                    </SimulationBody>
-                </SimulationCard>
-            </ProfileContainer>
+            <ProfileContainer
+                handleLogout={handleLogout}
+                usdWallet={usdWallet}
+                resetSimulation={resetSimulation}
+            />
         </ProtectedRoute>
     )
 }
