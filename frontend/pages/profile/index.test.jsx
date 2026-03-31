@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ProfileContainer from "../../components/ProfileContainer/ProfileContainer";
+import userEvent from "@testing-library/user-event";
 
 describe('Profile Page Integration', () => {
     const mockUSDWallet = { balance: 90, currency: 'USD', id: 9, isActive: true, lockedBalance: 0 };
@@ -48,5 +49,20 @@ describe('Profile Page Integration', () => {
 
         expect(screen.getByTestId('wallet-balance')).toHaveTextContent(mockUSDWallet.balance);
         expect(screen.getByTestId('start-balance')).toHaveTextContent(mockStartBalance);
+    });
+
+    it('executes function properly when user is clicking logout button', async () => {
+        render(
+            <ProfileContainer
+                handleLogout={mockHandleLogout}
+                usdWallet={mockUSDWallet}
+                resetSimulation={mockResetSimulation}
+            />
+        );
+
+        const logoutButton = screen.getByRole('button', { name: /logout/i });
+        await userEvent.click(logoutButton);
+
+        expect(mockHandleLogout).toHaveBeenCalled();
     });
 });
