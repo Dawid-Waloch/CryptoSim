@@ -65,4 +65,19 @@ describe('Profile Page Integration', () => {
 
         expect(mockHandleLogout).toHaveBeenCalled();
     });
+
+    it('executes function properly when user is clicking reset simulation button', async () => {
+        render(
+            <ProfileContainer
+                handleLogout={mockHandleLogout}
+                usdWallet={mockUSDWallet}
+                resetSimulation={mockResetSimulation}
+            />
+        );
+
+        const resetSimulationButton = screen.getByRole('button', { name: /reset simulation/i });
+        await userEvent.click(resetSimulationButton);
+
+        expect(mockResetSimulation).toHaveBeenCalled();
+    });
 });
