@@ -64,6 +64,7 @@ describe('Profile Page Integration', () => {
         await userEvent.click(logoutButton);
 
         expect(mockHandleLogout).toHaveBeenCalled();
+        expect(mockHandleLogout).toHaveBeenCalledTimes(1);
     });
 
     it('executes function properly when user is clicking reset simulation button', async () => {
@@ -79,5 +80,6 @@ describe('Profile Page Integration', () => {
         await userEvent.click(resetSimulationButton);
 
         expect(mockResetSimulation).toHaveBeenCalled();
+        expect(mockResetSimulation).toHaveBeenCalledTimes(1);
     });
 });
