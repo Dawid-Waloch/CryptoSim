@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useToast } from "../../context/ToastContext";
@@ -15,6 +15,10 @@ describe('Register Page Integration', () => {
     const mockSetFlashMessage = vi.fn();
 
     const mockPush = vi.fn();
+
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
 
     it('renders all kind of errors', async () => {
         render(<RegisterPage />);
@@ -68,5 +72,37 @@ describe('Register Page Integration', () => {
         });
 
         expect(mockPush).toHaveBeenCalledWith('/login');
+    });
+
+    it('renders error toast when users username already exist', async () => {
+        vi.mocked(useToast).mockReturnValue({
+            setFlashMessage: mockSetFlashMessage
+        });
+
+        render(<RegisterPage />);
+
+        fetch.mockResolvedValueOnce({
+            ok: false,
+            json: async () => ({ message: 'Username already exists' })
+        });
+
+        const usernameInput = screen.getByPlaceholderText('Username');
+        const emailInput = screen.getByPlaceholderText('E-mail');
+        const passwordInput = screen.getByPlaceholderText('Password');
+        const repeatPasswordInput = screen.getByPlaceholderText('Repeat password');
+        const submitButton = screen.getByRole('button', { name: /submit/i });
+
+        await userEvent.type(usernameInput, mockUser.username);
+        await userEvent.type(emailInput, mockUser.email);
+        await userEvent.type(passwordInput, mockUser.password);
+        await userEvent.type(repeatPasswordInput, mockUser.password);
+        await userEvent.click(submitButton);
+
+        await waitFor(() => {
+            expect(mockSetFlashMessage).toHaveBeenCalledWith({
+                type: 'error',
+                message: 'Username already exists'
+            });
+        });
     });
 });
