@@ -25,16 +25,19 @@ CryptoSim enables users to:
 ├── .prettierrc
 ├── next.config.mjs
 ├── package.json
-└── README.md
+├── README.md
+└── vitest.config.js
 ```
 
 ### Technology Stack
-| Layer    | Technologies                    |
-| -------- | ------------------------------- |
-| Frontend | React / Next.js                 |
-| Backend  | Java, Spring Boot, Maven        |
-| Styling  | CSS, Styled Components          |
-| Database | PostgreSQL (local instance)     |
+| Layer    | Technologies                                   |
+| -------- | -----------------------------------------------|
+| Frontend | React / Next.js                                |
+| Backend  | Java, Spring Boot, Maven                       |
+| Styling  | CSS, Styled Components                         |
+| Database | PostgreSQL (local instance)                    |
+| Unit/Integration Testing | Vitest, React Testing Library  |
+| E2E Testing | Playwright |
 
 ### Application Overview
 > Screenshots will be added when the project will be finished
@@ -78,6 +81,22 @@ CryptoSim enables users to:
     npm install
     npm run dev
     ```
+### How to run tests
+
+**Run unit & integration tests**
+```bash
+npm run test
+```
+
+**Run tests in watch mode**
+```bash
+npm run test:watch
+```
+
+**Run E2E tests**
+```bash
+npm run test:e2e
+```
 
 ### Database
 
