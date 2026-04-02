@@ -108,4 +108,33 @@ describe('Register Page Integration', () => {
             });
         });
     });
+
+    it('renders error when the request fails completely', async () => {
+        vi.mocked(useToast).mockReturnValue({
+            setFlashMessage: mockSetFlashMessage
+        });
+
+        render(<RegisterPage />);
+
+        fetch.mockRejectedValueOnce(new Error('Failed to fetch'));
+
+        const usernameInput = screen.getByPlaceholderText('Username');
+        const emailInput = screen.getByPlaceholderText('E-mail');
+        const passwordInput = screen.getByPlaceholderText('Password');
+        const repeatPasswordInput = screen.getByPlaceholderText('Repeat password');
+        const submitButton = screen.getByRole('button', { name: /submit/i });
+
+        await userEvent.type(usernameInput, mockUser.username);
+        await userEvent.type(emailInput, mockUser.email);
+        await userEvent.type(passwordInput, mockUser.password);
+        await userEvent.type(repeatPasswordInput, mockUser.password);
+        await userEvent.click(submitButton);
+
+        await waitFor(() => {
+            expect(mockSetFlashMessage).toHaveBeenCalledWith({
+                type: 'error',
+                message: 'Failed to fetch'
+            });
+        });
+    });
 });
