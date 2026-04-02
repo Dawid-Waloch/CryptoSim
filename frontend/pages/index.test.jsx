@@ -11,4 +11,16 @@ describe('Landing Page Integration', () => {
 
         expect(link).toHaveAttribute('href', '/dashboard');
     });
+
+    it('redirects to login page when user is not logged', async () => {
+        vi.mocked(useAuth).mockReturnValue({
+            user: null
+        });
+
+        render(<LandingPage />);
+
+        const link = screen.getByRole('link', { name: /start trading/i });
+
+        expect(link).toHaveAttribute('href', '/login');
+    });
 });
