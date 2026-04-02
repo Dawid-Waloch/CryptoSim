@@ -77,7 +77,7 @@ describe('Register Page Integration', () => {
     it.each([
         { typeOfData: 'email'},
         { typeOfData: 'username'}
-    ])('renders error toast when users $typeOfData already exist', async () => {
+    ])('renders error toast when users $typeOfData already exist', async ({ typeOfData }) => {
         vi.mocked(useToast).mockReturnValue({
             setFlashMessage: mockSetFlashMessage
         });
@@ -86,7 +86,7 @@ describe('Register Page Integration', () => {
 
         fetch.mockResolvedValueOnce({
             ok: false,
-            json: async () => ({ message: '$typeOfData already exists' })
+            json: async () => ({ message: `${typeOfData} already exists` })
         });
 
         const usernameInput = screen.getByPlaceholderText('Username');
@@ -104,7 +104,7 @@ describe('Register Page Integration', () => {
         await waitFor(() => {
             expect(mockSetFlashMessage).toHaveBeenCalledWith({
                 type: 'error',
-                message: '$typeOfData already exists'
+                message: `${typeOfData} already exists`
             });
         });
     });
