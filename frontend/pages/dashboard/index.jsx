@@ -2,26 +2,9 @@ import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { useAuth } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
-import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
-import WalletDropdown from "../../components/WalletDropdown/WalletDropdown";
-import AssetsTable from "../../components/AssetsTable/AssetsTable";
-import RecentTransactionsTable from "../../components/RecentTransactionsTable/RecentTransactionsTable";
-import EmptyTable from "../../components/EmptyTable/EmptyTable";
-import {
-    BalanceCard,
-    BalanceInfo,
-    BalanceText,
-    DasboardContainer,
-    DashboardInfo,
-    MarketOverviewCard,
-    MarketOverviewText,
-    PriceChartCard,
-    PriceChartText,
-    RecentTransactionsCard,
-    RecentTransactionsText,
-} from "./styles";
-import PriceChart from "../../components/PriceChart/PriceChart";
 import { useAsset } from "../../context/AssetContext";
+import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
+import DashboardContainer from "../../components/DashboardContainer/DashboardContainer";
 
 const Dashboard = () => {
     const [wallets, setWallets] = useState([]);
@@ -32,7 +15,7 @@ const Dashboard = () => {
     const { setFlashMessage } = useToast();
     const { selectedAsset } = useAsset();
 
-    const { username, userId } = user || {};
+    const { userId } = user || {};
 
     useEffect(() => {
         if(!userId) return;
@@ -151,50 +134,13 @@ const Dashboard = () => {
     return (
         <ProtectedRoute>
             <Navbar />
-            <DasboardContainer>
-                <h2>Welcome, {username}!</h2>
-                <DashboardInfo>
-                    <BalanceCard>
-                        <BalanceText>Account Balance:</BalanceText>
-                        <BalanceInfo>
-                            {wallets.length > 0 ? (
-                                <WalletDropdown wallets={wallets} />
-                            ) : (
-                                <div>You don't have any wallet</div>
-                            )}
-                        </BalanceInfo>
-                    </BalanceCard>
-                    <PriceChartCard>
-                        <PriceChartText>Price chart:</PriceChartText>
-                        <PriceChart
-                            assetInfo={assetInfo}
-                            assetPriceHistory={assetPriceHistory}
-                        />
-                    </PriceChartCard>
-                    <MarketOverviewCard>
-                        <MarketOverviewText>Market Overview:</MarketOverviewText>
-                        {assetsWallet.length > 0 ? (
-                            <AssetsTable assetsWallet={assetsWallet} wallets={wallets} />
-                        ) : (
-                            <EmptyTable
-                                cells={["Asset", "Quantity", "Current Price", "Value", "Buy", "Sell"]}
-                                message={"You don't have any bought assets"}
-                            />
-                        )}
-                    </MarketOverviewCard>
-                    <RecentTransactionsCard>
-                        <RecentTransactionsText>Recent Transactions:</RecentTransactionsText>
-                        {recentTransactions.length > 0 ? (
-                            <RecentTransactionsTable recentTransactions={recentTransactions} />
-                        ) : (
-                            <EmptyTable
-                                cells={["Date", "Asset Name", "Price", "Quantity", "Value", "Type"]}
-                                message={"You don't have any transactions"}
-                            />
-                        )}
-                    </RecentTransactionsCard>
-                </DashboardInfo>
-            </DasboardContainer>
+            <DashboardContainer
+                wallets={wallets}
+                assetsWallet={assetsWallet}
+                assetInfo={assetInfo}
+                assetPriceHistory={assetPriceHistory}
+                recentTransactions={recentTransactions}
+            />
         </ProtectedRoute>
     );
 };

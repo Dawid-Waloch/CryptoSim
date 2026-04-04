@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Button as BaseButton } from "../../components/ModalWindow/ModalWindowStyled";
+import { Button as BaseButton } from "../ModalWindow/ModalWindowStyled";
 
-export const ProfileContainer = styled.div`
+export const ProfileWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;

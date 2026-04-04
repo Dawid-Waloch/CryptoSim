@@ -4,6 +4,13 @@ import { render, waitFor } from "@testing-library/react";
 import { useToast } from "../../context/ToastContext";
 import FlashMessageListener from "./FlashMessageListener";
 
+vi.mock('react-hot-toast', () => ({
+    default: {
+        success: vi.fn(),
+        error: vi.fn(),
+    },
+}));
+
 describe('FlashMessageListener Component', () => {
     const mockClearFlashMessage = vi.fn();
 
