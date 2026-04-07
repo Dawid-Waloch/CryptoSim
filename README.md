@@ -40,7 +40,7 @@ CryptoSim enables users to:
 | E2E Testing | Playwright |
 
 ### Application Overview
-> Screenshots will be added when the project will be finished
+https://github.com/user-attachments/assets/64340665-c095-4108-9a36-01aa96a97368
 
 ### Getting Started (Local Development)
 **Prerequisites**
