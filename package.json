@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
     "dev": "next dev frontend",
     "build": "next build frontend",
     "start": "next start frontend",
