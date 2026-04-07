@@ -7,6 +7,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
     "dev": "next dev frontend",
     "build": "next build frontend",
     "start": "next start frontend",
