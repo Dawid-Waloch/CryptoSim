@@ -83,6 +83,7 @@ const LoginPage = () => {
                                 <span>Username:</span>
                             </Label>
                             <Input
+                                data-testid="login-username-input"
                                 type="text"
                                 placeholder="Username"
                                 value={username}
@@ -96,6 +97,7 @@ const LoginPage = () => {
                                 <span>Password:</span>
                             </Label>
                             <Input
+                                data-testid="login-password-input"
                                 type="password"
                                 placeholder="Password"
                                 value={password}
@@ -104,7 +106,7 @@ const LoginPage = () => {
                             <ErrorContainer>{getError("password")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
-                            <Button type="submit">Submit</Button>
+                            <Button data-testid="login-submit-btn" type="submit">Submit</Button>
                         </FieldContainer>
                     </form>
                 </FormContainer>
