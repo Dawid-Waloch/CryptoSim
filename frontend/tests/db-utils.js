@@ -18,3 +18,10 @@ export const registerAndloginTestUser = async ({ request }) => {
 
     return { user };
 };
+
+export const deleteTestUser = async ({ request }) => {
+    const { user } = await registerAndloginTestUser({ request });
+
+    await request.delete(`http://localhost:8080/api/users/${user.username}`);
+}
+
