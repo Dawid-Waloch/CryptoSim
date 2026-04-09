@@ -14,14 +14,16 @@ export const registerAndloginTestUser = async ({ request }) => {
 
     await request.post('http://localhost:8080/api/register', { data: user });
 
-    await request.post('http://localhost:8080/api/login', { data: { username: user.username, password: user.password }});
+    await request.post('http://localhost:8080/api/login', {
+        data: { username: user.username, password: user.password }
+    });
 
     return { user };
 };
 
-export const deleteTestUser = async ({ request }) => {
-    const { user } = await registerAndloginTestUser({ request });
+export const deleteTestUser = async ({ request, username }) => {
+    if (!username) throw new Error('Username is required to delete user');
 
-    await request.delete(`http://localhost:8080/api/users/${user.username}`);
+    await request.delete(`http://localhost:8080/api/users/${username}`);
 }
 
