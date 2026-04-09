@@ -52,4 +52,13 @@ public class UserService {
     public User getUserById(Long userId){
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User doesn't exists"));
     }
+
+    public boolean deleteByUsername(String username) {
+        if (!userRepository.existsByUsername(username)) {
+            return false;
+        }
+
+        userRepository.deleteByUsername(username);
+        return true;
+    }
 }
