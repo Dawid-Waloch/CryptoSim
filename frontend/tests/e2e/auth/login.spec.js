@@ -29,5 +29,6 @@ test.describe('Login', () => {
         await page.getByTestId('login-password-input').fill('wrongUser123');
         await page.getByTestId('login-submit-btn').click();
         await expect(page.getByText(/user not found/i)).toBeVisible({ timeout: 4000 });
+        await expect(page).toHaveURL('/login');
     });
 });
