@@ -12,7 +12,7 @@ test.describe('Register', () => {
         await deleteTestUser({ request, username: mockUser.username });
     });
 
-    test('Register user with valid credentials', async ({ page, request }) => {
+    test('registers user with valid credentials', async ({ page }) => {
         await page.goto('/register');
         await page.getByTestId('register-username-input').fill(mockUser.username);
         await page.getByTestId('register-email-input').fill(mockUser.email);
@@ -21,5 +21,24 @@ test.describe('Register', () => {
         await page.getByTestId('register-submit-btn').click();
 
         await expect(page.getByText(/registration success/i)).toBeVisible({ timeout: 4000 });
+        await expect(page).toHaveURL('/login');
+    });
+
+    test('registers user with already existing username', async ({ page }) => {
+        await page.goto('/register');
+        await page.getByTestId('register-username-input').fill(mockUser.username);
+        await page.getByTestId('register-email-input').fill(mockUser.email);
+        await page.getByTestId('register-password-input').fill(mockUser.password);
+        await page.getByTestId('register-repeat-password-input').fill(mockUser.password);
+        await page.getByTestId('register-submit-btn').click();
+        
+        await page.goto('/register');
+        await page.getByTestId('register-username-input').fill(mockUser.username);
+        await page.getByTestId('register-email-input').fill(mockUser.email);
+        await page.getByTestId('register-password-input').fill(mockUser.password);
+        await page.getByTestId('register-repeat-password-input').fill(mockUser.password);
+        await page.getByTestId('register-submit-btn').click();
+        
+        await expect(page.getByText(/username already exists/i)).toBeVisible();
     });
 });
