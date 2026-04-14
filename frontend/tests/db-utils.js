@@ -1,4 +1,4 @@
-const createUser = () => {
+export const createUser = () => {
     const id = Date.now();
 
     return {
