@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { deleteTestUser, registerAndloginTestUser } from '../../db-utils';
+import { deleteTestUser, registerTestUser } from '../../db-utils';
 
 test.describe('Login', () => {
     let testUser;
 
     test.beforeAll(async ({ request }) => {
-        testUser = await registerAndloginTestUser({ request });
+        testUser = await registerTestUser({ request });
     });
 
     test.afterAll(async ({ request }) => {
