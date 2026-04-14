@@ -2,11 +2,15 @@ import { test, expect } from '@playwright/test';
 import { createUser, deleteTestUser } from '../../db-utils';
 
 test.describe('Register', () => {
-    const mockUser = createUser();
+    let mockUser;
+
+    test.beforeEach(async () => {
+        mockUser = createUser();
+    });
 
     test.afterEach(async ({ request }) => {
         await deleteTestUser({ request, username: mockUser.username });
-    })
+    });
 
     test('Register user with valid credentials', async ({ page, request }) => {
         await page.goto('/register');
