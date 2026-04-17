@@ -74,7 +74,7 @@ const LoginPage = () => {
                 <FormContainer>
                     <FormName>
                         <LoginIcon />
-                        <span>Login</span>
+                        <span data-testid='login-span'>Login</span>
                     </FormName>
                     <form onSubmit={handleSubmit}>
                         <FieldContainer>
