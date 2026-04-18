@@ -19,13 +19,14 @@ test.describe('Landing - logged in', () => {
     let testUser;
 
     test.beforeEach(async ({ request, page }) => {
-        testUser = await registerAndLoginTestUser({ request, page });
+        const { user } = await registerAndLoginTestUser({ request, page });
+        testUser = user;
     });
 
     test.afterEach(async ({ request }) => {
         await deleteTestUser({
             request,
-            username: testUser.user.username
+            username: testUser.username
         });
     });
 
