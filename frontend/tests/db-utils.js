@@ -22,11 +22,21 @@ export const registerAndLoginTestUser = async ({ request, page }) => {
 
     await request.post('http://localhost:8080/api/register', { data: user });
 
-    await page.addInitScript((user) => {
-        localStorage.setItem('userInfo', JSON.stringify(user));
-    }, user);
+    const response = await request.post('http://localhost:8080/api/login', {
+        data: { username: user.username, password: user.password }
+    });
 
-    return { user };
+    const data = await response.json();
+
+    await page.addInitScript((data) => {
+        localStorage.setItem('userInfo', JSON.stringify({
+            username: data.username,
+            userId: data.userId,
+            email: data.email
+        }));
+    }, data);
+
+    return { user, data };
 };
 
 export const deleteTestUser = async ({ request, username }) => {
