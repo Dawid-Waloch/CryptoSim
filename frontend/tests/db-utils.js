@@ -17,14 +17,14 @@ export const registerTestUser = async ({ request }) => {
     return { user };
 };
 
-export const registerAndLoginTestUser = async ({ request }) => {
+export const registerAndLoginTestUser = async ({ request, page }) => {
     const user = createUser();
 
     await request.post('http://localhost:8080/api/register', { data: user });
 
-    await request.post('http://localhost:8080/api/login', {
-        data: { username: user.username, password: user.password }
-    });
+    await page.addInitScript((user) => {
+        localStorage.setItem('userInfo', JSON.stringify(user));
+    }, user);
 
     return { user };
 };
