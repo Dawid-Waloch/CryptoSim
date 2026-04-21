@@ -17,7 +17,7 @@ export const registerTestUser = async ({ request }) => {
     return { user };
 };
 
-export const registerAndLoginTestUser = async ({ request, page }) => {
+export const registerAndLoginTestUser = async ({ request }) => {
     const user = createUser();
 
     await request.post('http://localhost:8080/api/register', { data: user });
@@ -27,14 +27,6 @@ export const registerAndLoginTestUser = async ({ request, page }) => {
     });
 
     const data = await response.json();
-
-    await page.addInitScript((data) => {
-        localStorage.setItem('userInfo', JSON.stringify({
-            username: data.username,
-            userId: data.userId,
-            email: data.email
-        }));
-    }, data);
 
     return { user, data };
 };
