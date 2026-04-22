@@ -18,8 +18,8 @@ test.describe('Landing - logged out', () => {
 test.describe('Landing - logged in', () => {
     let testUser;
 
-    test.beforeEach(async ({ request }) => {
-        const { user } = await registerAndLoginTestUser({ request });
+    test.beforeEach(async ({ request, page }) => {
+        const { user } = await registerAndLoginTestUser({ request, page });
         testUser = user;
     });
 
