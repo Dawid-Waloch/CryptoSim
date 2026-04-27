@@ -41,8 +41,14 @@ test.describe('Dashboard', () => {
 
     test('renders data correctly', async ({ page }) => {
         await page.goto('/dashboard');
+
         await page.getByTestId('dashboard-select').click();
         await page.getByTestId('dashboard-menu-item').click();
         await expect(page.getByTestId('dashboard-wallet-balance')).toContainText(walletBalanceAfterBuy.toString());
+
+        await expect(page.getByTestId('dashboard-overview-asset-name')).toContainText(asset.name);
+
+        await expect(page.getByTestId('dashboard-transactions-asset-name')).toContainText(asset.name);
+        await expect(page.getByTestId('dashboard-transactions-op-type')).toContainText(/buy/i);
     });
 });

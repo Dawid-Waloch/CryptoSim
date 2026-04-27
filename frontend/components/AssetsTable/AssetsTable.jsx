@@ -104,7 +104,7 @@ const AssetsTable = ({ assetsWallet, wallets }) => {
                     {assetsWallet.map((asset, id) => (
                         <TableRowStyled key={id} onClick={() => setSelectedAsset(asset.assetId)}>
                             <TableCell>
-                                <AssetNameSpan>
+                                <AssetNameSpan data-testid="dashboard-overview-asset-name">
                                     <TokenIcon symbol={asset.symbol} variant="branded" size={40} />
                                     {asset.name}
                                 </AssetNameSpan>
