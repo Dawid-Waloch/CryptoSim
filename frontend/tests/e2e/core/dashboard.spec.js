@@ -30,6 +30,7 @@ test.describe('Dashboard', () => {
     
     test('loads dashboard correctly', async ({ page }) => {
         await page.goto('/dashboard');
+        
         await expect(page.getByText(/welcome/i)).toBeVisible();
     });
 
