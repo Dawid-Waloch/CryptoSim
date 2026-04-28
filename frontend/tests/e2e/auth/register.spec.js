@@ -4,7 +4,7 @@ import { createUser, deleteTestUser } from '../../db-utils';
 test.describe('Register', () => {
     let mockUser;
 
-    test.beforeEach(async () => {
+    test.beforeEach(() => {
         mockUser = createUser();
     });
 
