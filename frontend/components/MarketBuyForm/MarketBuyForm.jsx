@@ -73,7 +73,7 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
     return (
         <MarketBuyFormContainer>
             <MarketBuyFormHeader>
-                <span>Buy {name} Asset</span>
+                <span data-testid="market-asset-name-buy-span">Buy {name} Asset</span>
                 <span>{String(symbol).toUpperCase()}</span>
             </MarketBuyFormHeader>
             <MarketBuyFormBody>

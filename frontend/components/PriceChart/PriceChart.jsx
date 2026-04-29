@@ -85,7 +85,7 @@ const PriceChart = ({ assetInfo, assetPriceHistory }) => {
             <AssetTitleChart>
                 <TokenIcon symbol={symbol} variant="branded" size={55} />
                 <AssetInfoChart>
-                    <AssetName>{name}</AssetName>
+                    <AssetName data-testid="market-chart-asset-name">{name}</AssetName>
                     <AssetPriceContainer data-testid='price-info'>
                         <AssetPrice>{Number(currentPrice).toFixed(2)}</AssetPrice>
                         {percentageChange >= 0 ? (

@@ -72,4 +72,17 @@ test.describe('Market', () => {
 
         await expect(page.getByText(/you don't have enough money to buy that asset/i)).toBeVisible();
     });
+
+    test('renders all components correctly when user clicks specific asset', async ({ page, marketSetup }) => {
+        const { assetsList } = marketSetup;
+        const firstAsset = assetsList[0];
+
+        await page.goto('/market');
+
+        await page.getByTestId('market-asset-container').first().click();
+
+        await expect(page.getByTestId('market-asset-name-buy-span')).toContainText(firstAsset.name);
+        
+        await expect(page.getByTestId('market-chart-asset-name')).toContainText(firstAsset.name);
+    });
 });
