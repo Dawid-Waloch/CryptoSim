@@ -60,4 +60,16 @@ test.describe('Market', () => {
 
         await expect(totalCashSpan).toContainText(totalCashValueAfterBuy.toString());
     });
+
+    test('displays error when user doesnt have enough funds', async ({ page, marketSetup }) => {
+        const quantity = 100;
+        
+        await page.goto('/market');
+
+        await page.getByTestId('market-asset-container').first().click();
+        await page.getByTestId('market-quantity-input').fill(quantity.toString());
+        await page.getByTestId('market-buy-btn').click();
+
+        await expect(page.getByText(/you don't have enough money to buy that asset/i)).toBeVisible();
+    });
 });
