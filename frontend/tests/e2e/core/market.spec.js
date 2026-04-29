@@ -38,4 +38,26 @@ test.describe('Market', () => {
 
         await expect(page.getByTestId('market-asset-container')).toHaveCount(assetsList.length);
     });
+
+    test('checks if buying assets works correctly', async ({ page, marketSetup }) => {
+        const { assetsList } = marketSetup;
+        const firstAsset = assetsList[0];
+        const quantity = 2;
+        
+        await page.goto('/market');
+
+        const totalCashSpan = await page.getByTestId('market-total-cash-span');
+
+        await expect(totalCashSpan).toHaveText(/[\d.]+/);
+
+        const totalCashText = await totalCashSpan.innerText();
+        const totalCashValue = parseFloat(totalCashText.match(/[\d.]+/)?.[0] || '0');
+        const totalCashValueAfterBuy = totalCashValue - (firstAsset.currentPrice * quantity);
+
+        await page.getByTestId('market-asset-container').first().click();
+        await page.getByTestId('market-quantity-input').fill(quantity.toString());
+        await page.getByTestId('market-buy-btn').click();
+
+        await expect(totalCashSpan).toContainText(totalCashValueAfterBuy.toString());
+    });
 });
