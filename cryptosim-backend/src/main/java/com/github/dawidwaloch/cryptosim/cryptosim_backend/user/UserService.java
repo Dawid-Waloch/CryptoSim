@@ -41,15 +41,24 @@ public class UserService {
         return userRepository.findByUsername(username)
                 .map(user -> {
                     if (passwordEncoder.matches(password, user.getPassword())) {
-                        return new LoginResponseDTO(true, "Login successful", user.getUsername(), user.getId());
+                        return new LoginResponseDTO(true, "Login successful", user.getUsername(), user.getId(), user.getEmail());
                     } else {
-                        return new LoginResponseDTO(false, "Invalid password", null, null);
+                        return new LoginResponseDTO(false, "Invalid password", null, null, null);
                     }
                 })
-                .orElse(new LoginResponseDTO(false, "User not found", null, null));
+                .orElse(new LoginResponseDTO(false, "User not found", null, null, null));
     }
 
     public User getUserById(Long userId){
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User doesn't exists"));
+    }
+
+    public boolean deleteByUsername(String username) {
+        if (!userRepository.existsByUsername(username)) {
+            return false;
+        }
+
+        userRepository.deleteByUsername(username);
+        return true;
     }
 }

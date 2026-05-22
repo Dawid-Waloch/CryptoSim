@@ -36,6 +36,9 @@ public class Transaction {
     @Column(name = "created_at", nullable = false)
     LocalDateTime createdAt;
 
+    @Column(name = "disabled", nullable = false)
+    Boolean disabled;
+
     public static Transaction buy(User user, Asset asset, BigDecimal quantity, BigDecimal price){
         Transaction t = new Transaction();
         t.user = user;
@@ -44,6 +47,7 @@ public class Transaction {
         t.quantity = quantity;
         t.price = price;
         t.createdAt = LocalDateTime.now();
+        t.disabled = false;
         return t;
     }
 
@@ -55,6 +59,7 @@ public class Transaction {
         t.quantity = quantity;
         t.price = price;
         t.createdAt = LocalDateTime.now();
+        t.disabled = false;
         return t;
     }
 }

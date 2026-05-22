@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Navbar from "../../components/Navbar/Navbar";
 import { useToast } from "../../context/ToastContext";
+import { AppRegistrationIcon, EmailIcon, PersonIcon, LockIcon } from "../../icons";
 import {
     Button,
     FieldContainer,
@@ -73,11 +74,18 @@ const RegisterPage = () => {
             <Navbar />
             <RegistrationContainer>
                 <FormContainer>
-                    <FormName>Registration</FormName>
+                    <FormName>
+                        <AppRegistrationIcon />
+                        <span>Registration</span>
+                    </FormName>
                     <form onSubmit={handleSubmit}>
                         <FieldContainer>
-                            <Label htmlFor="username">Username:</Label>
+                            <Label htmlFor="username">
+                                <PersonIcon />
+                                <span>Username:</span>
+                            </Label>
                             <Input
+                                data-testid="register-username-input"
                                 type="text"
                                 placeholder="Username"
                                 value={username}
@@ -86,8 +94,12 @@ const RegisterPage = () => {
                             <ErrorContainer>{getError("username")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
-                            <Label htmlFor="email">E-mail:</Label>
+                            <Label htmlFor="email">
+                                <EmailIcon />
+                                <span>E-mail:</span>
+                            </Label>
                             <Input
+                                data-testid="register-email-input"
                                 type="email"
                                 placeholder="E-mail"
                                 value={email}
@@ -96,8 +108,12 @@ const RegisterPage = () => {
                             <ErrorContainer>{getError("email")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
-                            <Label htmlFor="password">Password:</Label>
+                            <Label htmlFor="password">
+                                <LockIcon />
+                                <span>Password:</span>
+                            </Label>
                             <Input
+                                data-testid="register-password-input"
                                 type="password"
                                 placeholder="Password"
                                 value={password}
@@ -106,8 +122,12 @@ const RegisterPage = () => {
                             <ErrorContainer>{getError("password")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
-                            <Label htmlFor="repeat_password">Repeat password:</Label>
+                            <Label htmlFor="repeat_password">
+                                <LockIcon />
+                                <span>Repeat password:</span>
+                            </Label>
                             <Input
+                                data-testid="register-repeat-password-input"
                                 type="password"
                                 placeholder="Repeat password"
                                 value={repeatPassword}
@@ -116,7 +136,7 @@ const RegisterPage = () => {
                             <ErrorContainer>{getError("repeatPassword")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
-                            <Button type="submit">Submit</Button>
+                            <Button data-testid="register-submit-btn" type="submit">Submit</Button>
                         </FieldContainer>
                     </form>
                 </FormContainer>

@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "../../context/AuthContext";
 import Navbar from "../../components/Navbar/Navbar";
 import { useToast } from "../../context/ToastContext";
+import { LoginIcon, PersonIcon, LockIcon } from "../../icons";
 import {
     Button,
     FieldContainer,
@@ -57,7 +58,7 @@ const LoginPage = () => {
             }
 
             setFlashMessage({ type: "success", message: "Login success" });
-            login({username: data.username, userId: data.userId});
+            login({username: data.username, userId: data.userId, email: data.email});
             router.push("/dashboard");
         } catch (err) {
             setFlashMessage({type: "error", message: err.message || "Server unreachable" });
@@ -71,11 +72,18 @@ const LoginPage = () => {
             <Navbar />
             <LoginContainer>
                 <FormContainer>
-                    <FormName>Login</FormName>
+                    <FormName>
+                        <LoginIcon />
+                        <span data-testid='login-span'>Login</span>
+                    </FormName>
                     <form onSubmit={handleSubmit}>
                         <FieldContainer>
-                            <Label htmlFor="username">Username:</Label>
+                            <Label htmlFor="username">
+                                <PersonIcon />
+                                <span>Username:</span>
+                            </Label>
                             <Input
+                                data-testid="login-username-input"
                                 type="text"
                                 placeholder="Username"
                                 value={username}
@@ -84,8 +92,12 @@ const LoginPage = () => {
                             <ErrorContainer>{getError("username")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
-                            <Label htmlFor="password">Password:</Label>
+                            <Label htmlFor="password">
+                                <LockIcon />
+                                <span>Password:</span>
+                            </Label>
                             <Input
+                                data-testid="login-password-input"
                                 type="password"
                                 placeholder="Password"
                                 value={password}
@@ -94,7 +106,7 @@ const LoginPage = () => {
                             <ErrorContainer>{getError("password")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
-                            <Button type="submit">Submit</Button>
+                            <Button data-testid="login-submit-btn" type="submit">Submit</Button>
                         </FieldContainer>
                     </form>
                 </FormContainer>

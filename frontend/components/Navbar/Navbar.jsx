@@ -1,5 +1,17 @@
 import { useAuth } from "../../context/AuthContext";
-import { NavbarContainer, NavLink, NavLinks, NavLogo } from "./NavbarStyled";
+import {
+    AppRegistrationIcon,
+    HomeIcon,
+    StoreIcon,
+    AccountCircleIcon,
+    LoginIcon
+} from "../../icons";
+import {
+    NavbarContainer,
+    NavLink,
+    NavLinks,
+    NavLogo
+} from "./NavbarStyled";
 
 const Navbar = () => {
     const { user } = useAuth();
@@ -12,13 +24,29 @@ const Navbar = () => {
             <NavLinks>
                 {user ? (
                     <>
-                        <NavLink href={"/dashboard"}>Dashboard</NavLink>
-                        <NavLink href={"/market"}>Market</NavLink>
+                        <NavLink href={"/dashboard"}>
+                            <HomeIcon />
+                            <span>Dashboard</span>
+                        </NavLink>
+                        <NavLink href={"/market"}>
+                            <StoreIcon />
+                            <span>Market</span>
+                        </NavLink>
+                        <NavLink href={"/profile"}>
+                            <AccountCircleIcon />
+                            <span>Profile</span>
+                        </NavLink>
                     </>
                 ): (
                     <>
-                        <NavLink href={"/login"}>Login</NavLink>
-                        <NavLink href={"/register"}>Register</NavLink>
+                        <NavLink href={"/login"}>
+                            <LoginIcon />
+                            <span>Login</span>
+                        </NavLink>
+                        <NavLink href={"/register"}>
+                            <AppRegistrationIcon />
+                            <span>Register</span>
+                        </NavLink>
                     </>
                 )}
             </NavLinks>

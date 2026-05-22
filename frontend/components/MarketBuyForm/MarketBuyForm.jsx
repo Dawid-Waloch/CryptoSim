@@ -18,7 +18,7 @@ import {
 } from "./MarketBuyFormStyled";
 
 const MarketBuyForm = ({ walletBalance, assetInfo }) => {
-    const [quantity, setQuantity] = useState(undefined);
+    const [quantity, setQuantity] = useState(0);
     const [formError, setFormError] = useState("");
     const { setFlashMessage } = useToast();
     const { user } = useAuth();
@@ -73,7 +73,7 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
     return (
         <MarketBuyFormContainer>
             <MarketBuyFormHeader>
-                <span>Buy {name} Asset</span>
+                <span data-testid="market-asset-name-buy-span">Buy {name} Asset</span>
                 <span>{String(symbol).toUpperCase()}</span>
             </MarketBuyFormHeader>
             <MarketBuyFormBody>
@@ -88,18 +88,19 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
                                 -
                             </Button>
                             <Input
+                                data-testid="market-quantity-input"
                                 type="number"
                                 min={0}
                                 placeholder="Quantity"
                                 value={quantity}
                                 onChange={(e) => {
                                     const value = e.target.value;
-                                    setQuantity(value === "" ? "" : Number(value))
+                                    setQuantity(Number(value))
                                 }}
                             />
                             <Button
                                 type="button"
-                                onClick={() => setQuantity((q) => q + 1)}
+                                onClick={() => setQuantity((q) => (Number(q) || 0) + 1)}
                             >
                                 +
                             </Button>
@@ -114,9 +115,9 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
                         <span>{((quantity || 0) * currentPrice).toFixed(2)}$</span>
                     </EstimatedCostField>
                     <TotalCashField>
-                        <span>Total Cash: {Number(walletBalance).toFixed(2)}$</span>
+                        <span data-testid="market-total-cash-span">Total Cash: {Number(walletBalance).toFixed(2)}$</span>
                     </TotalCashField>
-                    <BuyButton type="submit">Buy</BuyButton>
+                    <BuyButton data-testid="market-buy-btn" type="submit">Buy</BuyButton>
                     <ErrorContainer>{formError}</ErrorContainer>
                 </form>
             </MarketBuyFormBody>

@@ -1,5 +1,4 @@
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { ArrowDropUpIcon, ArrowDropDownIcon } from '../../icons';
 import { TokenIcon } from '@web3icons/react/dynamic'
 import {
     AssetsListContainer,
@@ -17,6 +16,8 @@ const MarketAssets = ({ marketAssets, setSelectedAsset }) => {
         <AssetsListContainer>
             {marketAssets.map((marketAsset, id) => (
                 <MarketAssetContainer
+                    data-testid="market-asset-container"
+                    role='button'
                     $id={id}
                     key={id}
                     onClick={() => setSelectedAsset({

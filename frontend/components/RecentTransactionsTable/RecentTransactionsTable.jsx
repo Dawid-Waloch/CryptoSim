@@ -1,25 +1,34 @@
 import { useEffect, useState } from "react";
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
 import { TokenIcon } from "@web3icons/react/dynamic";
-import { TableContainer, AssetNameSpan, TableCell, TypeSpan, Input } from "./RecentTransactionsStyled";
+import {
+    TableContainer,
+    AssetNameSpan,
+    TableCell,
+    TypeSpan,
+    Input
+} from "./RecentTransactionsStyled";
 
 const RecentTransactionsTable = ({ recentTransactions }) => {
-    const [filteredTransactions, setFilteredTransactions] = useState([...recentTransactions].reverse());
+    const sortedRecentTransactions = [...recentTransactions].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const [filteredTransactions, setFilteredTransactions] = useState([...sortedRecentTransactions]);
     const [assetSearch, setAssetSearch] = useState("");
 
     useEffect(() => {
         if(assetSearch.length > 0) {
-            setFilteredTransactions([...recentTransactions].filter((transaction) => 
-                transaction.name.toLowerCase().startsWith(assetSearch.toLowerCase())).reverse()
+            setFilteredTransactions([...sortedRecentTransactions].filter((transaction) => 
+                transaction.name.toLowerCase().startsWith(assetSearch.toLowerCase()))
             )
         } else {
-            setFilteredTransactions([...recentTransactions].reverse());
+            setFilteredTransactions([...sortedRecentTransactions]);
         }
     }, [assetSearch])
     
     return (
         <>
             <Input
+                type="text"
+                aria-label="Search Assets"
                 placeholder="Search Assets"
                 value={assetSearch}
                 onChange={(e) => setAssetSearch(e.target.value)}
@@ -40,21 +49,22 @@ const RecentTransactionsTable = ({ recentTransactions }) => {
                         {filteredTransactions.map((transaction, id) => {
                             const date = new Date(transaction.createdAt);
                             const formattedDate = date.toLocaleString();
+                            const isLast = id === filteredTransactions.length - 1;
 
                             return (
                                 <TableRow key={id}>
-                                    <TableCell>{formattedDate}</TableCell>
-                                    <TableCell>
-                                        <AssetNameSpan>
+                                    <TableCell $isLast={isLast}>{formattedDate}</TableCell>
+                                    <TableCell $isLast={isLast}>
+                                        <AssetNameSpan data-testid="dashboard-transactions-asset-name">
                                             <TokenIcon symbol={transaction.symbol} variant="branded" size={40} />
                                             {transaction.name}
                                         </AssetNameSpan>
                                     </TableCell>
-                                    <TableCell>{transaction.price}$</TableCell>
-                                    <TableCell>{transaction.quantity.toFixed(2)}</TableCell>
-                                    <TableCell>{transaction.value}$</TableCell>
-                                    <TableCell>
-                                        <TypeSpan type={transaction.type}>
+                                    <TableCell $isLast={isLast}>{transaction.price}$</TableCell>
+                                    <TableCell $isLast={isLast}>{transaction.quantity.toFixed(2)}</TableCell>
+                                    <TableCell $isLast={isLast}>{transaction.value}$</TableCell>
+                                    <TableCell $isLast={isLast}>
+                                        <TypeSpan data-testid="dashboard-transactions-op-type" type={transaction.type}>
                                             {transaction.type}
                                         </TypeSpan>
                                     </TableCell>

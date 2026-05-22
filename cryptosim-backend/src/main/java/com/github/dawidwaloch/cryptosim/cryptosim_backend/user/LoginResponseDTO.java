@@ -26,5 +26,11 @@ public record LoginResponseDTO(
                 description = "ID of the logged-in user (present only on success)",
                 example = "1"
         )
-        Long userId
+        Long userId,
+
+        @Schema(
+                description = "E-mail of the logged-in user (present only on success)",
+                example = "dawid@wp.pl"
+        )
+        String email
 ) {}

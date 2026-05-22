@@ -13,7 +13,8 @@ public class TransactionMapper {
                 t.getQuantity(),
                 t.getPrice(),
                 t.getQuantity().multiply(t.getPrice()),
-                t.getCreatedAt()
+                t.getCreatedAt(),
+                t.getDisabled()
         );
     }
 }

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DasboardContainer = styled.div`
+export const DashboardWrapper = styled.div`
     width: 80%;
     display: flex;
     margin: 0 auto;
@@ -10,7 +10,7 @@ export const DasboardContainer = styled.div`
 export const DashboardInfo = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: 115px 290px auto;
     gap: 20px;
 `;
 

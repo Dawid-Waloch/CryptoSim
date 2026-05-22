@@ -19,7 +19,7 @@ const LandingPage = () => {
                 <Header>CryptoSim</Header>
                 <Subtitle>Trade. Learn. Repeat.</Subtitle>
                 <Link href={user ? "/dashboard" : "/login"}>
-                    <Button>Start Trading</Button>
+                    <Button data-testid='landing-btn'>Start Trading</Button>
                 </Link>
             </LeftColumn>
             <RightColumn>

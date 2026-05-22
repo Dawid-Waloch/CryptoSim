@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { TokenIcon } from '@web3icons/react/dynamic'
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { createChart, CandlestickSeries } from 'lightweight-charts';
+import { ArrowDropDownIcon, ArrowDropUpIcon } from '../../icons';
 import {
     AssetChartContainer,
     AssetInfoChart,
@@ -86,8 +85,8 @@ const PriceChart = ({ assetInfo, assetPriceHistory }) => {
             <AssetTitleChart>
                 <TokenIcon symbol={symbol} variant="branded" size={55} />
                 <AssetInfoChart>
-                    <AssetName>{name}</AssetName>
-                    <AssetPriceContainer>
+                    <AssetName data-testid="market-chart-asset-name">{name}</AssetName>
+                    <AssetPriceContainer data-testid='price-info'>
                         <AssetPrice>{Number(currentPrice).toFixed(2)}</AssetPrice>
                         {percentageChange >= 0 ? (
                             <ChangeSpan profit={true}>

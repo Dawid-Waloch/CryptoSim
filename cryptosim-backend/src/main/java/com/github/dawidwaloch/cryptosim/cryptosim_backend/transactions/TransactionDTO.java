@@ -43,5 +43,11 @@ public record TransactionDTO(
                 description = "Date and time when the transaction was created",
                 example = "2026-01-12T14:30:00"
         )
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+
+        @Schema(
+                description = "Info about availability for sepcific user",
+                example = "FALSE"
+        )
+        Boolean disabled
 ) {}

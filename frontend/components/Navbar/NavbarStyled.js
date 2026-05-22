@@ -11,7 +11,7 @@ export const NavbarContainer = styled.nav`
     align-items: center;
     width: 80%;
     margin: 20px auto;
-    padding: 10px;
+    padding: 0 20px;
 `;
 
 export const NavLinks = styled.div`
@@ -25,12 +25,33 @@ export const NavLogo = styled.div`
 `;
 
 export const NavLink = styled(Link)`
+    position: relative;
     padding: 10px;
     color: white;
     text-decoration: none;
     font-size: 1.25em;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 2px;
+        width: 100%;
+        height: 2px;
+        background: white;
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.3s ease;
+    }
 
     &:hover {
         color: #ffffffd5;
+    }
+
+    &:hover::after {
+        transform: scaleX(1);
     }
 `
