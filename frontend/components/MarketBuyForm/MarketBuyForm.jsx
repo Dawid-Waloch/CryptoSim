@@ -73,7 +73,7 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
     return (
         <MarketBuyFormContainer>
             <MarketBuyFormHeader>
-                <span>Buy {name} Asset</span>
+                <span data-testid="market-asset-name-buy-span">Buy {name} Asset</span>
                 <span>{String(symbol).toUpperCase()}</span>
             </MarketBuyFormHeader>
             <MarketBuyFormBody>
@@ -88,6 +88,7 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
                                 -
                             </Button>
                             <Input
+                                data-testid="market-quantity-input"
                                 type="number"
                                 min={0}
                                 placeholder="Quantity"
@@ -114,9 +115,9 @@ const MarketBuyForm = ({ walletBalance, assetInfo }) => {
                         <span>{((quantity || 0) * currentPrice).toFixed(2)}$</span>
                     </EstimatedCostField>
                     <TotalCashField>
-                        <span>Total Cash: {Number(walletBalance).toFixed(2)}$</span>
+                        <span data-testid="market-total-cash-span">Total Cash: {Number(walletBalance).toFixed(2)}$</span>
                     </TotalCashField>
-                    <BuyButton type="submit">Buy</BuyButton>
+                    <BuyButton data-testid="market-buy-btn" type="submit">Buy</BuyButton>
                     <ErrorContainer>{formError}</ErrorContainer>
                 </form>
             </MarketBuyFormBody>

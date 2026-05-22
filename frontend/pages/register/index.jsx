@@ -85,6 +85,7 @@ const RegisterPage = () => {
                                 <span>Username:</span>
                             </Label>
                             <Input
+                                data-testid="register-username-input"
                                 type="text"
                                 placeholder="Username"
                                 value={username}
@@ -98,6 +99,7 @@ const RegisterPage = () => {
                                 <span>E-mail:</span>
                             </Label>
                             <Input
+                                data-testid="register-email-input"
                                 type="email"
                                 placeholder="E-mail"
                                 value={email}
@@ -111,6 +113,7 @@ const RegisterPage = () => {
                                 <span>Password:</span>
                             </Label>
                             <Input
+                                data-testid="register-password-input"
                                 type="password"
                                 placeholder="Password"
                                 value={password}
@@ -124,6 +127,7 @@ const RegisterPage = () => {
                                 <span>Repeat password:</span>
                             </Label>
                             <Input
+                                data-testid="register-repeat-password-input"
                                 type="password"
                                 placeholder="Repeat password"
                                 value={repeatPassword}
@@ -132,7 +136,7 @@ const RegisterPage = () => {
                             <ErrorContainer>{getError("repeatPassword")}</ErrorContainer>
                         </FieldContainer>
                         <FieldContainer>
-                            <Button type="submit">Submit</Button>
+                            <Button data-testid="register-submit-btn" type="submit">Submit</Button>
                         </FieldContainer>
                     </form>
                 </FormContainer>

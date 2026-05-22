@@ -55,7 +55,7 @@ const RecentTransactionsTable = ({ recentTransactions }) => {
                                 <TableRow key={id}>
                                     <TableCell $isLast={isLast}>{formattedDate}</TableCell>
                                     <TableCell $isLast={isLast}>
-                                        <AssetNameSpan>
+                                        <AssetNameSpan data-testid="dashboard-transactions-asset-name">
                                             <TokenIcon symbol={transaction.symbol} variant="branded" size={40} />
                                             {transaction.name}
                                         </AssetNameSpan>
@@ -64,7 +64,7 @@ const RecentTransactionsTable = ({ recentTransactions }) => {
                                     <TableCell $isLast={isLast}>{transaction.quantity.toFixed(2)}</TableCell>
                                     <TableCell $isLast={isLast}>{transaction.value}$</TableCell>
                                     <TableCell $isLast={isLast}>
-                                        <TypeSpan type={transaction.type}>
+                                        <TypeSpan data-testid="dashboard-transactions-op-type" type={transaction.type}>
                                             {transaction.type}
                                         </TypeSpan>
                                     </TableCell>

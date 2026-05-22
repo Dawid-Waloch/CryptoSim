@@ -16,6 +16,7 @@ const MarketAssets = ({ marketAssets, setSelectedAsset }) => {
         <AssetsListContainer>
             {marketAssets.map((marketAsset, id) => (
                 <MarketAssetContainer
+                    data-testid="market-asset-container"
                     role='button'
                     $id={id}
                     key={id}

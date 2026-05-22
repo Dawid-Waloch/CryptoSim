@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
     "dev": "next dev frontend",
     "build": "next build frontend",
     "start": "next start frontend",
@@ -27,9 +30,11 @@
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^25.5.2",
     "@vitejs/plugin-react": "^5.1.4",
     "autoprefixer": "^10.4.22",
     "babel-plugin-styled-components": "^2.1.4",

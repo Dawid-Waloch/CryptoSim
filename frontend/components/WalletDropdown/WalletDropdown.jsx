@@ -11,6 +11,7 @@ const WalletDropdown = ({ wallets }) => {
 
     return (
         <Select
+            data-testid="dashboard-select"
             value={selectedValue}
             onChange={handleChange}
             fullWidth
@@ -40,6 +41,7 @@ const WalletDropdown = ({ wallets }) => {
         >
             {wallets.map(wallet => (
             <MenuItem
+                data-testid="dashboard-menu-item"
                 key={wallet.id}
                 value={wallet.id}
                 sx={{
@@ -59,7 +61,7 @@ const WalletDropdown = ({ wallets }) => {
                     }
                 }}
             >
-                <span>{wallet.currency} {wallet.balance}</span>
+                <span data-testid="dashboard-wallet-balance">{wallet.currency} {wallet.balance}</span>
                 <AccountBalanceWalletIcon fontSize="large" />
             </MenuItem>
             ))}
